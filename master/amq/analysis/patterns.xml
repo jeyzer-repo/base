@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="AMQ" version="${project.version}">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - function  (6)
+			5 - function_discovery  (5)
+			6 - executor  (4)
+			7 - executor_thread_name (3)
+			8 - operation (2)
+			9 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolumn separator to declare multiple line patterns -->
+			<functions>
+				<function pattern="activemq.broker.TransportConnection.doStop" name="AMQ stopping connection"/>
+				<function pattern="activemq.broker.TransportConnection.stop" name="AMQ connection stopping"/>
+				<function pattern="activemq.broker.TransportConnection.serviceException" name="AMQ connection error processing"/>
+				<function pattern="concurrent.locks.ReentrantReadWriteLock$WriteLock.lock;activemq.broker.TransportConnection$4.run" name="About to stop AMQ connection"/> <!-- Multiple line pattern -->
+				<function pattern="activemq.broker.TransportConnection.processAddConsumer" name="Add consumer"/>
+				<function pattern="activemq.broker.TransportConnection.processAddProducer" name="Add producer"/>
+				<function pattern="activemq.broker.TransportConnection.processAddDestination" name="Add destination"/>
+				<function pattern="activemq.broker.TransportConnection.processAddSession" name="Add session"/>
+				<function pattern="activemq.broker.TransportConnection.processAddConnection" name="Add connection"/>
+				<function pattern="activemq.broker.TransportConnection.processMessage" name="Incoming message processing"/>
+				<function pattern="activemq.broker.TransportConnection.processCommitTransactionOnePhase" name="Incoming txn commit processing"/>
+				<function pattern="activemq.broker.TransportConnection.processDispatch" name="Outgoing message processing"/>
+				<function pattern="activemq.broker.TransportConnection.processMessageAck" name="Process message ACK"/>
+				<function pattern="activemq.broker.TransportConnection.processProducerAck" name="Process producer ACK"/>
+				<function pattern="activemq.broker.TransportConnection.processRemoveConsumer" name="Remove consumer"/>
+				<function pattern="activemq.broker.TransportConnection.processRemoveProducer" name="Remove producer"/>
+				<function pattern="activemq.broker.TransportConnection.processRemoveDestination" name="Remove destination"/>
+				<function pattern="activemq.broker.TransportConnection.processRemoveSession" name="Remove session"/>
+				<function pattern="activemq.broker.TransportConnection.processRemoveConnection" name="Remove connection"/>
+				<function pattern="activemq.broker.TransportConnection.processRemoveSubscription" name="Remove subscription"/>
+				<function pattern="activemq.broker.TransportConnection.processKeepAlive" name="Process keep alive"/>
+				<function pattern="activemq.broker.region.Topic.send" name="Topic message processing" />
+				<function pattern="activemq.broker.region.Queue.send" name="Queue message processing" />
+				<function pattern="activemq.broker.region.TopicSubscription.add" name="Add topic subscription"/>
+				<function pattern="activemq.broker.jmx.ManagedRegionBroker.registerDestination" name="Register destination in JMX"/>
+				<function pattern="activemq.broker.jmx.ManagedTransportConnection.processAddConnection" name="Add connection in JMX"/>
+				<function pattern="activemq.broker.jmx.ManagedTransportConnector.createConnection" name="Create connection in JMX"/>
+				<function pattern="activemq.broker.jmx.ManagedTransportConnection.doStop" name="Stop connection in JMX"/>
+				<function pattern="activemq.broker.jmx.ManagedTransportConnection.unregisterMBean" name="Unregister mbean in JMX"/>
+				<function pattern="activemq.transport.TransportThreadSupport.doStart" name="Create transport thread"/>
+				<function pattern="apache.activemq.broker.BrokerFactory.createBroker" name="Broker creation"/>
+				<function pattern="activemq.broker.region.Queue.iterate;at org.apache.activemq.thread.PooledTaskRunner.runTask" name="Queue message dispatching (internal)"/>    <!-- Multiple line pattern -->
+				<function pattern="activemq.broker.region.Queue.expireMessages" name="Queue message expiry"/>
+				<function pattern="activemq.broker.region.RegionBroker.purgeInactiveDestinations" name="Inactive queue or topic purging"/>
+				<function pattern="kahadb.MessageDatabase.checkpointCleanup" name="KAHADB cleanup"/>
+				<function pattern="KahaDBMessageStore.recover" name="KAHADB recover : move all the messages that were in the journal into long term storage"/>
+				<function pattern="kahadb.journal.Journal.write" name="KAHADB Journal writing"/>
+				<function pattern="java.io.FileDescriptor.sync;kahadb.journal.DataFileAppender.processQueue" name="KAHADB Journal disk file writing (sync)"/> <!-- Multiple line pattern -->
+				<function pattern="activemq.util.RecoverableRandomAccessFile.sync;kahadb.disk.journal.DataFileAppender.processQueue" name="KAHADB Journal disk file writing (sync)"/> <!-- Multiple line pattern -->
+				<function pattern="java.io.RandomAccessFile.write;kahadb.journal.DataFileAppender.processQueue" name="KAHADB Journal disk file writing"/> <!-- Multiple line pattern -->
+				<!-- 5.11.1 -->
+				<function pattern="java.io.RandomAccessFile.write;apache.activemq.util.RecoverableRandomAccessFile.write;kahadb.disk.journal.DataFileAppender.processQueue" name="KAHADB Journal disk file writing"/> <!-- Multiple line pattern -->
+				<function pattern="java.io.RandomAccessFile.write;kahadb.MessageDatabase.store" name="KAHADB file writing"/> <!-- Multiple line pattern -->
+				<function pattern="util.concurrent.DelayQueue.take;activemq.broker.region.Queue$FlowControlTimeoutTask.run" name="Queue flow control timeout waiting"/> <!-- Multiple line pattern -->
+				<function pattern="store.kahadb.KahaDBStore$KahaDBMessageStore.addMessage" name="KAHADB message storage"/>
+				<function pattern="store.kahadb.KahaDBStore$KahaDBMessageStore.removeAsyncMessage" name="KAHADB message removal (async)"/>
+				<function pattern="activemq.transport.TransportSupport.onException" name="IO Exception handling (Producer connection stale)"/>
+				<function pattern="activemq.transport.AbstractInactivityMonitor.doOnewaySend" name="AMQ connection heartbeat"/>
+				<function pattern="activemq.transport.InactivityMonitor.onException" name="IO Exception handling (Inactivity Monitor)"/>
+				<function pattern="activemq.advisory.AdvisoryBroker.fireAdvisory" name="Fire advisory"/>
+				<function pattern="amqextensions.security.JaasAuthenticationBroker.login" name="JAAS login"/>
+				<!-- Abstract on AMQ 5.11 -->
+				<function pattern="activemq.transport.AbstractInactivityMonitor.onException" name="IO Exception handling (Inactivity Monitor)"/>
+				<!-- Commons -->
+				<function pattern="apache.activemq.transport.tcp.TcpTransport.oneway" name="TCP message processing"/>
+				<function pattern="transport.tcp.TcpTransport.readCommand" name="TCP read"/>
+				<function pattern="internal.ssl.SSLSocketImpl.readRecord" name="TCP SSL read"/>
+				<function pattern="transport.tcp.SslTransport.doConsume" name="TCP SSL message processing"/>
+				<function pattern="java.util.TimerThread.mainLoop(Timer.java:509)" name="Timer thread on hold"/>
+				<function pattern="ssl.internal.ssl.SSLServerSocketImpl.accept" name="SSL Server socket listening"/>
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<!--operation pattern="activemq.usage.Usage.waitForSpace;BaseDestination.waitForSpace;BaseDestination.waitForSpace;Queue.send" name="Wait for AMQ memory space"/--> <!-- Multiple line pattern -->
+				<operation pattern="concurrent.ConcurrentHashMap.contains;apache.activemq.security.AuthorizationBroker.send" name="Connection destination map access"/> <!-- Multiple line pattern -->
+				<operation pattern="activemq.usage.MemoryUsage.waitForSpace" name="Wait for AMQ Memory zone space" />
+				<operation pattern="activemq.usage.Usage.waitForSpace" name="Wait for AMQ space (memory, storage or temp zone)" />
+				<operation pattern="activemq.broker.region.PrefetchSubscription.dispatchPending" name="Message dispatching to consumer"/>
+				<operation pattern="activemq.broker.jmx.ManagedTransportConnection.stopAsync" name="Connection async stopping"/>
+				<operation pattern="activemq.transport.FutureResponse.getResult" name="AMQ access"/>
+				<operation pattern="concurrent.SynchronousQueue.poll" name="Worker waiting for action"/>
+				<operation pattern="java.net.SocketInputStream.socketRead0" name="Socket read"/>
+				<operation pattern="ScheduledThreadPoolExecutor$DelayedWorkQueue.take" name="Worker waiting for queue element"/>
+				<operation pattern="locks.AbstractQueuedSynchronizer$ConditionObject.await" name="Thread waiting for queue element"/>
+				<operation pattern="activemq.broker.jmx.ManagedRegionBroker.registerDestination" name="Register destination in JMX"/>
+				<operation pattern="activemq.broker.jmx.ManagedRegionBroker.removeConsumer" name="Remove consumer in JMX"/>
+				<operation pattern="activemq.broker.jmx.ManagedRegionBroker.addConsumer" name="Add consumer in JMX"/>
+				<operation pattern="activemq.broker.jmx.ManagedRegionBroker.createObjectName" name="Create JMX object"/>
+				<operation pattern="activemq.advisory.AdvisoryBroker.addConsumer" name="Add consumer in Advisory"/>
+				<operation pattern="activemq.broker.region.RegionBroker.addDestination" name="Add destination"/>
+				<operation pattern="activemq.broker.region.Topic.addSubscription" name="Add topic subscription"/>
+				<operation pattern="org.apache.kahadb.page.PageFile.writeBatch" name="KAHADB Journal page file flush writing"/>
+				<operation pattern="store.kahadb.MessageDatabase.updateIndex" name="KAHADB database index update"/>
+				<operation pattern="kahadb.util.DataByteArrayOutputStream.writeUTF" name="KAHADB file writing"/>
+				<operation pattern="activemq.broker.region.AbstractRegion.lookup" name="AMQ destination lookup"/>
+				<operation pattern="activemq.broker.region.AbstractRegion.getDestinations" name="AMQ destinations map access"/>
+				<operation pattern="activemq.broker.region.RegionBroker.getDestinationMap" name="AMQ destination map access"/>
+				<operation pattern="activemq.broker.jmx.BrokerMBeanSupport.createProducerName" name="Producer name creation"/>
+			</operations>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<executor pattern="concurrent.ThreadPoolExecutor$Worker" name="Thread pool worker"/>
+				<executor pattern="transport.tcp.TcpTransport.run" name="TCP listener"/>
+				<executor pattern="store.kahadb.MessageDatabase$3.run" name="AMQ Journal Checkpoint Worker"/>
+				<executor pattern="java.util.TimerThread.mainLoop" name="Timer main loop"/>
+				<executor pattern="org.apache.kahadb.journal.DataFileAppender$2.run" name="KAHADB writer"/>
+				<executor pattern="org.apache.activemq.store.kahadb.disk.journal.DataFileAppender$1" name="KAHADB writer"/>
+				<executor pattern="activemq.transport.tcp.TcpTransportServer.run" name="AMQ Server socket listener"/>
+				<executor pattern="transport.tcp.TcpTransportServer$1.run" name="AMQ Server thread handler"/>
+				<executor pattern="org.apache.activemq.console.Main" name="AMQ Main"/>
+				<executor pattern="org.apache.activemq.broker.region.Queue$FlowControlTimeoutTask.run" name="Producer Flow Control Timeout (sign of memory full)"/>
+				<executor pattern="org.apache.kahadb.journal.DataFileAppender$1.run" name="KAHADB Journal file writer"/>
+			</executors>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude pattern="console.command.StartCommand.waitForShutdown" name="AMQ Main"/>
+				<exclude pattern="concurrent.SynchronousQueue.poll;concurrent.ThreadPoolExecutor.getTask" name="Worker thread waiting for a task to execute"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.net.SocketInputStream.read;com.sun.net.ssl.internal.ssl.InputRecord.readFully" name="Inactive thread listening on socket"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.net.SocketInputStream.read;sun.security.ssl.InputRecord.readFully" name="Inactive thread listening on socket"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Object.wait;kahadb.journal.DataFileAppender.processQueue" name="Inactive AMQ Kahadb writing thread"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Object.wait;kahadb.disk.journal.DataFileAppender.processQueue" name="Inactive AMQ Kahadb writing thread 2"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Object.wait;java.util.TimerThread.mainLoop" name="Timer thread waiting"/>	<!-- Multiple line pattern -->
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude_thread_name pattern_regex="RMI TCP Accept.*" name="RMI thread"/>
+				<exclude_thread_name pattern_regex="RMI Schedul.*" name="RMI scheduler"/>
+				<exclude_thread_name pattern="ConcurrentQueueStoreAndDispatch" name="AMQ queue dispatcher" size="8"/>
+				<exclude_thread_name pattern="RMI Reaper" name="RMI thread"/>
+				
+				<!-- AMQ -->
+				<exclude_thread_name pattern_regex="ActiveMQ Transport Server.*?" name="AMQ connection handler"/>
+				<exclude_thread_name pattern_regex="ActiveMQ BrokerService.worker.1" name="AMQ server"/>
+				<exclude_thread_name pattern_regex="^ActiveMQ BrokerService\[.*Task-.*" name="ActiveMQ Broker task inactive" size="5"/>
+				<exclude_thread_name pattern_regex="^MulticastDiscoveryAgent-.*" name="ActiveMQ Multicast discovery agent inactive" size="5"/>
+				<exclude_thread_name pattern_regex="main" name="AMQ main" size="17"/>
+				<exclude_thread_name pattern_regex="ActiveMQ Journal Checkpoint Worker" name="ActiveMQ Journal Checkpoint Worker inactive" size="9"/>
+				<exclude_thread_name pattern_regex="ActiveMQ Journal Scheduled executor" name="ActiveMQ Journal Scheduled executor inactive" size="9"/>
+				<exclude_thread_name pattern_regex="^MulticastDiscoveryAgent-.*" name="ActiveMQ Multicast discovery agent inactive" size="5"/>
+				<exclude_thread_name pattern_regex="^Notifier-MulticastDiscoveryAgent-.*" name="ActiveMQ Multicast discovery agent advertiser inactive" size="8"/>
+				<exclude_thread_name pattern_regex="Usage Async Task" name="Usage Async Task inactive" size="8"/>
+				<exclude_thread_name pattern_regex="^ActiveMQ Task" name="ActiveMQ Task inactive" size="10"/>
+								
+			</exclude_thread_names>
+		</patterns>
+
+</profile>

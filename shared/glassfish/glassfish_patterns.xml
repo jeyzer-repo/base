@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="Glassfish" version="${project.version}">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - locker  (7)
+			5 - function  (6)
+			6 - function_discovery  (5)
+			7 - executor  (4)
+			8 - executor_thread_name (3)
+			9 - operation (2)
+			10 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
+			<functions>
+				<!-- Glassfish -->
+				<function pattern="grizzly.ssl.SSLReadTask.doHandshake" name="Glassfish SSL client handshake"/>
+				<function pattern="glassfish.bootstrap.GlassFishMain$Launcher.launch" name="Glassfish startup"/> <!-- Glassfish 4 -->
+				<function pattern="glassfish.bootstrap.GlassFishImpl.stop" name="Glassfish shutdown"/> <!-- Glassfish 4 -->
+				<function pattern="org.apache.catalina.core.StandardContext.start" name="Web application startup"/> <!-- Glassfish 4 -->
+				<function pattern="com.sun.enterprise.web.WebApplication.stop" name="Web application shutdown"/> <!-- Glassfish 4 -->
+				<function pattern="grizzly.filter.SSLReadFilter.execute;grizzly.DefaultProtocolChain.executeProtocolFilter" name="Glassfish SSL hand shake"/>  <!-- Multiple line pattern -->
+				<function pattern="org.glassfish.grizzly.ssl.SSLBaseFilter.doHandshakeStep" name="Glassfish SSL hand shake"/> <!-- Glassfish 4 -->
+				<function pattern="com.sun.enterprise.v3.server.DynamicReloader.reloadApps" name="Glassfish application reload monitor"/>
+				<function pattern="org.glassfish.kernel.FileMonitoringImpl$1.run" name="Glassfish file monitoring"/>
+				<function pattern="org.apache.catalina.session.StandardManager.processExpires" name="Glassfish sessions expiry"/>
+				<function pattern="org.glassfish.grizzly.ssl.SSLBaseFilter$SSLTransportFilterWrapper.handleRead" name="Glassfish SSL initiation"/>
+				<function pattern="org.glassfish.deployment.autodeploy.AutoDeployer.deployAll" name="Glassfish auto deploy"/>
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<!-- Glassfish -->
+				<operation pattern="org.glassfish.web.loader.WebappClassLoader.findLoadedClass0" name="Web app class loading"			type="Class loader"/>
+				<operation pattern="org.glassfish.config.support.TranslatedConfigView.invoke" name="Glassfish config system property resolution"/>
+			</operations>
+			<lockers>
+				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
+  				<!-- locker pattern="java.util.concurrent.locks.LockSupport.park" name="LockSupport"/-->
+			</lockers>
+			<executors>
+				<!-- Glassfish -->
+				<executor pattern="com.sun.enterprise.web.connector.grizzly.WorkerThreadImpl.run" name="Glassfish HTTP connector"/>
+				<executor pattern="com.sun.grizzly.http.ProcessorTask.process" name="Glassfish HTTP connector"/>
+				<executor pattern="com.sun.grizzly.http.HttpProtocolChain.execute" name="Glassfish HTTP connector"/>
+				<executor pattern="grizzly.ssl.SSLWorkerThread.run" name="Glassfish HTTPS connector"/>
+				<executor pattern="org.glassfish.kernel.FileMonitoringImpl$1.run" name="Glassfish file monitoring"/>
+				<executor pattern="org.glassfish.grizzly.threadpool.AbstractThreadPool$Worker.doWork" name="Glassfish 4 HTTP connector"/>
+				<executor pattern="org.glassfish.deployment.autodeploy.AutoDeployService$1.run" name="Glassfish auto deployer"/>
+				<executor pattern="com.sun.enterprise.glassfish.bootstrap.GlassFishMain.main" name="Glassfish main"/>
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<!--executor_thread_name pattern="thread pattern" name="Thread type name"/-->
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!-- exclude_thread_name pattern_regex="RMI TCP.*" name="RMI"/-->
+				<!-- exclude_thread_name pattern="JMX server connection timeout" name="RMI"/-->
+			</exclude_thread_names>
+		</patterns>
+
+</profile>

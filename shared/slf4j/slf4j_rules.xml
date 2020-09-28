@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Slf4j">
+
+		<!-- ************************************************************************ -->
+		<!--                              SLF4J RULES                                 -->
+		<!-- ************************************************************************ -->
+						
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="Log debug percentage" param="Slf4j debug logging" stickers="performance" ref="JZR-SHA-SLF4J-001">
+			<narrative>This rule detects if intensive Slf4j logging is occurring in debug mode.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="50" 
+				           level="CRITICAL" 
+				           sub_level="7"
+				           message="High generation of debug traces.&#10; Review the log configurations to disable the ones in debug as soon as possible."/>
+				<threshold type="system value" 
+						   count="1"
+				           value="25" 
+				           level="WARNING"
+				           sub_level="7" 
+				           message="Important generation of debug traces.&#10; Review the log configurations to disable the ones in debug."/>
+			</thresholds>
+		</rule>
+
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="Log error percentage" param="Log4j error logging" stickers="performance" ref="JZR-SHA-SLF4J-002">
+			<narrative>This rule detects if intensive logj logging is occurring in error mode.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="5" 
+				           level="WARNING"
+				           sub_level="6"
+				           message="Important generation of error traces.&#10; Check the applicative logs."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="Log warning percentage" param="Log4j warning logging" stickers="performance" ref="JZR-SHA-SLF4J-003">
+			<narrative>This rule detects if intensive logj logging is occurring in warning mode.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="10" 
+				           level="WARNING"
+				           sub_level="6" 
+				           message="Important generation of warning traces.&#10; Check the applicative logs."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="Log info percentage" param="Log4j info logging" stickers="performance" ref="JZR-SHA-SLF4J-004">
+			<narrative>This rule detects if intensive logj logging is occurring in info mode.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="50" 
+				           level="CRITICAL"
+				           sub_level="7" 
+				           message="High generation of info traces.&#10; Review the log4j configurations to disable the ones in info as soon as possible."/>
+				<threshold type="system value" 
+						   count="1"
+				           value="25" 
+				           level="WARNING"
+				           sub_level="7"
+				           message="Important generation of info traces.&#10; Review the log4j configurations to disable the ones in info."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="Log debug percentage" param="Log4j debug logging" ref="JZR-SHA-SLF4J-005">
+			<narrative>This rule detects if intensive logj logging is occurring in debug mode.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="50" 
+				           level="CRITICAL"
+				           sub_level="7"
+				           message="High generation of debug traces.&#10; Review the log4j configurations to disable the ones in debug as soon as possible."/>
+				<threshold type="system value" 
+						   count="1"
+				           value="25" 
+				           level="WARNING"
+				           sub_level="7"
+				           message="Important generation of debug traces.&#10; Review the log4j configurations to disable the ones in debug."/>
+			</thresholds>
+		</rule>
+		
+	</rules>
+
+</monitor>

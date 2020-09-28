@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="AMQ">
+
+		<!-- ************************************************************************ -->
+		<!--                   APPLICATIVE PROCESS CARD RULES                         -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If process card property value contains the given pattern, generate event. -->
+		<rule name="Process card property pattern" param_display="ActiveMQ version" param="org.apache.activemq:Broker:.*:BrokerVersion" ref="JZR-APP-AMQ-001">
+			<narrative>This rule checks that the ActiveMQ version is greater than 5.12.x</narrative>
+			<thresholds>
+				<threshold type="system pattern" 
+						   count="1"
+				           pattern="(^[1-4]\..*?)|(^5\.[1-7]\..*?)|(^5\.8\.1[1-2].*?)" 
+				           level="WARNING" 
+				           sub_level="6"
+				           message="Old ActiveMQ version.&#10; Upgrade is recommended."/>
+			</thresholds>
+		</rule>
+
+		<!-- ************************************************************************ -->
+		<!--                        APPLICATIVE AMQ RULES                          -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If percentage of function is greater or equal to [value] across current session, generate event. -->
+		<rule name="Function global percentage" param_display="KAHADB disk writing" param="KAHADB Journal disk file writing" ref="JZR-APP-AMQ-101">
+			<narrative>This rule detects any intensive KAHADB Journal disk file writing.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="20" 
+				           level="CRITICAL"
+				           sub_level="7"
+				           message="Important KAHADB Journal disk file writing (bottleneck).&#10; You may consider to review the AMQ message persistence strategy&#10; or increase the disk access speed."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="Destination map access" param="AMQ destination map access" ref="JZR-APP-AMQ-102">
+			<narrative>This rule detects the AMQ-3454 bug.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="20" 
+				           level="CRITICAL"
+				           sub_level="8" 
+				           trust_factor="95"
+				           message="Important destination map access (bottleneck). Ref: AMQ-3454&#10; You may consider an upgrade to AMQ 5.6.0"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If function regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Function parallel contention" extra_info="Stale connection" ref="JZR-APP-AMQ-103">
+			<narrative>This rule detects the presence of stale connections.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="10"
+				           pattern="IO Exception handling \(Inactivity Monitor\)" 
+				           level="WARNING"
+				           sub_level="8"
+				           message="Client connections get stale or closed.&#10;Either client is under load or down&#10;or AMQ server itself is not responding in time.&#10;Monitor the queues and topics to determine the activity type and take action accordingly."/>
+			</thresholds>
+		</rule>
+
+		<!--  If function regex [pattern] in the current task is seen more than [count], generate event. Pattern is regex  -->
+		<rule name="Function pattern" extra_info="Full AMQ internal memory zone" ref="JZR-APP-AMQ-104">
+			<narrative>This rule detects an AMQ internal memory zone is full.</narrative>
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="5"
+				           pattern="Queue flow control timeout waiting" 
+				           level="CRITICAL"
+				           sub_level="8" 
+				           message="An AMQ internal memory zone (storage, temp or memory) is full.&#10;Incoming message processing will degrade until consumers do their job.&#10;Check the AMQ logs and monitor the queues and topics."/>
+			</thresholds>
+		</rule>
+
+		<!--  If operation regex [pattern] in the current task is seen more than [value], generate event. Pattern is regex -->
+		<rule name="Operation pattern" extra_info="Full AMQ memory usage zone" ref="JZR-APP-AMQ-105">
+			<narrative>This rule detects that the AMQ memory usage zone is full.</narrative>
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="5"
+				           pattern="Wait for AMQ space \(memory, storage or temp zone\)" 
+				           level="CRITICAL"
+				           sub_level="8" 
+				           message="The AMQ memory usage zone is full.&#10;Incoming message processing will degrade until consumers do their job.&#10;Check the AMQ logs and monitor the queues and topics."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If function regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Function parallel contention" extra_info="Incoming message processing" ref="JZR-APP-AMQ-106">
+			<narrative>This rule detects any large incoming message processing.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="10"
+				           pattern="Incoming message processing" 
+				           level="INFO"
+				           sub_level="9" 
+				           message="Remote producer is producing large volume of messages.&#10;Monitor the queues and topics to determine the activity type and take action accordingly."/>
+				<threshold type="session custom"
+						   count="3"
+						   value="10"
+				           pattern="Incoming message processing" 
+				           level="WARNING"
+				           sub_level="9"
+				           message="Remote producer is producing large volume of messages.&#10;There is a risk of memory zone flooding, especially if a remote consumer is slow to consume messages.&#10;Check the AMQ logs and monitor the queues and topics to determine the activity type and take action accordingly."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If the list of comma separated functions [functions] is respectively seen in more than [function_appearance_thresholds] parallel threads, generate event. -->
+		<rule name="Multi function contention" extra_info="Intensive AMQ connection failover" ref="JZR-APP-AMQ-107">
+			<narrative>This rule detects any intensive AMQ connection failover.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   functions="Add connection, Stop connection in JMX, IO Exception handling (Producer connection stale)"
+						   function_appearance_thresholds="2,5,10"
+				           level="WARNING"
+				           sub_level="7" 
+				           message="Connection fail-over is occurring. Monitor the queues and topics to determine the activity type and take action accordingly."/>
+				<threshold type="session custom"
+						   count="3"
+						   functions="Add connection, Stop connection in JMX, IO Exception handling (Producer connection stale)"
+						   function_appearance_thresholds="5,10,20"
+				           level="CRITICAL"
+				           sub_level="6"
+				           message="Massive connection fail-over is occurring.&#10;AMQ is in stress situation and has to handle now client reconnections which will make it worse.&#10;Check the AMQ logs and monitor the queues and topics to determine the activity type and take action accordingly.&#10;AMQ may crash with an Out of memory error of type Cannot create thread.&#10;Please plan an AMQ restart"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If function regex [pattern] in the current task is seen more than 30 mn, generate event. Pattern is regex  -->
+		<rule name="Function pattern" extra_info="Slow remote consumer" ref="JZR-APP-AMQ-108">
+			<narrative>This rule detects the presence of slow remote consumers.</narrative>
+			<thresholds>
+				<threshold type="action pattern" 
+						   time="30m"
+				           pattern="Outgoing message processing" 
+				           level="WARNING"
+				           sub_level="7" 
+				           message="Remote consumer could be slow to consume messages.&#10;There is a risk of memory zone flooding if a remote producer is highly active.&#10;Check the AMQ logs and monitor the queues and topics to determine the activity type and act upon."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of operation within action principal is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation in principal percentage" principal="Incoming message processing" param_display="Connection destination map access percentage in incoming message processing" param="Connection destination map access" ref="JZR-APP-AMQ-109">
+			<narrative>This rule detects a contention on the connection destination map.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="40" 
+				           level="WARNING"
+				           sub_level="7" 
+				           message="Contention on the connection destination map.&#10; This map probably contains a high number of queue and topic descriptors.&#10;Either monitor those through any JMX console or perform a memory dump to check the map content to identify the root cause application.&#10;Temp destinations are often the first suspicious candidates."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of threads matching the [pattern] is greater than [value] for [count] times, generate event. Applies for active and inactive threads. Pattern is regex -->
+		<rule name="Named thread limit" extra_info="AMQ connections" ref="JZR-APP-AMQ-110">
+			<narrative>This rule detects a high number of client connections established with AMQ.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="2"
+						   value="100"
+						   pattern="^ActiveMQ Transport:.*" 
+				           level="WARNING"
+				           sub_level="6"
+				           message="High number of client connections established with AMQ. Check the Pools sheet."/>
+				<threshold type="session custom"
+						   count="5"
+						   value="500"
+						   pattern="^ActiveMQ Transport:.*"
+				           level="CRITICAL"
+				           sub_level="7"
+				           message="AMQ is flooded by client connections. &#10;Check the Pools sheet. Risk of process crash."/>
+			</thresholds>
+		</rule>
+		
+		<!-- ************************************************************************ -->
+		<!--                        APPLICATIVE MX AMQ RULES                          -->
+		<!-- ************************************************************************ -->		
+
+		<!--  If bad AMQ health status, generate event. -->
+		<rule name="MX bean parameter pattern" param_display="ActiveMQ Health status" param="org.apache.activemq:Broker:.*:Health:CurrentStatus" ref="JZR-APP-AMQ-201">
+			<narrative>This rule checks the ActiveMQ health status.</narrative>
+			<thresholds>
+				<threshold type="session pattern"
+						   count="1"
+				           pattern="^Getting Worried.*" 
+				           level="WARNING" 
+				           sub_level="8"
+				           message="ActiveMQ health status is bad. Please check the related status message."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If AMQ temp storage almost full for some time, generate event. -->
+		<rule name="MX bean parameter number" param_display="ActiveMQ temp storage" param="org.apache.activemq:Broker:.*:TempPercentUsage" ref="JZR-APP-AMQ-202">
+			<narrative>This rule checks if the ActiveMQ temporary storage is almost full.</narrative>
+			<thresholds>
+				<threshold type="session value" 
+						   count="3"
+				           value="70" 
+				           level="CRITICAL"
+				           sub_level="7" 
+				           message="ActiveMQ temporary storage almost full."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If AMQ store almost full for some time, generate event. -->
+		<rule name="MX bean parameter number" param_display="ActiveMQ persistent storage" param="org.apache.activemq:Broker:.*:StorePercentUsage" ref="JZR-APP-AMQ-203">
+			<narrative>This rule checks if the ActiveMQ persistent storage is almost full.</narrative>
+			<thresholds>
+				<threshold type="session value" 
+						   count="3"
+				           value="70" 
+				           level="CRITICAL"
+				           sub_level="7" 
+				           message="ActiveMQ persistent storage almost full."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If AMQ memory almost full for some time, generate event. -->
+		<rule name="MX bean parameter number" param_display="ActiveMQ temp storage" param="org.apache.activemq:Broker:.*:MemoryPercentUsage" ref="JZR-APP-AMQ-204">
+			<narrative>This rule checks if the ActiveMQ memory zone is almost full.</narrative>
+			<thresholds>
+				<threshold type="session value" 
+						   count="3"
+				           value="70" 
+				           level="WARNING"
+				           sub_level="7" 
+				           message="ActiveMQ memory zone almost full."/>
+			</thresholds>
+		</rule>
+		
+	</rules>
+
+</monitor>

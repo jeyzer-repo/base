@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<stickers group="Java version">
+
+	<sticker name="java11" type="property card" property="java.version" pattern="^1.11.*"/>
+	
+	<sticker name="java10" type="property card" property="java.version" pattern="^1.10.*"/>
+	
+	<sticker name="java9" type="property card" property="java.version" pattern="^1.9.*"/>
+	
+	<sticker name="java8" type="property card" property="java.version" pattern="^1.8.*"/>
+	
+	<sticker name="java7" type="property card" property="java.version" pattern="^1.7.*"/>
+	
+	<sticker name="java6" type="property card" property="java.version" pattern="^1.6.*"/>
+
+	<sticker name="java5" type="property card" property="java.version" pattern="^1.5.*"/>
+	
+	<sticker name="java4" type="property card" property="java.version" pattern="^1.4.*"/>
+
+</stickers>

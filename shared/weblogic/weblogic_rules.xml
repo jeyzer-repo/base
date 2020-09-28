@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Weblogic">
+
+		<!-- ************************************************************************ -->
+		<!--                       WEBLOGIC RULES                                     -->
+		<!-- ************************************************************************ -->
+
+		<!--  If number of active threads matching the [pattern] is greater than [value] for [count] snapshots or [time], generate event. Applies for thread pools. Pattern is regex -->
+		<rule name="Active named thread limit" extra_info="HTTP thread pool" ref="JZR-SHA-WBL-001">
+			<narrative>This rule detects any Weblogic worker thread pool misery.</narrative>
+			<thresholds>
+				<threshold type="global custom"
+						   count="5"
+						   value="20"
+						   pattern="^ExecuteThread: '.*" 
+				           level="WARNING"
+				           sub_level="7"
+				           message="Weblogic HTTP connection pool about to be exhausted. Application may be under load.&#10;Monitor closely the application. You may consider increasing the pool size."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of threads (active and inactive) matching the [pattern] is lower or equal than [value] for [count] thread dumps or [time], generate event. Pattern is regex -->
+		<!--  Important : Absent threads rules cannot be complementary as one or the other will wrongly match. Put all patterns under the same regex like below -->
+		<!--
+		<rule name="Absent threads" extra_info="HTTP thread pool" ref="JZR-SHA-WBL-002">
+			<narrative>This rule detects any Websphere worker thread pool emptiness.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="5"
+						   value="0"
+						   pattern="^ExecuteThread: '.*" 
+				           level="CRITICAL"
+				           sub_level="9"
+				           message="HTTP thread pool is empty or missing. Please check the logs and plan a restart."/>
+			</thresholds>
+		</rule>
+		-->
+
+	</rules>
+
+</monitor>

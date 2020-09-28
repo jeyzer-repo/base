@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Hibernate">
+
+		<!-- ************************************************************************ -->
+		<!--                       HIBERNATE RULES                                    -->
+		<!-- ************************************************************************ -->
+
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads for [count] successive times, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Hibernate database connection pool access contention" ref="JZR-SHA-HBT-001">
+			<narrative>This rule detects the Hibernate database connection pool miseries.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="2"
+				           pattern="Hibernate get connection|Get JDBC connection from C3P0 pool|Waiting for JDBC connection from C3P0 pool"
+				           level="INFO"
+				           sub_level="8"
+				           message="Light contention on the Hibernate connection pool.&#10;Review and possibly increase the Hibernate connection pool size (hibernate.c3p0.max_size)"/>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Hibernate get connection|Get JDBC connection from C3P0 pool|Waiting for JDBC connection from C3P0 pool"  
+				           level="WARNING"
+				           sub_level="7"
+				           message="Contention on the Hibernate connection pool.&#10;System is about to run out of database resources.&#10;Increase the Hibernate connection pool size (hibernate.c3p0.max_size) and investigate any JDBC connection leakage."/>
+				<threshold type="session custom"
+						   count="3"
+						   value="5"
+				           pattern="Hibernate get connection|Get JDBC connection from C3P0 pool|Waiting for JDBC connection from C3P0 pool"  
+				           level="CRITICAL"
+				           sub_level="7"
+				           message="Severe contention on the Hibernate connection pool.&#10;System is running out of database resources.&#10;Plan possibly a restart, increase the Hibernate connection pool size (hibernate.c3p0.max_size) and investigate any JDBC connection leakage."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads for [count] successive times, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Hibernate prepared statement creation contention" ref="JZR-SHA-HBT-002">
+			<narrative>This rule detects contentions on the Hibernate prepared statement generation.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Waiting for JDBC prepared statement from C3P0 pool"  
+				           level="WARNING"
+				           sub_level="6"
+				           message="Contention on the Hibernate prepared statement creation.&#10;System is creating too many distinct prepared statements.&#10;Enable the Hibernate prepared statement pool or increase its size (set the hibernate.c3p0.max_statements)."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads for [count] successive times, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Hibernate logging active" stickers="performance" ref="JZR-SHA-HBT-003">
+			<narrative>This rule detects if the Hibernate logging is active.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Hibernate logging"  
+				           level="INFO"
+				           sub_level="9"
+				           message="Hibernate logging is enabled.&#10;This may impact the system performance.&#10;Check the Hibernate documentation to disable it."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>

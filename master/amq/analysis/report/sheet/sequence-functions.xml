@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+		<sheet type="sequence" name="Task sequence" link_type="Tsq">
+		
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays AMQ message processing activity as well as KAHADB operations.</description>
+		
+			<headers>
+				<tendency_function/>
+				<tendency_operation/>
+			</headers>
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+			</row_headers>
+		
+			<display>
+
+				<advanced_function display_operation="true" display_contention_type="false">
+					<highlight name="TCP SSL message processing" color="SEA_GREEN"/>
+					<highlight name="Message sending" color="LIGHT_GREEN"/>
+				
+					<highlight name="Add consumer" color="YELLOW"/>
+					<highlight name="Add producer" color="YELLOW"/>
+					<highlight name="Add destination" color="YELLOW"/>
+					<highlight name="Add session" color="YELLOW"/>
+					<highlight name="Add connection" color="YELLOW"/>
+					<highlight name="Remove consumer" color="LEMON_CHIFFON"/>
+					<highlight name="Remove producer" color="LEMON_CHIFFON"/>
+					<highlight name="Remove destination" color="LEMON_CHIFFON"/>
+					<highlight name="Remove session" color="LEMON_CHIFFON"/>
+					<highlight name="Remove connection" color="LEMON_CHIFFON"/>
+					<highlight name="Remove subscription" color="LEMON_CHIFFON"/>
+					<highlight name="Outgoing message processing" color="RGB-132-247-129"/> <!-- middle green -->
+					<highlight name="Incoming message processing" color="LIGHT_GREEN"/>
+					<highlight name="Process message ACK" color="LIGHT_GREEN"/>
+					<highlight name="Incoming txn commit processing" color="LIGHT_GREEN"/>
+					<highlight name="Process producer ACK" color="LIGHT_GREEN"/>
+					<highlight name="Process keep alive" color="LIGHT_GREEN"/>
+
+					<!-- AMQ 5 specific -->
+					<highlight name="Queue flow control timeout waiting" color="RGB-243-91-87"/> <!-- light red -->
+					
+					<highlight name="Queue message expiry" color="RGB-201-117-195"/>  <!-- light purple -->
+					<highlight name="Inactive queue or topic purging" color="RGB-201-117-195"/> <!-- light purple -->
+					
+					<!-- Broker -->
+					<highlight name="Queue message dispatching (internal)" color="RGB-199-221-241"/> <!-- light blue -->
+				
+					<highlight name="IO Exception handling (Inactivity Monitor)" color="RGB-243-91-87"/> <!-- light red -->
+					<highlight name="IO Exception handling (Producer connection stale)" color="RGB-243-91-87"/> <!-- light red -->
+					<highlight name="AMQ stopping connection" color="ROSE"/>
+					<highlight name="About to stop AMQ connection" color="ROSE"/>
+					
+					<highlight name="KAHADB Journal writing" color="LAVENDER"/>
+					<highlight name="KAHADB cleanup" color="LAVENDER"/>
+					<highlight name="KAHADB recover : move all the messages that were in the journal into long term storage" color="LAVENDER"/>
+					<highlight name="KAHADB Journal disk file writing (sync)" color="RGB-223-23-128"/> <!-- dark purple -->
+					<highlight name="KAHADB Journal disk file writing" color="RGB-223-23-128"/> <!-- dark purple -->
+					<highlight name="KAHADB message storage" color="LAVENDER"/>
+					
+					<highlight name="(ATBI)" color="GREY_25_PERCENT"/>
+				</advanced_function>
+				
+				<!-- Java Lock display -->
+				<!--lock_state color="ORANGE" lock_owner="RGB-209-47-109" lock_owner_and_locked="RGB-174-76-169" deadlock="RED" suspended="RED" stats="true"/-->
+
+				<!-- Identical consecutive stacks : add colored borders  -->
+				<frozen_code_state color="RED" stats="true"/>
+				
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+
+			</display>
+			
+		</sheet>
+		
+<!-- Supported colors :    
+	HSSFColor.AQUA, 
+	HSSFColor.AUTOMATIC, 
+	HSSFColor.BLACK, 
+	HSSFColor.BLUE, 
+	HSSFColor.BLUE_GREY, 
+	HSSFColor.BRIGHT_GREEN, 
+	HSSFColor.BROWN, 
+	HSSFColor.CORAL, 
+	HSSFColor.CORNFLOWER_BLUE, 
+	HSSFColor.DARK_BLUE, 
+	HSSFColor.DARK_GREEN, 
+	HSSFColor.DARK_RED, 
+	HSSFColor.DARK_TEAL, 
+	HSSFColor.DARK_YELLOW, 
+	HSSFColor.GOLD, 
+	HSSFColor.GREEN, 
+	HSSFColor.GREY_25_PERCENT, 
+	HSSFColor.GREY_40_PERCENT, 
+	HSSFColor.GREY_50_PERCENT, 
+	HSSFColor.GREY_80_PERCENT, 
+	HSSFColor.INDIGO, 
+	HSSFColor.LAVENDER, 
+	HSSFColor.LEMON_CHIFFON, 
+	HSSFColor.LIGHT_BLUE, 
+	HSSFColor.LIGHT_CORNFLOWER_BLUE, 
+	HSSFColor.LIGHT_GREEN, 
+	HSSFColor.LIGHT_ORANGE, 
+	HSSFColor.LIGHT_TURQUOISE, 
+	HSSFColor.LIGHT_YELLOW, 
+	HSSFColor.LIME, 
+	HSSFColor.MAROON, 
+	HSSFColor.OLIVE_GREEN, 
+	HSSFColor.ORANGE, 
+	HSSFColor.ORCHID, 
+	HSSFColor.PALE_BLUE, 
+	HSSFColor.PINK, 
+	HSSFColor.PLUM, 
+	HSSFColor.RED, 
+	HSSFColor.ROSE, 
+	HSSFColor.ROYAL_BLUE, 
+	HSSFColor.SEA_GREEN, 
+	HSSFColor.SKY_BLUE, 
+	HSSFColor.TAN, 
+	HSSFColor.TEAL, 
+	HSSFColor.TURQUOISE, 
+	HSSFColor.VIOLET, 
+	HSSFColor.WHITE, 
+	HSSFColor.YELLOW 
+-->

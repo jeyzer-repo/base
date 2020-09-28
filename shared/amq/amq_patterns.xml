@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="AMQ" version="${project.version}">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - function  (6)
+			5 - function_discovery  (5)
+			6 - executor  (4)
+			7 - executor_thread_name (3)
+			8 - operation (2)
+			9 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
+			<functions>
+				<!-- AMQ Client -->
+				<function pattern="activemq.transport.AbstractInactivityMonitor.onException" name="AMQ IO exception or inactivity exception thrown"/>
+				<function pattern="activemq.transport.failover.FailoverTransport.doReconnect" name="AMQ connection fail-over/monitoring"/>
+				<!-- Also used for standard message sending : disable -->
+				<!--function pattern="activemq.transport.AbstractInactivityMonitor.doOnewaySend" name="AMQ client heartbeat"/-->
+				<function pattern="transport.failover.FailoverTransport.doReconnect" name="AMQ connection fail-over/monitoring"/>
+				<function pattern="activemq.transport.tcp.TcpTransport.readCommand" name="AMQ listening on connection for command to execute"/>
+				<function pattern="org.apache.activemq.command.MessageDispatch.visit" name="AMQ message dispatching"/>
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<!-- AMQ Client -->
+				<operation pattern="activemq.transport.tcp.TcpTransport.connect" name="AMQ connection creation" priority="900"	type="AMQ"/>
+				<operation pattern="activemq.transport.tcp.TcpTransport.doStop" name="AMQ connection stop" priority="900"	    type="AMQ"/>
+				<operation pattern="activemq.ActiveMQConnection.createSession" name="AMQ session creation" priority="900"		type="AMQ"/>
+				<operation pattern="activemq.ActiveMQMessageProducer.send" name="AMQ message sending" priority="900"			type="AMQ"/>
+				<operation pattern="activemq.broker.region.Topic.send" name="AMQ topic message sending" priority="900"			type="AMQ"/>
+				<operation pattern="activemq.broker.region.Queue.send" name="AMQ queue message sending" priority="900"			type="AMQ"/>
+				<operation pattern="activemq.ActiveMQSession.sendAck" name="AMQ message acknowledgement sending" priority="900"	type="AMQ"/>
+				<operation pattern="SimplePriorityMessageDispatchChannel.dequeue" name="AMQ access"								type="AMQ"/>
+				<operation pattern="activemq.transport.FutureResponse.getResult" name="AMQ waiting for response" priority="900"	type="AMQ"/>
+				<operation pattern="ssl.ClientHandshaker.serverHello" name="SSL client handshake"/>
+			</operations>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<!-- AMQ Client -->
+				<executor pattern="activemq.thread.PooledTaskRunner" name="AMQ thread"/>
+				<executor pattern="org.apache.activemq.transport.tcp.TcpTransport.run" name="AMQ transport thread"/>
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<!--executor_thread_name pattern="thread pattern" name="Thread type name"/-->
+				<executor_thread_name pattern="ActiveMQ InactivityMonitor Worker" name="AMQ connection inactivity monitor thread"/>
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!-- exclude_thread_name pattern_regex="RMI TCP.*" name="RMI"/-->
+			</exclude_thread_names>
+		</patterns>
+
+</profile>

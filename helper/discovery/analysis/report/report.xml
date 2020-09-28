@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<report enabled="${JEYZER_JZR_REPORT_ENABLED}">
+
+	<!-- JZR report configuration -->
+	
+	<!-- Path of the generated JZR report file : 
+	     output_directory/output_file_prefix==start day(yyyy-MM-dd)===start hour(HH-mm-ss)===end hour(HH-mm-ss)=jzr.xlsx -->
+	     
+	<xlsx_report output_directory="${JEYZER_OUTPUT_DIR}/analysis" output_file_prefix="${JEYZER_TARGET_NAME}-report">
+
+		<sheet type="navigation" name="Menu" tab_color="LIGHT_GREEN"/>
+		
+		<sheet type="session_details" name="Session info"/>
+	
+		<!-- process card sheet will be displayed only if the process card file is available -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/process-card/process-card.xml"/>
+		
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/monitoring/monitoring-all-alerts-with-graph.xml"/>
+		
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-monitoring-all-alerts.xml"/>
+		
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/dashboard/action-dashboard.xml"/>
+	
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-standard.xml"/>
+		
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-charts.xml"/>
+		
+		<!-- display java locks and related -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-locks.xml"/>
+		
+		<!-- display function discovery findings -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-function-discovery.xml"/>
+		
+		<sheet type="sequence" name="Oracle interactions" link_type="Phi">
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+			</row_headers>
+		
+			<display>
+
+				<!-- Function display. Color applies for ATBI -->
+				<function color="GREY_25_PERCENT" stats="false"/>
+
+				<advanced_operation stats="false">
+					<highlight name="(OTBI)" color="GREY_25_PERCENT"/>
+					<highlight name="Oracle result wait" color="ORANGE"/>
+					<highlight name="Oracle connection creation" color="ORANGE"/>
+					<highlight name="Oracle read" color="MAROON"/>
+					<highlight name="Oracle data received" color="MAROON"/>
+					<highlight name="Oracle data sending" color="BROWN"/>
+					<highlight name="CORBA operation" color="DARK_YELLOW"/>
+					<highlight name="File system access" color="PINK"/>
+					<highlight name="Class loading" color="PINK"/>
+					<highlight name="File exist check" color="PINK"/>
+					<highlight name="File last modified check" color="PINK"/>
+				</advanced_operation>
+
+				<!-- Operation display. Color applies for OTBI -->
+				<!--  operation color="GREY_25_PERCENT" stats="false"/>-->
+
+				<!-- Long running tasks display -->
+				<!-- long_running color="LIGHT_YELLOW" threshold="7" stats="false"/> -->
+
+			</display>
+		</sheet>
+		
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-gc-global.xml"/>
+
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-gc-old.xml"/>
+
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-memory.xml"/>
+
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-cpu.xml"/>
+
+		<!--  display the list of actions -->
+		<sheet type="action_list" name="Task list"/>
+
+		<!--  display the stacks seen more than threshold times, ordered by number of appearances -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/top-stacks/top-stacks.xml"/>
+		
+		<!--  display the merged actions and their related stacks as a tree -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/profiling/action-profiling.xml"/>
+		
+		<!--  display the distinct actions and their related stacks as a tree -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/profiling/action-distinct-profiling.xml"/>
+		
+		<!-- function and operation appearance categorized by action / main function -->
+		<sheet type="principal_histogram" name="Action histogram"/>
+
+		<!-- function and operation global appearance  -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/histogram/function-histogram-with-graph.xml"/>
+
+		<!-- Monitoring rules display -->
+		<sheet type="monitoring_rules" name="Monitoring Rules"/>
+		
+		<!-- Process jars sheet will be displayed only if the process jar paths file is available -->
+		<sheet type="process_jars" name="Libraries"/>
+
+		<!-- Profiles display -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/analysis-patterns/analysis-patterns.xml"/>
+
+	</xlsx_report>
+
+</report>
+
+<!-- Supported colors :    
+	HSSFColor.AQUA, 
+	HSSFColor.AUTOMATIC, 
+	HSSFColor.BLACK, 
+	HSSFColor.BLUE, 
+	HSSFColor.BLUE_GREY, 
+	HSSFColor.BRIGHT_GREEN, 
+	HSSFColor.BROWN, 
+	HSSFColor.CORAL, 
+	HSSFColor.CORNFLOWER_BLUE, 
+	HSSFColor.DARK_BLUE, 
+	HSSFColor.DARK_GREEN, 
+	HSSFColor.DARK_RED, 
+	HSSFColor.DARK_TEAL, 
+	HSSFColor.DARK_YELLOW, 
+	HSSFColor.GOLD, 
+	HSSFColor.GREEN, 
+	HSSFColor.GREY_25_PERCENT, 
+	HSSFColor.GREY_40_PERCENT, 
+	HSSFColor.GREY_50_PERCENT, 
+	HSSFColor.GREY_80_PERCENT, 
+	HSSFColor.INDIGO, 
+	HSSFColor.LAVENDER, 
+	HSSFColor.LEMON_CHIFFON, 
+	HSSFColor.LIGHT_BLUE, 
+	HSSFColor.LIGHT_CORNFLOWER_BLUE, 
+	HSSFColor.LIGHT_GREEN, 
+	HSSFColor.LIGHT_ORANGE, 
+	HSSFColor.LIGHT_TURQUOISE, 
+	HSSFColor.LIGHT_YELLOW, 
+	HSSFColor.LIME, 
+	HSSFColor.MAROON, 
+	HSSFColor.OLIVE_GREEN, 
+	HSSFColor.ORANGE, 
+	HSSFColor.ORCHID, 
+	HSSFColor.PALE_BLUE, 
+	HSSFColor.PINK, 
+	HSSFColor.PLUM, 
+	HSSFColor.RED, 
+	HSSFColor.ROSE, 
+	HSSFColor.ROYAL_BLUE, 
+	HSSFColor.SEA_GREEN, 
+	HSSFColor.SKY_BLUE, 
+	HSSFColor.TAN, 
+	HSSFColor.TEAL, 
+	HSSFColor.TURQUOISE, 
+	HSSFColor.VIOLET, 
+	HSSFColor.WHITE, 
+	HSSFColor.YELLOW 
+-->
+    

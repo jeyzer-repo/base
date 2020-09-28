@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<report enabled="${JEYZER_JZR_REPORT_ENABLED}">
+
+	<!-- JZR report configuration -->
+	
+	<!-- Path of the generated JZR report file : 
+	     output_directory/output_file_prefix==start day(yyyy-MM-dd)===start hour(HH-mm-ss)===end hour(HH-mm-ss)=jzr.xlsx -->
+	     
+	<xlsx_report output_directory="${JEYZER_OUTPUT_DIR}/analysis" output_file_prefix="${JEYZER_TARGET_NAME}-report">
+
+		<sheet type="navigation" name="Menu" tab_color="LIGHT_GREEN"/>
+		
+		<sheet type="session_details" name="Session info"/>
+	
+		<!-- highlights stacks of low interest -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-tuning-executors.xml"/>
+
+		<!-- highlights functions of interest -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-tuning-functions.xml"/>
+		
+		<!-- highlights operations of interest -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-tuning-operations.xml"/>
+		
+		<!-- display the merged actions and their related stacks as a tree -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/profiling/atbi-profiling-with-graph.xml"/>
+		
+		<!-- display function discovery findings -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-function-discovery.xml"/>	
+
+		<!--  display the stacks seen more than threshold times, ordered by number of appearances -->
+		<sheet type="top_stacks" name="Top stacks" threshold="10"/>
+		
+		<!-- function and operation appearance categorized by action / main function -->
+		<sheet type="principal_histogram" name="Action histogram"/>
+
+		<!-- Profiles display -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/analysis-patterns/analysis-patterns.xml"/>
+
+	</xlsx_report>
+
+</report>
+    

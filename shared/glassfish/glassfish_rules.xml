@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Glassfish">
+
+		<!-- ************************************************************************ -->
+		<!--                       GLASSFISH RULES                                    -->
+		<!-- ************************************************************************ -->
+
+		<!--  If number of active threads matching the [pattern] is greater than [value] for [count] snapshots or [time], generate event. Applies for thread pools. Pattern is regex -->
+		<rule name="Active named thread limit" extra_info="HTTP thread pool" ref="JZR-SHA-GLF-001">
+			<narrative>This rule detects any Glassfish worker thread pool misery.</narrative>
+			<thresholds>
+				<threshold type="global custom"
+						   count="5"
+						   value="20"
+						   pattern="^httpWorkerThread-.*" 
+				           level="WARNING"
+				           sub_level="8"
+				           message="Glassfish HTTP connection pool about to be exhausted. Application may be under load.&#10;Monitor closely the application. You may consider increasing the pool size."/>
+				<threshold type="global custom"
+						   count="5"
+						   value="20"
+						   pattern="^httpSSLWorkerThread-.*" 
+				           level="WARNING"
+				           sub_level="8"
+				           message="Glassfish HTTPS connection pool about to be exhausted. Application may be under load.&#10;Monitor closely the application. You may consider increasing the pool size."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If number of threads (active and inactive) matching the [pattern] is lower or equal than [value] for [count] thread dumps or [time], generate event. Pattern is regex -->
+		<!--  Important : Absent threads rules cannot be complementary as one or the other will wrongly match. Put all patterns under the same regex like below -->
+		<!--
+		<rule name="Absent threads" extra_info="HTTP thread pool" ref="JZR-SHA-GLF-002">
+			<narrative>This rule detects Glassfish worker thread pool emptiness.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="5"
+						   value="0"
+						   pattern="^httpWorkerThread-.*|^httpSSLWorkerThread-." 
+				           level="CRITICAL"
+				           sub_level="9"
+				           message="HTTP thread pool is empty or missing. Please check the logs and plan a restart."/>
+			</thresholds>
+		</rule>
+		-->
+		
+		<!--  If function regex pattern in the current task is seen more than value, generate event. Pattern is regex -->
+		<rule name="Function pattern" extra_info="Glassfish startup" ref="JZR-SHA-GLF-003">
+			<narrative>This rule detects any Glassfish process starting.</narrative>
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="1"
+				           pattern="Glassfish startup" 
+				           level="INFO" 
+				           sub_level="8"
+				           message="Glassfish server has been started."/>
+			</thresholds>
+		</rule>
+		<rule name="Function pattern" extra_info="Glassfish shutdown" ref="JZR-SHA-GLF-004">
+			<narrative>This rule detects any Glassfish process shutdown.</narrative>
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="1"
+				           pattern="Glassfish shutdown" 
+				           level="INFO" 
+				           sub_level="8"
+				           message="Glassfish server has been shutdown."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>

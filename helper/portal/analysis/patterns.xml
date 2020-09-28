@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="Portal" version="$LastChangedRevision: 628 $">
+
+
+		<!-- 
+			Pattern rule appliance by priority :
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - function  (6)
+			5 - function_discovery  (5)
+			6 - executor  (4)
+			7 - executor_thread_name (3)
+			8 - operation (2)
+			9 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- Discovery functions are loaded only if discovery mode is enabled (cf. discovery_mode) -->
+			<discovery_functions>
+				<!-- pattern is a list of keywords, comma separated. Each keyword will issue one discovery rule -->
+				<!-- pattern_regex is optional. Focus can be : method, class, both -->
+				<discovery_function pattern="${JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_1}" focus="both"/>
+				<discovery_function pattern="${JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_2}" focus="both"/>
+				<discovery_function pattern="${JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_3}" focus="both"/>
+				<discovery_function pattern="${JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_4}" focus="both"/>
+				<discovery_function pattern="${JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_5}" focus="both"/>
+			</discovery_functions>
+			<!-- In pattern attribute, use semicolumn separator to declare multiple line patterns -->
+			<functions>
+				<!-- <function pattern="any.thread.stack.Extract1"  name="Function 1"/> -->
+				<!-- <function pattern="any.thread.stack.Extract2"  name="Function 2"/> -->
+				<!-- <function pattern="any.thread.stack.Extract3;stack.Extract4"  name="Function 3"/> --> <!-- Multiple line pattern -->
+				<!-- <function pattern="any.thread.stack.Extract5"  name="Important Function 5" priority="900"/> -->  <!-- High priority : must be displayed -->
+			</functions>
+			<!-- Discovery functions are loaded only if discovery mode is enabled (cf. discovery_mode) -->
+			<discovery_operations>
+				<!-- pattern is a list of keywords, comma separated. Each keyword will issue one discovery rule -->
+				<!-- pattern_regex is optional. Focus can be : method, class, both -->
+				<!-- discovery_operation pattern="transaction,batch,close,open" pattern_regex=".*" focus="method"/-->
+			</discovery_operations>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<!-- <operation pattern="MyClass.myoperation1" name="Operation 1"/> -->
+				<!-- <operation pattern="mypackage.MyClass.myoperation2" name="Operation 2"/> -->
+				<!-- <operation pattern="mypackage.MyClass.myoperation3" name="Operation 3" priority="900"/> -->  <!-- High priority : must be displayed -->
+				<!-- <operation pattern="mypackage.MyClass.myoperation4;MyClass.myoperation5"  name="Operation 4"/> --> <!-- Multiple line pattern -->
+				<!-- <operation pattern="mypackage.MyClass." name="MyClass access"/> -->
+			</operations>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<!-- <executor pattern="MyThread.service" name="Thread 1"/> -->
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<!--executor_thread_name pattern="thread pattern" name="Thread type name"/-->
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!-- <exclude pattern="performUselessOperation" name="Useless stack to be discarded"/> -->
+				<!-- <exclude pattern="performUselessOperation" name="Useless stack to be discarded if stack size is below the following limit" size="12"/> -->
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!-- <exclude_thread_name pattern_regex="performUselessOperation.*" pattern="Useless stack to be discarded if stack size is below the following limit" size="12" name="Useless stack to be discarded"/> -->
+				<!-- <exclude_thread_name pattern="performUselessOperation3" name="Useless stack to be discarded"/> -->
+			</exclude_thread_names>
+		</patterns>
+
+</profile>

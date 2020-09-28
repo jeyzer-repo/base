@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Java">
+
+		<!-- ************************************************************************ -->
+		<!--                       JAVA RULES                                         -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If operation regex pattern in the current task is seen more than value, generate event. Pattern is regex -->
+		<rule name="Operation pattern" extra_info="Java exception generation" ref="JZR-SHA-JAVA-001">
+			<narrative>This rule detects the generation of Java exceptions.</narrative>
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="1"
+				           pattern="Java exception generation" 
+				           level="INFO"
+				           message="Java exception throwing detected. Please check the applicative logs.&#10; This may be false positive if the exception is part of applicative processing like text to number conversion.&#10; However, if false positive are frequent, this is then negative performance hit to be reviewed by the application owner.&#10; Note that exception generation is 200-700 slower than any code based solution (ex: NumberFormatException vs Guava tryParse)."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation regex pattern in the current task is seen more than [value] percentage for [count] recording snapshots or [time], generate event. -->
+		<rule name="Operation pattern" extra_info="Java exception generation" stickers="performance" ref="JZR-SHA-JAVA-002">
+			<narrative>This rule detects any intensive generation of Java exceptions which may affect the performance of the application.</narrative>
+			<thresholds>
+				<threshold type="action pattern" 
+						   count="10"
+				           pattern="Java exception generation"
+				           percentage_in_action="60"  
+				           level="WARNING" 
+				           message="Exception generated very often within the action.&#10; Check the applicative logs for errors.&#10; Review the code as exception generation is performance invasive."/>
+				<threshold type="action pattern"
+						   count="10"
+				           pattern="Java exception generation"
+				           percentage_in_action="30" 
+				           level="INFO" 
+				           message="Exception generated very often within the action.&#10; Check the applicative logs for errors.&#10; Review the code as exception generation is performance invasive."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="Java String replace percentage" param="Java String replace" stickers="performance" ref="JZR-SHA-JAVA-003">
+			<narrative>This rule detects any intensive usage of the Java String replace which may affect the performance of the application.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="10" 
+				           level="INFO" 
+				           message="Possible contention on String replacement.&#10;String replacement involves regular expression whom initialization is at high cost.&#10;You may consider other alternatives like the Apache StringUtils.&#10;Fixed in Java 9 (JDK-8058779)."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If execution regex pattern in the current session is seen more than [value] for [count] snapshots or [time], generate event. -->
+		<rule name="Session execution pattern" extra_info="possible PKCS bug" stickers="solaris" ref="JZR-SHA-JAVA-004">
+			<narrative>This rule detects the possible presence of a Solaris PKCS bug.</narrative>
+			<thresholds>
+				<threshold type="session pattern" 
+						   count="5"
+				           pattern="sun.security.pkcs11.wrapper.PKCS11.C_DestroyObject" 
+				           level="CRITICAL" 
+				           sub_level="9"
+				           trust_factor="80"
+				           message="Possible JDK bug on PKCS11. System is about to freeze."/>
+			</thresholds>
+		</rule>
+
+		<!--  If number of active threads matching the [pattern] is greater than [value] for [count] snapshots or [time], generate event. Applies for thread pools. Pattern is regex -->
+		<rule name="Active named thread limit" extra_info="JMX thread pool" ref="JZR-SHA-JAVA-005">
+			<narrative>This rule detects any high number of JMX connection threads.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="5"
+						   value="25"
+						   pattern="^JMX server connection timeout.*" 
+				           level="CRITICAL"
+				           message="High number of JMX connection threads. Possible thread leak."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Future task completion waiting" ref="JZR-SHA-JAVA-006">
+			<narrative>This rule detects any contention on completion of Future tasks.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="5"
+						   value="10"
+				           pattern="Wait for Future task completion" 
+				           level="WARNING"
+				           message="Important and long long wait on the completion of tasks. Please check the system state health."/>
+				<threshold type="session custom"
+						   count="1"
+						   value="10"
+				           pattern="Wait for Future task completion" 
+				           level="INFO"
+				           message="Important wait on the completion of tasks."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Slow random number generation" ref="JZR-SHA-JAVA-007">
+			<narrative>This rule detects any random generation number slowness.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Random number generation" 
+				           level="WARNING"
+				           message="Long wait on random generation number.&#10; Either system entropy may be low (especially under Linux VM in which case entropy generators can be used) or JDK8 bug (JDK-8098581) fixed in 1.8.121+ or system is under high load.&#10; Please check the system state health."/>
+			</thresholds>
+		</rule>
+
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Java Weak Hashmap endless loop" ref="JZR-SHA-JAVA-008">
+			<narrative>This rule detects the JDK8 bug (JDK-8075006).</narrative>
+			<thresholds>
+				<!-- Other conditions : high thread CPU and endless thread -->
+				<threshold type="session custom"
+						   count="20"
+						   value="2"
+				           pattern="Weak hashMap access" 
+				           level="CRITICAL"
+				           sub_level="9"
+				           trust_factor="90"
+				           message="Threads accessing a weak hash map get stuck by looping endlessly and consuming therefore high CPU.&#10; JDK8 bug (JDK-8075006) supposed to be fixed, or system is under high load. Recommendation is to make this hash map access thread safe.&#10; Please check the system state health."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="Java introspection percentage" param="Java reflection operation" stickers="performance" ref="JZR-SHA-JAVA-009">
+			<narrative>This rule detects any important usage of Java reflection.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="5" 
+				           level="INFO" 
+				           message="Important usage of Java introspection.&#10; Review the code to possibly cache the introspection results."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="IP lookup" param="IP lookup" stickers="performance" ref="JZR-SHA-JAVA-010">
+			<narrative>This rule detects any IP lookup slowness which could be due to DNS issues.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="10"
+				           level="WARNING"
+				           sub_level="7" 
+				           message="Frequent IP lookup detected : DNS resolution is probably very slow.&#10;Please make sure that remote hosts are declared in the local host file.&#10;Check also the DNS resolution performance."/>
+			</thresholds>
+		</rule>
+
+		<!--  If operation is detected across current session, generate event. -->
+		<rule name="Operation presence" param_display="HashTable usage" param="Java hash table operation" stickers="code_quality" ref="JZR-SHA-JAVA-011">
+			<narrative>This rule detects the usage of the deprecated HashTable class.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           message="HashTable is deprecated class.&#10; Prefer ConcurrentHashMap for better performance."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation is detected across current session, generate event. -->
+		<rule name="Operation presence" param_display="Vector usage" param="Java vector operation" stickers="code_quality" ref="JZR-SHA-JAVA-012">
+			<narrative>This rule detects the usage of the deprecated Vector class.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           message="Vector is deprecated class.&#10; Prefer synchronized ArrayList for better performance."/>
+			</thresholds>
+		</rule>
+
+		<!--  If operation regex pattern in the current task is seen more than value, generate event. Pattern is regex -->
+		<rule name="Operation pattern" extra_info="GC execution" ref="JZR-SHA-JAVA-013">
+			<narrative>This rule detects any garbage collection execution.</narrative>
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="1"
+				           pattern="Garbage collector forced execution" 
+				           level="WARNING" 
+				           message="Force Garbage Collection detected : bad practice.&#10; Must be disabled if possible."/>
+			</thresholds>
+		</rule>
+
+		<!--  If operation regex pattern in the current task is seen more than value, generate event. Pattern is regex -->
+		<rule name="Operation pattern" extra_info="JVM exit" ref="JZR-SHA-JAVA-014">
+			<narrative>This rule detects any Java virtual machine exit execution.</narrative>
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="1"
+				           pattern="JVM stopping" 
+				           level="WARNING" 
+				           message="JVM exit call detected.&#10;Check any task sequence to make sure that no other important task was running at that time."/>
+			</thresholds>
+		</rule>
+
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="HTTP response wait" param="HTTP response wait" stickers="performance" ref="JZR-SHA-JAVA-015">
+			<narrative>This rule detects any HTTP slowness which could be due to DNS issues, or remote HTTP server under load or sending back large pages/data.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="10"
+				           level="WARNING"
+				           sub_level="7" 
+				           message="Frequent HTTP response wait detected : DNS resolution could be very slow or remote HTTP server is under load or generating high volume of data.&#10;For the DNS, please make sure that remote hosts are declared in the local host file.&#10;Check also the DNS resolution performance.&#10;Verify the remote HTTP server state."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If operation is detected across current session, generate event. -->
+		<rule name="Operation presence" param_display="Java Util Random usage" param="Random constructor" stickers="code_quality" ref="JZR-SHA-JAVA-016">
+			<narrative>This rule detects the usage of the java.util.Random constructor which is not recommended for security reasons.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           message="java.util.Random constructor should not be used.&#10; Prefer java.security.SecureRandom for security reasons."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>

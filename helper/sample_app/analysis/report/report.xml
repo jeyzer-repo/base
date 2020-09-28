@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<report enabled="${JEYZER_JZR_REPORT_ENABLED}">
+
+	<!-- JZR report configuration -->
+	
+	<!-- Path of the generated JZR report file : 
+	     output_directory/output_file_prefix==start day(yyyy-MM-dd)===start hour(HH-mm-ss)===end hour(HH-mm-ss)=jzr.xlsx -->
+	
+	<!-- theme is optional -->
+	<xlsx_report output_directory="${JEYZER_OUTPUT_DIR}/analysis" output_file_prefix="${JEYZER_TARGET_NAME}-report" theme="vinci" security_file="${JEYZER_BASE_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/security/report_security.xml">
+	
+		<sheet type="navigation" name="Menu" tab_color="LIGHT_GREEN"/>
+		
+		<sheet type="session_details" name="Session info"/>
+	
+		<!-- process card sheet will be displayed only if the process card file is available -->
+		<sheet type="process_card" name="Process card">
+			<!-- category will be displayed if at least one property is found in the process card file -->
+			<category name="Operating system" color="RGB-255-230-153">
+				<field name="Name" property="os.name"/>
+				<field name="Version" property="os.version"/>
+				<field name="Architecture" property="os.arch"/>
+				<field name="# CPUs" property="jzr.ext.process.available.processors"/>
+				<field name="Patch level" property="sun.os.patch.level"/>
+			</category>
+			<category name="JVM" color="RGB-196-227-252">
+				<field name="Vendor" property="java.vm.vendor"/>
+				<field name="VM name" property="java.vm.name"/>
+				<field name="Version" property="java.runtime.version"/>
+				<field name="Minor version" property="java.vm.version"/>
+				<field name="Java home" property="java.home"/>
+				<field name="Runtime name" property="java.runtime.name"/>
+				<field name="VM info" property="java.vm.info"/>
+			</category>
+			<category name="Regional settings" color="RGB-255-230-153">
+				<field name="Time zone" property="user.timezone"/>
+				<field name="Country" property="user.country"/>
+				<field name="Language" property="user.language"/>
+				<field name="Country variant" property="user.variant"/>
+				<field name="File encoding" property="file.encoding"/>
+			</category>
+			<category name="Process" color="RGB-196-227-252">
+				<field name="Pid" property="jzr.ext.process.pid"/>
+				<field name="User" property="user.name"/>
+				<field name="User home" property="user.home"/>
+				<field name="Working directory" property="user.dir"/>
+				<field name="Temp directory" property="java.io.tmpdir"/>
+				<field name="Startup command" property="sun.java.command"/>
+				<field name="Input parameters" property="jzr.ext.process.input.parameters"/>
+			</category>
+			<category name="VM 2ndary paths" color="RGB-255-230-153">
+				<field name="Classpath" property="java.class.path"/>
+				<field name="Boot classpath" property="sun.boot.class.path"/>
+				<field name="Java library path" property="java.library.path"/>
+				<field name="Java external directories" property="java.ext.dirs"/>
+				<field name="Java endorsed directories" property="java.endorsed.dirs"/>
+			</category>
+			<category name="JMX" color="RGB-196-227-252">
+				<field name="Port" property="com.sun.management.jmxremote.port"/>
+				<field name="Authentication enabled" property="com.sun.management.jmxremote.authenticate"/>
+				<field name="SSL enabled" property="com.sun.management.jmxremote.ssl"/>
+			</category>
+			
+			<category name="MX static parameters" color="RGB-191-202-136">
+				<!-- Customize this section based on your application parameters -->
+				<!-- name is regex pattern. Matched attribute should be unique (first match considered) -->
+				<field name="Broker name" property_pattern="org.apache.activemq:Broker:.*:BrokerName"/>
+				<field name="Version" property_pattern="org.apache.activemq:Broker:.*:BrokerVersion"/>
+			</category>
+			
+		</sheet>
+	
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/monitoring/monitoring-all-alerts-with-graph.xml"/>
+	
+		<sheet type="sequence" name="Task sequence" link_type="Tsk">
+		
+			<!-- Optional -->
+			<headers formats="Advanced JMX,Advanced Agent">
+				<process_up_time/>
+				<capture_time color="RED">
+					<!-- Factor defined in percentage gain or loss -->
+					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
+				</capture_time>
+				<thread_counter color="RED">
+					<!-- Factor defined in percentage gain or loss -->
+					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
+				</thread_counter>
+				
+				<section_delimiter title="Any thread pool" color="RGB-201-208-168"/>
+				<!-- Pool thread counter -->
+				<!--   To display in graphs, refer to : pool_thread_counter-<lower case pool name with spaces replaced by dashes> -->
+				<!--   example : pool_thread_counter-demo-thread-pool -->
+				<pool_thread_counter name="Any thread pool" regex="^thread name.*" threshold="50" color="RED" />
+				<pool_thread_action_counter name="Any thread pool actions" regex="^thread name.*" threshold="50" color="RED" />
+				<pool_thread_action_percent name="Any thread pool active %" regex="^thread name.*" threshold="100" color="RED" />
+
+				<section_delimiter title="CPU" color="RGB-201-208-168"/>
+				<system_cpu threshold="70" color="RED"/>
+				<process_cpu threshold="70" color="RED"/>
+				<computed_process_cpu threshold="70" color="RED"/>
+				<applicative_cpu_activity threshold="70" color="RED"/>
+				
+				<section_delimiter title="Memory" color="RGB-201-208-168"/>
+				<computed_process_memory color="RED"/>
+				<applicative_memory_activity threshold="70" color="RED"/>
+				<!-- Heap -->
+				<memory_pool_heap display="Heap size" color="RED"/>
+				<memory_pool_heap_ratio display="Heap usage %" threshold="70" color="RED"/>
+				<!-- Garbage collection -->
+				<garbage_collection_time_percent gc="all" display="GC execution time percentage" threshold="30" color="RED"/>
+				<garbage_collection_health_indication gc="last" pool="all" display="GC health indication" threshold="80" color="RED"/>
+				
+				<section_delimiter title="Tendencies" color="RGB-201-208-168"/>
+				<tendency_function/>
+				<tendency_operation/>
+				<tendency_function_operation/>
+				<tendency_executor/>
+				<tendency_contention_type/>				
+			</headers>
+			<headers formats="Jstack 1.6+,Jstack 1.6+ Hung,JMX,Jstack 1.5" freeze="true">
+				<capture_time color="RED">
+					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
+				</capture_time>
+				<thread_counter color="RED">
+					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
+				</thread_counter>
+				<recording_snapshot_file_name/>
+				<tendency_function/>
+				<tendency_operation/>
+				<tendency_function_operation/>
+				<tendency_executor/>
+				<tendency_contention_type/>	
+			</headers>
+			<headers formats="IBM core dump, default" freeze="true">
+				<thread_counter color="RED">
+					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
+				</thread_counter>
+				<recording_snapshot_file_name/>
+				<tendency_function/>
+				<tendency_operation/>
+				<tendency_function_operation/>
+				<tendency_executor/>
+				<tendency_contention_type/>
+			</headers>
+			
+			<row_headers>
+				<thread_id action_link="true"/>
+				<action_start_time/>
+				<thread_name/>
+				<action_size color="RGB-231-213-137" threshold="10"/> <!-- Light brown -->
+				<action_duration color="RGB-231-213-137" threshold="600"/> <!-- Light brown -->
+				<executor>
+					<highlight name="Thread sample" color="RGB-172-186-230"/>  <!-- Light grey blue-->
+					<highlight name="Thread sample with regex" regex="Thread sample-id-.*" color="RGB-172-186-230"/>  <!-- Light grey blue-->
+				</executor>
+				<function_principal>
+					<highlight name="Application startup" color="GREY_25_PERCENT"/>
+					<highlight name="(ATBI)" color="GREY_25_PERCENT"/>
+				</function_principal>
+				<operation_principal>
+					<highlight name="File exist check" color="PINK"/>
+					<highlight name="File last modified check" color="PINK"/>
+				</operation_principal>
+				<lock_state>
+					<highlight name="Action in deadlock situation" regex="D" color="RED"/>
+					<highlight name="Action in locking situation" regex="L" color="ORANGE"/>
+					<highlight name="Action suspended on debug breakpoint" regex="S" color="RED"/>
+				</lock_state>
+				<action_consumed_memory color="ORANGE" threshold="100" color_activity="RGB-225-255-225"/>
+				<action_consumed_cpu color="ORANGE" threshold="1" color_activity="RGB-225-255-225"/>
+			</row_headers>
+			
+			<display>
+
+				<!-- Function display. Color applies for ATBI -->
+				<!-- function color="GREY_25_PERCENT" / -->
+
+				<advanced_function display_operation="true" display_contention_type="false">
+					<highlight name="Application startup" color="LIGHT_GREEN"/>
+					<highlight name="(ATBI)" color="GREY_25_PERCENT"/>
+				</advanced_function>
+
+				<!-- Long running tasks display -->
+				<long_running color="LIGHT_YELLOW" threshold="7" stats="true"/>
+
+				<!-- Java Lock display -->
+				<lock_state color="ORANGE" lock_owner="RGB-209-47-109" lock_owner_and_locked="RGB-174-76-169" deadlock="RED" suspended="RED" stats="true"/>
+
+				<!-- Identical consecutive stacks : add colored borders  -->
+				<frozen_code_state color="RED" stats="false"/>
+
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+
+			</display>
+		</sheet>
+		
+		<sheet type="sequence" name="MX metrics" link_type="Mxf">
+		
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays MX attributes.</description>
+		
+			<!-- Optional -->
+			<headers formats="Advanced JMX,Advanced Agent">
+				
+				<!-- Display MX bean attribute as string -->
+				<!-- name is regex pattern. Matched attribute should be unique (first match considered) -->
+				<mx_bean_param name="org.apache.activemq:Broker:.*:Health:CurrentStatus" display="Health status" display_comment="Broker state \nPossible values : Good or Getting Worried with warning details">
+					<highlight name="Getting Worried" regex="^Getting Worried.*" color="ORANGE"/>
+				</mx_bean_param>
+				
+				<!-- Display MX bean attribute as number -->
+				<!-- name is regex pattern. Matched attribute should be unique (first match considered) -->
+				<mx_bean_param_number name="org.apache.activemq:Broker:.*:MemoryPercentUsage" display="Memory % usage" display_comment="AMQ Memory % usage" threshold="50" color="RED">
+					<!-- Factor defined in percentage gain or loss -->
+					<delta increase_factor="20" increase_color="RGB-255-180-129" decrease_factor="20" decrease_color="RGB-167-255-167"/>
+				</mx_bean_param_number>
+				
+			</headers>
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+			</row_headers>
+		
+			<display/>
+
+		</sheet>
+		
+		<sheet type="sequence" name="Charts" link_type="Cht">
+		
+			<!-- Optional -->
+			<headers formats="Advanced JMX,Advanced Agent">
+				<thread_counter color="RED">
+					<!-- Factor defined in percentage gain or loss -->
+					<delta increase_factor="10" increase_color="ORANGE" decrease_factor="10" decrease_color="GREEN"/>
+				</thread_counter>
+				<system_cpu threshold="70" color="RED"/>
+				<process_cpu threshold="70" color="RED"/>
+				<computed_process_cpu threshold="70" color="RED"/>
+				<applicative_cpu_activity threshold="70" color="RED"/>
+				<system_physical_used_memory color="RED"/>
+				<system_physical_used_memory_percent threshold="70" color="RED"/>
+				<computed_process_memory color="RED"/>
+				<applicative_memory_activity threshold="70" color="RED"/>
+				<!-- Heap -->
+				<memory_pool_heap display="Heap size" color="RED"/>
+				<memory_pool_heap_ratio display="Heap usage %" threshold="70" color="RED"/>
+			</headers>
+			<headers formats="Jstack 1.6+,Jstack 1.6+ Hung,JMX,Jstack 1.5">
+				<capture_time color="RED">
+					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
+				</capture_time>
+				<thread_counter color="RED">
+					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
+				</thread_counter>
+			</headers>
+			<headers formats="IBM core dump, default">
+				<thread_counter color="RED">
+					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
+				</thread_counter>		
+			</headers>
+			
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+			</row_headers>
+		
+			<display/>
+			
+			<charts>
+				<chart title="CPU" y_axis_max="400">
+					<serie header="system_cpu"/>
+					<serie header="process_cpu"/>
+					<serie header="computed_process_cpu"/>
+					<serie header="applicative_cpu_activity"/>
+				</chart>
+				<chart title="Threads">
+					<serie header="thread_counter"/>
+				</chart>
+				<chart title="Time">
+					<serie header="capture_time"/>
+				</chart>
+				<chart title="Memory">
+					<serie header="memory_pool_heap"/>
+					<serie header="computed_process_memory"/>
+				</chart>
+				<chart title="Memory %" y_axis_max="400">
+					<serie header="memory_pool_heap_ratio"/>
+					<serie header="applicative_memory_activity"/>
+					<serie header="system_physical_used_memory_percent"/>
+				</chart>
+			</charts>
+
+		</sheet>
+		
+		<sheet type="sequence" name="Function discovery" link_type="Fdi">
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+			</row_headers>
+		
+			<display>
+
+				<advanced_function stats="false" display_operation="false" display_contention_type="false">
+					<!-- Highlight is performed based on the BUILT_JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_REGEX_X internal property 
+						 which is set with a regular expression containing the different discovery keywords.
+						 Its regex value is automatically built based on JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_X value -->
+					<highlight regex="${BUILT_JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_REGEX_1}" color="${JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_COLOR_1}"/>
+					<highlight regex="${BUILT_JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_REGEX_2}" color="${JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_COLOR_2}"/>
+					<highlight regex="${BUILT_JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_REGEX_3}" color="${JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_COLOR_3}"/>
+					<highlight regex="${BUILT_JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_REGEX_4}" color="${JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_COLOR_4}"/>
+					<highlight regex="${BUILT_JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_REGEX_5}" color="${JEYZER_ANALYZER_DISCOVERY_FUNCTIONS_COLOR_5}"/>
+					
+					<highlight name="(ATBI)" color="GREY_25_PERCENT"/>
+				</advanced_function>
+				
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+
+			</display>
+		</sheet>
+				
+		<sheet type="sequence" name="Oracle interactions" link_type="Ora">
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+				<tendency_operation/>
+			</row_headers>
+		
+			<display>
+
+				<!-- Function display. Color applies for ATBI -->
+				<function color="GREY_25_PERCENT"/>
+
+				<advanced_operation>
+					<highlight name="(OTBI)" color="GREY_25_PERCENT"/>
+					<!--  General Oracle highlight -->
+					<highlight name="Oracle interaction" regex="Oracle*." color="ORANGE"/>
+					<!--  which can replace the below Oracle highlights : -->
+					<!--
+					<highlight name="Oracle result wait" color="ORANGE"/>
+					<highlight name="Oracle connection creation" color="ORANGE"/>
+					<highlight name="Oracle read" color="MAROON"/>
+					<highlight name="Oracle data received" color="MAROON"/>
+					<highlight name="Oracle data sending" color="BROWN"/>
+					-->
+					<highlight name="CORBA operation" color="DARK_YELLOW"/>
+					<highlight name="File system access" color="PINK"/>
+					<highlight name="Class loading" color="PINK"/>
+					<highlight name="File exist check" color="PINK"/>
+					<highlight name="File last modified check" color="PINK"/>
+				</advanced_operation>
+
+				<!-- Operation display. Color applies for OTBI -->
+				<!--  operation color="GREY_25_PERCENT" />-->
+
+				<!-- Long running tasks display -->
+				<!-- long_running color="LIGHT_YELLOW" threshold="7" stats="false"/> -->
+
+			</display>
+		</sheet>
+		
+		<sheet type="sequence" name="Contentions" link_type="Ctt">
+		
+			<!-- Sheet description. Use &#10; as carriage return -->
+			<description>Displays Jeyzer time sequence display features, focusing on contention types.&#10;Contention type is low level activity.</description>
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+				<tendency_contention_type/>	
+			</row_headers>
+		
+			<display>
+				<advanced_contention_type all_contention_types="true">
+					<highlight name="Synchro" color="RGB-119-165-233"/> <!-- Blue light-->
+					
+					<highlight name="Database" color="RGB-254-148-6"/> <!-- Orange light-->
+					<highlight name="Oracle" color="RGB-254-148-6"/> <!-- Orange light-->
+					<highlight name="MSSQL" color="RGB-254-148-6"/> <!-- Orange light-->
+					<highlight name="DB2" color="RGB-254-148-6"/> <!-- Orange light-->
+					
+					<highlight name="File" color="RGB-72-181-11"/> <!-- Green light-->
+					<highlight name="Class loader" color="RGB-191-219-157"/> <!-- Green ultra light-->
+					
+					<highlight name="Resource pool" color="RGB-255-101-101"/> <!-- Red light-->
+					
+					<highlight name="Log" color="RGB-247-225-241"/> <!-- Pink light-->
+					
+					<highlight name="Blocked" color="ORANGE"/>
+					<highlight name="Waiting" color="LIGHT_BLUE"/>
+					<highlight name="Timed waiting" color="PALE_BLUE"/>
+				</advanced_contention_type>
+
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+				
+			</display>
+		</sheet>
+
+		<sheet type="sequence" name="States" link_type="Sta">
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+			</row_headers>
+		
+			<display>
+				<!-- Function display. Color applies for ATBI -->
+				<function color="GREY_25_PERCENT" />
+
+				<!-- Operation display. Color applies for OTBI -->
+				<operation color="GREY_25_PERCENT" />
+
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+				
+				<!-- Stack state displayed as cell color -->
+				<state>
+					<highlight name="BLOCKED" color="ORANGE"/>
+					<highlight name="RUNNABLE" color="BRIGHT_GREEN"/>
+					<highlight name="NEW" color="YELLOW"/>
+					<highlight name="TIMED_WAITING" color="PALE_BLUE"/>
+					<highlight name="WAITING" color="LIGHT_BLUE"/>
+					<highlight name="TERMINATED" color="GREY_40_PERCENT"/>
+				</state>
+				
+			</display>
+		</sheet>
+		
+		<sheet type="sequence" name="Memory GC Global" link_type="GCg" formats="Advanced JMX,Advanced Agent">
+		
+			<headers formats="Advanced JMX,Advanced Agent">
+
+				<!-- Use type all to display the garbage collectors executed since last JZR recording snapshot -->
+				<!-- Use type last to display the last garbage collector executed since last JZR recording snapshot -->
+				<garbage_collection_executed_garbage_collector type="all" display="Executed garbage collector(s)"/>
+
+				<!-- Set gc to last to display the figures for the last executed garbage collector -->
+				<!-- Set pool to all to display the figures for all the memory pools -->
+				<garbage_collection_health_indication gc="last" pool="all" display="Health Indication" threshold="80" color="RED"/>
+			
+				<section_delimiter title="Execution count" color="RGB-201-208-168"/>
+				
+				<!-- Set gc to display the gc count since the last thread dump with : -->
+				<!--    # all to display it for all the garbage collectors                     -->				 
+				<!--    # old or young to display it for the corresponding garbage collector   -->
+				<!--    # last to display it for the last executed garbage collector           -->
+				<!--    # the exact garbage collector name. Ex : PS Scavenge                   -->
+				<garbage_collection_count gc="old" display="Major GC count" threshold="20" color="ORANGE"/>
+				<garbage_collection_count gc="young" display="Minor GC count" threshold="5" color="ORANGE"/>
+				
+				<section_delimiter title="Execution time &#10; Global" color="RGB-201-208-168"/>
+				
+				<!-- Set gc to display the sum of the gc times since the last thread dump (or equivalent percentage) with : -->
+				<!--    # all to display it for all the garbage collectors                     -->
+				<!--    # old or young to display it for the corresponding garbage collector   -->
+				<!--    # last to display it for the last executed garbage collector           -->
+				<!--    # the exact garbage collector name. Ex : PS Scavenge                   -->
+				<garbage_collection_time gc="all"         display="GC execution time" threshold="300" color="RED"/>
+				<garbage_collection_time_percent gc="all" display="GC execution time %" threshold="20" color="RED"/>
+
+				<section_delimiter title="Memory used &#10; After last GC" color="RGB-201-208-168"/>
+
+				<!-- Set gc to :                                                                --> 
+				<!--    # old or young to display the figures of the related garbage collectors -->
+				<!--    # last to display the figures of the last executed garbage collector    -->
+				<!--    # the exact garbage collector name. Ex : PS Scavenge                    -->
+				<!-- Set pool to :                                                              --> 
+				<!--    # all to display the figures of all the memory pools                    -->
+				<!--    # old or young to display the figures of the related memory pool        -->
+				<!--    # the exact memory pool name. Ex : PS Old Gen                           -->
+
+				<garbage_collection_memory_used_after_gc gc="last" pool="all" display="Used memory" threshold="100000" color="RED"/>
+				<garbage_collection_memory_used_after_gc_percent gc="last" pool="all" display="Used memory %" threshold="80" color="RED"/>
+
+				<section_delimiter title="Memory released &#10; After last GC" color="RGB-201-208-168"/>
+				<!-- Display in green if greater than 80% -->
+				<garbage_collection_memory_released gc="last" pool="all"         display="Released memory" threshold="100000" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released_percent gc="last" pool="all" display="Released memory %" threshold="80" color="RGB-149-208-80"/>
+
+				<section_delimiter title="Memory used &#10; Before last GC" color="RGB-201-208-168"/>
+				<garbage_collection_memory_used_before_gc gc="last" pool="all" display="Used memory before" threshold="100000" color="RED"/>
+				<garbage_collection_memory_used_before_gc_percent gc="last" pool="all" display="Used memory before %" threshold="80" color="RED"/>
+
+				<section_delimiter title="Memory pools &#10; Max size" color="RGB-201-208-168"/>
+				<garbage_collection_memory_max gc="last" pool="all" display="Total max size" threshold="100000" color="RED"/>				
+				<garbage_collection_memory_max gc="last" pool="old" display="Old pool max size" threshold="100000" color="RED"/>
+				<garbage_collection_memory_max gc="last" pool="young" display="Young pool max size" threshold="100000" color="RED"/>
+								
+			</headers>
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+			</row_headers>
+		
+			<display>
+			</display>
+			
+			<charts>
+				<chart title="GC health" y_axis_max="100">
+					<serie header="garbage_collection_health_indication-last-all"/>
+				</chart>
+				<chart title="GC memory used vs released">
+					<serie header="garbage_collection_memory_used_after_gc-last-all"/>
+					<serie header="garbage_collection_memory_used_before_gc-last-all"/>
+					<serie header="garbage_collection_memory_released-last-all"/>
+					<serie header="garbage_collection_memory_max-last-all"/>
+				</chart>
+				<chart title="GC time">
+					<serie header="garbage_collection_time-all"/>
+				</chart>
+				<chart title="GC %" y_axis_max="100">
+					<serie header="garbage_collection_time_percent-all"/>
+					<serie header="garbage_collection_memory_used_after_gc_percent-last-all"/>
+					<serie header="garbage_collection_memory_released_percent-last-all"/>
+				</chart>
+			</charts>
+			
+		</sheet>
+
+
+		<sheet type="sequence" name="Memory GC Old" link_type="GCo" formats="Advanced JMX,Advanced Agent">
+		
+			<headers formats="Advanced JMX,Advanced Agent">
+
+				<!-- Use type all to display the garbage collectors executed since last JZR recording snapshot -->
+				<!-- Use type last to display the last garbage collector executed since last JZR recording snapshot -->
+				<garbage_collection_executed_garbage_collector type="all" display="Executed garbage collector(s)"/>
+
+				<!-- Set gc to last to display the figures for the last executed garbage collector -->
+				<!-- Set pool to all to display the figures for all the memory pools -->				
+				<garbage_collection_health_indication gc="old" pool="old" display="Health Indication - Old GC Old gen" threshold="80" color="RED"/>
+				
+				<section_delimiter title="Execution count" color="RGB-201-208-168"/>
+				
+				<!-- Set gc to display the gc count since the last thread dump with : -->
+				<!--    # all to display it for all the garbage collectors                     -->				 
+				<!--    # old or young to display it for the corresponding garbage collector   -->
+				<!--    # last to display it for the last executed garbage collector           -->
+				<!--    # the exact garbage collector name. Ex : PS Scavenge                   -->
+				<garbage_collection_count gc="old" display="Major GC count" threshold="20" color="ORANGE"/>
+				
+				<section_delimiter title="Execution time" color="RGB-201-208-168"/>
+				
+				<!-- Set gc to display the sum of the gc times since the last thread dump (or equivalent percentage) with : -->
+				<!--    # all to display it for all the garbage collectors                     -->				 
+				<!--    # old or young to display it for the corresponding garbage collector   -->
+				<!--    # last to display it for the last executed garbage collector           -->
+				<!--    # the exact garbage collector name. Ex : PS Scavenge                   -->
+				<garbage_collection_time gc="old"         display="Major GC execution time" threshold="300" color="RED"/>
+				<garbage_collection_time_percent gc="old" display="Major GC execution time %" threshold="20" color="RED"/>				
+
+				<section_delimiter title="Memory used &#10; Post major GC" color="RGB-201-208-168"/>
+
+				<!-- Set gc to :                                                                --> 
+				<!--    # old or young to display the figures of the related garbage collectors -->
+				<!--    # last to display the figures of the last executed garbage collector    -->
+				<!--    # the exact garbage collector name. Ex : PS Scavenge                    -->
+				<!-- Set pool to :                                                              --> 
+				<!--    # all to display the figures of all the memory pools                    -->
+				<!--    # old or young to display the figures of the related memory pool        -->
+				<!--    # the exact memory pool name. Ex : PS Old Gen                           -->
+
+				<garbage_collection_memory_used_after_gc gc="old" pool="old" display="Major GC - Old pool used" threshold="100000" color="RED"/>
+				<garbage_collection_memory_used_after_gc_percent gc="old" pool="old" display="Major GC - Old pool used %" threshold="80" color="RED"/>
+
+				<section_delimiter title="Memory released &#10; Post major GC" color="RGB-201-208-168"/>
+				<!-- Display in green if greater than 80% -->
+				<garbage_collection_memory_released gc="old" pool="old"         display="Major GC - Old pool released" threshold="100000" color="RGB-149-208-80"/>
+				<garbage_collection_memory_released_percent gc="old" pool="old" display="Major GC - Old pool released %" threshold="80" color="RGB-149-208-80"/>
+
+				<section_delimiter title="Memory used &#10; Before major GC" color="RGB-201-208-168"/>
+				<garbage_collection_memory_used_before_gc gc="old" pool="old" display="Major GC - Old pool used before" threshold="100000" color="RED"/>
+				<garbage_collection_memory_used_before_gc_percent gc="old" pool="old" display="Major GC - Old pool used before %" threshold="80" color="RED"/>
+
+				<section_delimiter title="Memory pool &#10; Max size" color="RGB-201-208-168"/>
+				<garbage_collection_memory_max gc="last" pool="old" display="Old pool - max size" threshold="100000" color="RED"/>
+								
+			</headers>
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+			</row_headers>
+		
+			<display>
+			</display>
+			
+			<charts>
+				<chart title="GC old health" y_axis_max="100">
+					<serie header="garbage_collection_health_indication-old-old"/>
+				</chart>
+				<chart title="GC old memory used vs released">
+					<serie header="garbage_collection_memory_used_after_gc-old-old"/>
+					<serie header="garbage_collection_memory_used_before_gc-old-old"/>
+					<serie header="garbage_collection_memory_released-old-old"/>
+					<serie header="garbage_collection_memory_max-old-old"/>
+				</chart>
+				<chart title="GC old time">
+					<serie header="garbage_collection_time-old"/>
+				</chart>
+				<chart title="GC %" y_axis_max="100">
+					<serie header="garbage_collection_time_percent-old"/>
+					<serie header="garbage_collection_memory_used_after_gc_percent-old-old"/>
+					<serie header="garbage_collection_memory_released_percent-old-old"/>
+				</chart>
+			</charts>
+			
+		</sheet>
+		
+		
+		<sheet type="sequence" name="Memory" link_type="Mem" formats="Advanced JMX,Advanced Agent">
+		
+			<!-- Optional -->
+			<headers formats="Advanced JMX,Advanced Agent">
+				<system_physical_used_memory color="RED"/>
+				<system_physical_used_memory_percent threshold="70" color="RED"/>
+				<computed_process_memory threshold="100" color="RED"/>
+				<applicative_memory_activity threshold="70" color="RED"/>
+				
+				<!-- Heap -->
+				<memory_pool_heap display="Heap size" color="RED"/>
+				<memory_pool_heap_ratio display="Heap usage %" threshold="70" color="RED"/>
+				<!-- Eden -->
+				<memory_pool category="PS Eden Space:usage:used" display="Eden used" color="RED" description="Eden space usage in Mb."/>
+				<!-- Old Gen -->
+				<memory_pool category="PS Old Gen:usage:used" display="Old Gen used" color="RED" description="Old generation used space in Mb."/>
+				<memory_pool_ratio fraction_category="PS Old Gen:usage:used" basis_category="PS Old Gen:usage:max" display="Old Gen Usage %" threshold="70" color="RED" description="Old generation usage in percentage.&#10;Formula is : 100 x (Old generation used space / Old generation strict maximum space limit)."/>
+				<memory_pool category="PS Old Gen:usage:committed" display="Old Gen committed" color="RED" description="Old generation committed maximum space limit in Mb.&#10;Committed means at a certain time as the JVM adjusts this limit dynamically.&#10;Value range is between Xms and Xmx."/>
+				<memory_pool category="PS Old Gen:usage:max" display="Old Gen max" color="RED" description="Old generation strict maximum space limit in Mb.&#10;Value is equal to Xmx in case it is set."/>
+				<memory_pool category="PS Old Gen:peak:used" display="Old Gen Peak" color="RED" description="Old generation peak usage in Mb since the last value fetch.">
+					<!-- Factor defined in percentage gain or loss -->
+					<delta increase_factor="10" increase_color="ORANGE" decrease_factor="10" decrease_color="GREEN"/>
+				</memory_pool>
+				<memory_pool category="PS Old Gen:collection:used" display="Old Gen after collection" color="RED" description="Old generation usage in Mb right after the last collection.">
+					<!-- Factor defined in percentage gain or loss -->
+					<delta increase_factor="10" increase_color="ORANGE" decrease_factor="10" decrease_color="GREEN"/>
+				</memory_pool>
+				<!-- Perm Gen -->
+				<memory_pool category="PS Perm Gen:usage:used" display="Perm Gen used" color="RED" description="Permanent generation usage in Mb.&#10; Permanent generation contains the loaded classes as well as the inner string pool (version dependant)."/>
+			</headers>
+		
+			<row_headers>
+				<thread_id action_link="true"/>
+				<action_consumed_memory color="ORANGE" threshold="100" color_activity="RGB-225-255-225"/>
+				<thread_name/>
+			</row_headers>
+		
+			<display>
+				<!-- Function display. Color applies for ATBI -->
+				<function color="GREY_25_PERCENT"/>
+
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+
+				<!-- Consumed memory in Mb -->
+				<!-- color and threashold are associated, color_activity is for any value greater than 0 -->
+				<consumed_memory color="ORANGE" threshold="100" color_activity="RGB-225-255-225" stats="true" value_activity="true"/>
+				
+				<!-- Applicative memory activity percentage -->
+				<applicative_memory_activity color="ORANGE" threshold="50" stats="true"/>
+			</display>
+			
+			<charts>
+				<chart title="Memory old">
+					<serie header="memory_pool-PS Old Gen:usage:used"/>
+					<serie header="memory_pool-PS Old Gen:usage:committed"/>
+					<serie header="memory_pool-PS Old Gen:usage:max"/>
+					<serie header="memory_pool-PS Old Gen:collection:used"/>
+				</chart>
+				<chart title="Memory old vs young">
+					<serie header="memory_pool-PS Old Gen:usage:used"/>
+					<serie header="memory_pool-PS Eden Space:usage:used"/>
+				</chart>
+				<chart y_axis_max="100">
+					<serie header="memory_pool_heap_ratio"/>
+					<serie header="memory_pool_ratio-PS Old Gen:usage:used-PS Old Gen:usage:max"/>
+				</chart>
+			</charts>
+			
+		</sheet>
+		
+		<sheet type="sequence" name="CPU" link_type="Cpu" formats="Advanced JMX,Advanced Agent">
+
+			<!-- Optional -->
+			<headers formats="Advanced JMX,Advanced Agent">
+				<system_cpu threshold="70" color="RED"/>
+				<process_cpu threshold="70" color="RED"/>
+				<computed_process_cpu threshold="70" color="RED"/>
+				<applicative_cpu_activity threshold="70" color="RED"/>
+			</headers>
+			
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+			</row_headers>
+		
+			<display>
+				<!-- Function display. Color applies for ATBI -->
+				<function color="GREY_25_PERCENT" />
+
+				<!-- Operation display. Color applies for OTBI -->
+				<operation color="GREY_25_PERCENT" />
+				
+				<!-- Stack trace display as cell comment. Adds overhead processing -->
+				<stack/>
+				
+				<!-- CPU details (cpu, sys, usr, act) displayed as cell color if within value range -->
+				<cpu_details stats="true" value_activity="true">
+					<highlights file="${JEYZER_ANALYZER_CONFIG_DIR}/report/highlights/cpu-ranges.xml"/>
+				</cpu_details>	
+			
+				<!-- Single display. Range value can be added -->
+				<!--
+				<cpu_usage/>
+				<sys_usage/>
+				<usr_usage/>
+				<act_usage/>
+				-->
+				
+				<!-- Wrap cell text. Required to display CPU details info -->
+				<wrap_text/>
+				
+			</display>
+		</sheet>
+		
+		<!--  display the list of actions -->
+		<sheet type="action_list" name="Task list"/>
+
+		<!--  display the stacks seen more than threshold times, ordered by number of appearances -->
+		<sheet type="top_stacks" name="Top stacks" threshold="1">
+			<display>
+			
+				<!-- display operation tag (optional). color is mandatory -->
+				<operations color="RGB-249-223-195"/>
+				
+				<!-- display function tag (optional). color is mandatory -->
+				<functions  color="RGB-208-228-244"/>
+				
+			</display>
+		</sheet>
+
+		<!--  display the merged actions and their related stacks as a tree -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/profiling/action-profiling-with-graph.xml"/>
+
+		<!--  display the distinct actions and their related stacks as a tree -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/profiling/action-distinct-profiling.xml"/>
+
+		<!-- function and operation appearance categorized by action / main function -->
+		<sheet type="principal_histogram" name="Action histogram"/>
+
+		<!-- function and operation global appearance  -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/histogram/function-histogram-with-graph.xml"/>
+
+		<!-- function and operation appearance categorized by executor  -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/histogram/executor-function-histogram.xml"/>
+
+		<!-- action and stack counts appearance categorized by executor  -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/histogram/executor-histogram.xml"/>
+
+		<!-- Monitoring events display -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/monitoring/monitoring-standard-alerts.xml"/>
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/monitoring/monitoring-advanced-alerts.xml"/>
+
+		<!-- Monitoring event sequence display -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-monitoring-all-alerts.xml"/>
+		
+		<!-- Action dashboard -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/dashboard/action-dashboard.xml"/>
+
+		<!-- display the recording measurements. Only in Jeyzer agent mode -->
+		<!-- <sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-recording.xml"/> -->
+		
+		<!-- Monitoring stickers display -->
+		<!-- <sheet type="monitoring_stickers" name="Stickers"/> -->
+
+		<!-- Monitoring rules display -->
+		<sheet type="monitoring_rules" name="Monitoring Rules"/>
+		
+		<!-- Process jars sheet will be displayed only if the process jar paths file is available -->
+		<sheet type="process_jars" name="Libraries"/>
+
+		<!-- Profiles display -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/analysis-patterns/analysis-patterns.xml"/>
+		
+        <sheet name="AMQ interactions" link_type="Amq">
+        
+			<row_headers>
+				<thread_id action_link="true"/>
+				<thread_name/>
+			</row_headers>
+        
+			<display>
+			
+				<!-- Function display. Color applies for ATBI -->
+				<function color="GREY_25_PERCENT" />
+	
+				<advanced_operation >
+					<highlight name="(OTBI)" color="GREY_25_PERCENT"/>
+					<highlight name="AMQ access" color="ORANGE"/>
+					<highlight name="AMQ connection creation (authentication)" color="MAROON"/>
+				</advanced_operation>
+				
+				<!-- Operation display. Color applies for OTBI -->
+				<operation color="GREY_25_PERCENT" />
+				
+				<!-- Long running tasks display -->
+				<long_running color="LIGHT_YELLOW" threshold="7" stats="false"/>
+				
+			</display>
+		</sheet>
+	</xlsx_report>
+
+</report>
+
+<!-- Supported colors :    
+	HSSFColor.AQUA, 
+	HSSFColor.AUTOMATIC, 
+	HSSFColor.BLACK, 
+	HSSFColor.BLUE, 
+	HSSFColor.BLUE_GREY, 
+	HSSFColor.BRIGHT_GREEN, 
+	HSSFColor.BROWN, 
+	HSSFColor.CORAL, 
+	HSSFColor.CORNFLOWER_BLUE, 
+	HSSFColor.DARK_BLUE, 
+	HSSFColor.DARK_GREEN, 
+	HSSFColor.DARK_RED, 
+	HSSFColor.DARK_TEAL, 
+	HSSFColor.DARK_YELLOW, 
+	HSSFColor.GOLD, 
+	HSSFColor.GREEN, 
+	HSSFColor.GREY_25_PERCENT, 
+	HSSFColor.GREY_40_PERCENT, 
+	HSSFColor.GREY_50_PERCENT, 
+	HSSFColor.GREY_80_PERCENT, 
+	HSSFColor.INDIGO, 
+	HSSFColor.LAVENDER, 
+	HSSFColor.LEMON_CHIFFON, 
+	HSSFColor.LIGHT_BLUE, 
+	HSSFColor.LIGHT_CORNFLOWER_BLUE, 
+	HSSFColor.LIGHT_GREEN, 
+	HSSFColor.LIGHT_ORANGE, 
+	HSSFColor.LIGHT_TURQUOISE, 
+	HSSFColor.LIGHT_YELLOW, 
+	HSSFColor.LIME, 
+	HSSFColor.MAROON, 
+	HSSFColor.OLIVE_GREEN, 
+	HSSFColor.ORANGE, 
+	HSSFColor.ORCHID, 
+	HSSFColor.PALE_BLUE, 
+	HSSFColor.PINK, 
+	HSSFColor.PLUM, 
+	HSSFColor.RED, 
+	HSSFColor.ROSE, 
+	HSSFColor.ROYAL_BLUE, 
+	HSSFColor.SEA_GREEN, 
+	HSSFColor.SKY_BLUE, 
+	HSSFColor.TAN, 
+	HSSFColor.TEAL, 
+	HSSFColor.TURQUOISE, 
+	HSSFColor.VIOLET, 
+	HSSFColor.WHITE, 
+	HSSFColor.YELLOW 
+-->
+    

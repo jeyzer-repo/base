@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="C3P0" version="${project.version}">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - locker  (7)
+			5 - function  (6)
+			6 - function_discovery  (5)
+			7 - executor  (4)
+			8 - executor_thread_name (3)
+			9 - operation (2)
+			10 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
+			<functions>
+				<!-- C3P0 -->
+				<function pattern="com.mchange.v2.resourcepool.BasicResourcePool.doAcquireAndDecrementPendingAcquiresWithinLockOnSuccess;BasicResourcePool.access;BasicResourcePool$ScatteredAcquireTask.run" name="C3P0 Pool connection access (asynchronous)"/> <!-- Multiple line pattern -->
+				<function pattern="com.mchange.v2.c3p0.impl.C3P0PooledConnectionPool$1PooledConnectionResourcePoolManager.destroyResource;BasicResourcePool$1DestroyResourceTask.run" name="C3P0 Pool connection closure (asynchronous)"/> <!-- Multiple line pattern -->
+				<function pattern="com.mchange.v2.async.ThreadPoolAsynchronousRunner$DeadlockDetector.run" name="C3P0 pool deadlock detection"/>
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<!-- C3P0 -->
+				<operation pattern="com.mchange.v2.c3p0.stmt.GooGooStatementCache.acquireStatement" name="Waiting for JDBC prepared statement from C3P0 pool" priority="910"/>
+				<operation pattern="com.mchange.v2.async.ThreadPoolAsynchronousRunner.postRunnable" name="Posting asynchronous administrative task to be executed by C3P0 pool" priority="910"/>
+				<operation pattern="com.mchange.v2.resourcepool.BasicResourcePool.awaitAvailable" name="Waiting for JDBC connection from C3P0 pool" priority="910"	type="Resource pool"/>
+				<operation pattern="com.mchange.v2.c3p0.WrapperConnectionPoolDataSource.getPooledConnection" name="Get JDBC connection from C3P0 pool"				type="Resource pool"/>
+				<operation pattern="com.mchange.v2.c3p0.impl." name="C3P0 JDBC pool operation"/>
+			</operations>
+			<lockers>
+				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
+  				<!-- locker pattern="java.util.concurrent.locks.LockSupport.park" name="LockSupport"/-->
+			</lockers>
+			<executors>
+				<!-- C3P0 -->
+				<executor pattern="com.mchange.v2.async.ThreadPoolAsynchronousRunner$PoolThread.run" name="C3P0 request asynchronous execution thread"/>
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<!--executor_thread_name pattern="thread pattern" name="Thread type name"/-->
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!-- exclude_thread_name pattern_regex="RMI TCP.*" name="RMI"/-->
+				<!-- exclude_thread_name pattern="JMX server connection timeout" name="RMI"/-->
+			</exclude_thread_names>
+		</patterns>
+
+</profile>

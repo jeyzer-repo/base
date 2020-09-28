@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="Java" version="${project.version}">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - locker  (7)
+			5 - function  (6)
+			6 - function_discovery  (5)
+			7 - executor  (4)
+			8 - executor_thread_name (3)
+			9 - operation (2)
+			10 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
+			<functions>
+				<!-- J2EE -->
+				<function pattern="javax.servlet.GenericServlet.init" name="Servlet startup" 							priority="1000"/>
+				<function pattern="com.sun.enterprise.web.VirtualServer.startChildren" name="Virtual server startup" 	priority="1000"/>
+				<function pattern="com.sun.enterprise.resource.AbstractResourcePool.resizePool" name="Java ressource pool resize"/>
+				<function pattern="com.sun.enterprise.resource.pool.resizer.Resizer.resizePool" name="Java ressource pool resize"/>
+				<function pattern="com.sun.enterprise.resource.pool.ConnectionPool.resizePoolAndGetNewResource" name="Java connection pool resize"/>
+				<function pattern="com.sun.gjc.spi.jdbc40.ConnectionHolder40.isSupportClientInfo" name="JDBC client info access"/>
+				<function pattern="javax.xml.parsers.DocumentBuilderFactory.newInstance" name="DOM builder loading"/>
+				<function pattern="java.util.concurrent.ThreadPoolExecutor.addIfUnderMaximumPoolSize" name="Thread pool extension"/>
+				<function pattern="java.util.concurrent.ThreadPoolExecutor.shutdownNow" name="Thread pool shutdown"/>
+				<function pattern="java.util.concurrent.ThreadPoolExecutor.processWorkerExit" name="Thread worker exit"/>
+				<function pattern="com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.getAttribute" name="JMX attribute remote access"/>
+				<function pattern="javax.management.MBeanServerInvocationHandler.findMXBeanProxy" name="MX bean proxy lookup"/>
+				<function pattern="com.sun.enterprise.resource.pool.PoolManagerImpl.getResource;com.sun.enterprise.connectors.ConnectionManagerImpl.getResource" name="Sun JDBC connection pool access"/>  <!-- Multiple line pattern -->
+				<function pattern="sun.management.GarbageCollectorImpl.createGCNotification" name="JMX GC notification creation"/>
+				<!-- SSL -->
+				<function pattern="ssl.ServerHandshaker.clientHello" name="SSL server handshake"/>
+				<function pattern="ssl.ClientHandshaker.serverCertificate" name="SSL client handshake"/>
+				<function pattern="javax.net.ssl.impl.SSLSocketImpl.startHandshake" name="SSL handshake"/>
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<!-- Kerberos -->
+				<operation pattern="sun.security.krb5.Credentials.acquireTGT" name="Acquire Kerberos TGT ticket"		priority="900"/>				
+				<!-- SSL -->
+				<operation pattern="ssl.CipherBox.encrypt" name="SSL data encryption"										type="Crypto"/>
+				<operation pattern="ssl.CipherBox.decrypt" name="SSL data decryption"										type="Crypto"/>
+				<!-- Could those System/Runtime calls be catch ?-->
+				<operation pattern="java.lang.Runtime.gc" name="Garbage collector forced execution" priority="900"/>
+				<operation pattern="java.lang.System.gc"  name="Garbage collector forced execution" priority="900"/>
+				<operation pattern="java.lang.Runtime.exit" name="JVM stopping" priority="900"/>
+				<operation pattern="java.lang.System.exit"  name="JVM stopping" priority="900"/>
+				<operation pattern="java.lang.Runtime.halt" name="JVM stopping" priority="900"/>
+				<operation pattern="java.lang.ApplicationShutdownHooks.runHooks" name="Shutdown hook execution"/>
+				<operation pattern="java.io.UnixFileSystem.delete" name="File deletion" priority="900"						type="File"/>
+				<operation pattern="javax.xml.parsers.SAXParserFactory.newInstance" name="SAX parser factory creation"/>
+				<operation pattern="Runtime.freeMemory" name="Access available memory"/>
+				<operation pattern="com.sun.jmx.mbeanserver.JmxMBeanServer.registerMBean" name="Register MX bean"			type="JMX"/>
+				<operation pattern="com.sun.jmx.mbeanserver.JmxMBeanServer.unregisterMBean" name="Unregister MX bean"		type="JMX"/>
+				<operation pattern="java.net.HttpURLConnection.getResponseCode" name="HTTP response wait"					type="Network"/>
+				<operation pattern="java.net.NetworkInterface.getNetworkInterfaces" name="Get machine network interfaces"	type="Network"/>
+				<operation pattern="java.net.InetAddress.getByName" name="IP lookup"										type="Network"/>
+				<operation pattern="SocketOutputStream.socketWrite" name="Socket writing"									type="Network"/>
+				<operation pattern="sun.nio.ch.WindowsSelectorImpl$SubSelector.poll0" name="Socket read wait"				type="Listen"/>
+				<operation pattern="sun.nio.ch.EPollArrayWrapper.epollWait" name="Socket read wait"							type="Listen"/>
+				<operation pattern="URLClassPath$FileLoader.getResource" name="System ressource access (file loader)"		type="File"/>
+				<operation pattern="URLClassPath$JarLoader.getResource" name="System ressource access (jar loader)"			type="File"/>
+				<operation pattern="Class.newInstance" name="Class loading"													type="Class loader"/>
+				<operation pattern="java.lang.ClassLoader.getResource" name="Class loader ressource access"					type="Class loader"/>
+				<operation pattern="java.lang.ClassLoader.loadClass" name="Class loading"									type="Class loader"/>
+				<operation pattern="java.util.jar.JarFile.getManifest" name="Jar manifest loading"							type="Class loader"/>
+				<operation pattern="java.lang.Class.forName" name="Class access"/>
+				<operation pattern="sun.nio.fs.WindowsNativeDispatcher.DeleteFile" name="File delete"						type="File"/>
+				<operation pattern="java.io.WinNTFileSystem.checkAccess" name="File access check"							type="File"/>
+				<operation pattern="java.io.File.exists" name="File exist check"											type="File"/>
+				<operation pattern="java.io.File.lastModified" name="File last modified check"								type="File"/>
+				<operation pattern="java.io.File.renameTo" name="File renaming"												type="File"/>
+				<operation pattern="ZipFile.open" name="Jar or zip file access"												type="File"/>
+				<operation pattern="java.util.zip.ZipFile." name="Zip file access"											type="File"/>
+				<operation pattern="java.util.zip.Inflater" name="Zip decompression"										type="File"/>
+				<operation pattern="java.io.FileInputStream.read" name="File reading"										type="File"/>
+				<operation pattern="java.io.FileInputStream.open" name="File opening"									    type="File"/>
+				<operation pattern="java.io.FileInputStream.close" name="File closing"									    type="File"/>
+				<operation pattern="java.io.FileOutputStream.open" name="File opening"									    type="File"/>
+				<operation pattern="java.io.FileOutputStream.write" name="File writing"									    type="File"/>
+				<operation pattern="java.io.RandomAccessFile.open" name="File opening"										type="File"/>
+				<operation pattern="java.io.RandomAccessFile.close" name="File closing"										type="File"/>
+				<operation pattern="DOMParser.parse" name="XML parsing"/>
+				<operation pattern="org.apache.xerces.parsers.XMLParser.parse" name="XML parsing"/>
+				<operation pattern="com.sun.org.apache.xml." name="XML operation"/>
+				<operation pattern="org.apache.xerces." name="XML operation"/>
+				<operation pattern="com.sun.xml.bind.v2.model.impl." name="JAXB operation"/>
+				<operation pattern="java.lang.Object.clone" name="Java object cloning"/>
+				<operation pattern="java.lang.AbstractStringBuilder.expandCapacity" name="String builder size expanding"	type="String"/>
+				<operation pattern="java.lang.String.split" name="String split"												type="String"/>
+				<operation pattern="java.util.concurrent.CopyOnWriteArrayList" name="Java array list copy"					type="Collection"/>
+				<operation pattern="java.lang.System.arraycopy" name="Java array list copy"									type="Collection"/>
+				<operation pattern="java.util.Collections.sort" name="Collection sort"										type="Collection"/>
+				<operation pattern="java.util.WeakHashMap.get" name="Weak hashMap access"									type="Collection"/>
+				<operation pattern="java.util.TimSort.sort" name="Timsort"/>
+				<operation pattern="java.lang.Thread.start" name="Java thread spawning-creation"/>
+				<operation pattern="java.lang.Thread.init" name="Java thread creation"/>
+				<operation pattern="java.lang.Thread.sleep" name="Thread on hold (sleep)"/>
+				<operation pattern="java.lang.Thread.join" name="Waiting for other thread to terminate"									type="Synchro"/>
+				<operation pattern="java.lang.Thread.isInterrupted" name="Thread waiting for interruption"								type="Synchro"/>
+				<operation pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.addResource" name="Write lock obtained to add a resource to the pool" priority="910"			type="Resource pool"/>
+				<operation pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.removeResource" name="Write lock obtained to remove a resource from the pool" priority="910"	type="Resource pool"/>
+				<operation pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.returnResource" name="Blocked on RW lock to get a resource from the pool" priority="910"		type="Resource pool"/>
+				<operation pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.getResource" name="Blocked on RW lock to get a resource from the pool" priority="910"		type="Resource pool"/>
+				<operation pattern="java.util.concurrent.FutureTask.awaitDone" name="Wait for Future task completion" 																	priority="910"	type="Task delegation"/>
+				<operation pattern="java.util.concurrent.ExecutorCompletionService.take;org.apache.activemq.transport.FutureResponse.getResult" name="Wait for Future task completion" 	priority="910"	type="Task delegation"/>   <!-- Multiple line pattern -->
+				<operation pattern="java.util.concurrent.locks.ReentrantReadWriteLock$WriteLock.lock" name="Blocked on RW lock (Writer)" priority="910"	type="Synchro"/>
+				<operation pattern="java.util.concurrent.locks.ReentrantReadWriteLock$ReadLock.lock" name="Blocked on RW lock (Reader)" priority="910"	type="Synchro"/>
+				<operation pattern="java.util.concurrent.locks.ReentrantLock.unlock" name="Reentrant unlock" priority="910"/>
+				<operation pattern="java.util.concurrent.locks.ReentrantLock.lock" name="Reentrant lock" priority="910"									type="Synchro"/>
+				<operation pattern="java.util.concurrent.locks.LockSupport.park" name="Thread on hold (wait for unlock)"								type="Synchro"/>
+				<operation pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer.releaseShared" name="Notify all queue consumers"/>
+				<operation pattern="java.util.TimeZone" name="Java time zone operation"/>
+				<operation pattern="UNIXProcess.waitFor" name="Waiting for Unix process execution end"													type="External process execution"/>
+				<operation pattern="java.lang.ProcessImpl.waitFor" name="Waiting for forked process execution end"										type="External process execution"/>
+				<operation pattern="java.util.concurrent.CountDownLatch.await" name="Java thread waiting for other thread signal(s)" priority="100"		type="Synchro"/>
+				<operation pattern="java.util.concurrent.CyclicBarrier.await" name="Java thread waiting for other threads to be ready" priority="100"	type="Synchro"/>
+				<operation pattern="java.lang.Object.wait" name="Object wait"																			type="Synchro"/>
+				<operation pattern="java.lang.Object.notifyAll" name="Wakes all threads"/>
+				<operation pattern="java.lang.Object.notify" name="Wakes one thread"/>
+				<operation pattern="sun.security.rsa.RSACore" name="RSA Cryptographic operation"/>
+				<operation pattern="sun.security.ssl.InputRecord.decrypt" name="SSL message decryption"/>
+				<operation pattern="sun.security.x509.X509CertImpl.isSelfIssued" name="SSL certificate check"/>
+				<operation pattern="javax.net.ssl.SSLContext.createSSLEngine" name="SSL engine creation"/>
+				<operation pattern="sun.security.pkcs11" name="PKCS cryptographic operation"/>
+				<operation pattern="javax.xml.transform.SecuritySupport.getSystemProperty" name="Java system property access"/>
+				<operation pattern="com.sun.enterprise.resource.PoolManagerImpl.resourceClosed" name="Java pool ressource closing"		type="Resource pool"/>
+				<operation pattern="com.sun.enterprise.resource.PoolManagerImpl.getResourceFromPool" name="Java pool ressource access"	type="Resource pool"/>
+				<operation pattern="com.sun.net.ssl.internal.ssl.SSLSocketImpl.performInitialHandshake" name="SSL handshake"/>
+				<operation pattern="sun.security.ssl.SSLSocketImpl.performInitialHandshake" name="SSL handshake"/>
+				<operation pattern="sun.net.ssl.internal.ssl.SSLSocketImpl.close" name="SSL socket closing"/>
+				<operation pattern="sun.net.ssl.internal.ssl.SSLSocketImpl.writeRecord" name="SSL socket writing"/>
+				<operation pattern="java.io.FileDescriptor.sync" name="Java disk writing"								type="File"/>
+				<operation pattern="java.io.RandomAccessFile.writeBytes" name="Java file writing"						type="File"/>
+				<operation pattern="java.io.ObjectInputStream.readObject" name="Object deserialization"/>
+				<operation pattern="StringBuilder.append" name="String builder append"									type="String"/>
+				<operation pattern="java.lang.ThreadLocal" name="Thread local access"/>
+				<operation pattern="java.util.Random.&lt;init&gt;" name="Random constructor"		                    type="Random generation"/>
+				<operation pattern="java.security.SecureRandom.nextBytes" name="Random number generation"				type="Random generation"/>
+				<operation pattern="sun.security.jca." name="Security certificate operation"							type="Crypto"/>
+				<operation pattern="javax.crypto.JarVerifier.verifySingleJar" name="Jar file signature verification"	type="Crypto"/>
+				<operation pattern="javax.crypto.Mac.update" name="Encryption MAC appliance"							type="Crypto"/>
+				<operation pattern="javax.crypto.Mac.doFinal" name="Encryption MAC appliance"							type="Crypto"/>
+				<operation pattern="sun.security.provider.SHA" name="SHA operation"										type="Crypto"/>
+				<operation pattern="sun.net.ssl.internal.ssl.SSLSocketImpl.handleException" name="Buffer error while reading on SSL connection" type="Exception"/>
+				<operation pattern="javax.crypto." name="Java cryptographic operation"									type="Crypto"/>
+				<operation pattern="sun.security.ssl." name="SSL operation"/>
+				<operation pattern="java.net." name="Java IO access (network)"											type="Network"/>
+				<!--operation pattern="java.io." name="Java IO access"														type="I/O"/-->
+				<operation pattern="sun.nio.ch.ServerSocketChannelImpl.accept0" name="Server socket listening"			type="Listen"/>
+				<operation pattern="HashMap.get" name="Hash map access"													type="Collection"/>
+				<operation pattern="Hashtable.get" name="Hash table access"												type="Collection"/>
+				<operation pattern="Hashtable.containsKey" name="Hash table access"										type="Collection"/>
+				<operation pattern="java.util.AbstractCollection." name="Java collection operation"						type="Collection"/>
+				<operation pattern="java.util.ArrayList." name="Java list operation"									type="Collection"/>
+				<operation pattern="java.util.Vector." name="Java vector operation"										type="Collection"/>
+				<operation pattern="java.util.WeakHashMap." name="Java weak hash map operation"							type="Collection"/>
+				<operation pattern="java.util.TreeMap." name="Java tree map operation"									type="Collection"/>
+				<operation pattern="java.util.Hashtable." name="Java hash table operation"								type="Collection"/>
+				<operation pattern="java.util.HashMap." name="Java hash map operation"								    type="Collection"/>
+				<operation pattern="java.util.concurrent.ConcurrentHashMap." name="Java concurrent hashmap operation" 	type="Collection"/>
+				<operation pattern="java.util.concurrent.ConcurrentHashMap$" name="Java concurrent hashmap operation" 	type="Collection"/>
+				<operation pattern="java.util.concurrent.SynchronousQueue.offer" name="Synchronous queue item insertion (can wait for consumption)"	type="Queue"/>
+				<operation pattern="java.util.concurrent.LinkedBlockingQueue.offer" name="Linked blocking queue item insertion (can wait for consumption)"/>
+				<operation pattern="java.lang.Math." name="Java mathematic operation"/>
+				<operation pattern="java.text.SimpleDateFormat." name="Date format operation"/>
+				<operation pattern="sun.util.calendar." name="Calendar operation"/>
+				<operation pattern="com.sun.common.util.logging.LoggingOutputStream$LoggingPrintStream.write" name="Sun logging operation"	type="Log"/>
+				<operation pattern="sun.nio.ch.FileChannelImpl.force" name="Physical file writing" 						type="File"/>
+				<operation pattern="java.util.GregorianCalendar." name="Calendar operation"/>
+				<operation pattern="java.lang.String.format" name="Java String format"									type="String"/>
+				<operation pattern="java.lang.String.replace" name="Java String replace"								type="String"/>
+				<operation pattern="java.lang.String.intern" name="Java String intern"									type="String"/>
+				<operation pattern="java.lang.StringBuffer." name="Java StringBuffer operation"							type="String"/>
+				<operation pattern="java.lang.StringBuilder." name="Java StringBuilder operation"						type="String"/>
+				<operation pattern="java.lang.Throwable" name="Java exception generation" 								type="Exception"/>
+				<operation pattern="java.lang.System.identityHashCode" name="Java identity hash code"/>
+				<operation pattern="java.util.regex." name="Java regex operation"										type="String"/>
+				<operation pattern="java.lang.Class." name="Java Class operation"/>
+				<operation pattern="sun.reflect." name="Java reflection operation"/>
+			</operations>
+			<lockers>
+				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
+			    <!-- Will also match lockInterruptibly -->
+  				<locker pattern="java.util.concurrent.locks.LockSupport.park" name="LockSupport"/>			    
+  				<locker pattern="java.util.concurrent.locks.ReentrantLock.lock" name="ReentrantLock"/>
+  				<locker pattern="java.util.concurrent.locks.Condition.await" name="Condition"/>
+  				<locker pattern="java.util.concurrent.locks.ReentrantReadWriteLock$ReadLock.lock" name="ReadLock"/>
+  				<locker pattern="java.util.concurrent.locks.ReentrantReadWriteLock$WriteLock.lock" name="WriteLock"/>
+  				<locker pattern="java.util.concurrent.CountDownLatch.await" name="CountDownLatch"/>
+  				<locker pattern="java.util.concurrent.CyclicBarrier.await" name="CyclicBarrier"/>
+  				<locker pattern="java.util.concurrent.Semaphore.acquire" name="Semaphore"/>
+  				<locker pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.returnResource" name="RWLockDataStructure"/>
+			</lockers>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<!-- J2EE -->
+				<executor pattern="HttpServlet.service" name="HTTP request"/>
+				<executor pattern="java.util.TimerThread.run" name="Java timer thread"/>
+				<executor pattern="com.sun.enterprise.web.LifecycleStarter.doRun" name="Web container startup thread"/>
+				<executor pattern="javax.management.timer.TimerAlarmClock.run" name="Javax clock timer thread"/>
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<executor_thread_name pattern="Main" name="Program main"/>
+				<executor_thread_name pattern="Keep-Alive-Timer" name="HTTP keep alive timer"/>
+				<executor_thread_name pattern="Service Thread" name="JVM service thread"/>
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude pattern="ThreadImpl.dumpThreads" name="Thread dump"/>
+				<exclude pattern="com.sun.jmx.remote.internal.ServerCommunicatorAdmin$Timeout.run" name="JMX"/>
+				<!-- Sun HTTP -->
+				<exclude pattern="sun.net.www.http.KeepAliveCache.run" name="HTTP keep alive timer" size="3"/>
+				<!-- RMI -->
+				<exclude pattern="RMIConnectionImpl.fetchNotifications" name="RMI"/>
+				<exclude pattern="sun.rmi.transport.Transport.serviceCall" name="RMI"/>
+				<exclude pattern="sun.rmi.transport.tcp.TCPTransport$AcceptLoop.run" name="RMI"/>
+				<exclude pattern="sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run" name="RMI"/>
+				<exclude pattern="sun.rmi.transport.tcp.TCPTransport.handleMessages" name="RMI"/>
+				<exclude pattern="sun.rmi.transport.ObjectTable$Reaper.run" name="RMI reaper"/>
+				<exclude pattern="sun.rmi.transport.DGCClient$EndpointEntry$RenewCleanThread.run" name="RMI"/>
+				<!-- GC related -->
+				<exclude pattern="java.lang.ref.Finalizer$FinalizerThread.run" name="Finalizer"/>
+				<exclude pattern="Reference$ReferenceHandler.run" name="Finalizer - Reference handler"/>
+				<exclude pattern="sun.misc.GC$Daemon.run" name="GC"/>
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!-- exclude_thread_name pattern_regex="RMI TCP.*" name="RMI"/-->
+				<!-- exclude_thread_name pattern="JMX server connection timeout" name="RMI"/-->
+			</exclude_thread_names>
+		</patterns>
+
+</profile>

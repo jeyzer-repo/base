@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="AMQ">
+
+		<!-- ************************************************************************ -->
+		<!--                       AMQ RULES                                         -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If function regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Function parallel contention" extra_info="AMQ stale connection" ref="JZR-SHA-AMQ-001">
+			<narrative>This rule detects if some AMQ connections get stale or closed.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="AMQ IO exception or inactivity exception thrown" 
+				           level="WARNING"
+				           sub_level="8"
+				           message="AMQ connections get stale or closed.&#10;Either AMQ server is under load or down&#10;or current process itself is not responding in time.&#10;Monitor the AMQ server queues and topics to determine the activity type and take action accordingly."/>
+			</thresholds>
+		</rule>	
+
+	</rules>
+
+</monitor>
