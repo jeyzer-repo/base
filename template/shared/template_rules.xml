@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Template group" stickers="">
+
+		<!-- ************************************************************************ -->
+		<!--                       TEMPLATE RULES                                     -->
+		<!-- ************************************************************************ -->
+
+		<!--  Documentation -->
+		<!--  http://jeyzer.org/docs/monitoring-rules/jeyzer-rules -->
+
+		<!--  Rule reference list -->
+		<!-- http://jeyzer.org/docs/monitoring-rules/monitoring-rule-reference-list/ -->
+		
+		<!--  Samples -->
+		<!--  See the config/monitor/rules/sample_rules.xml of your Jeyzer installation -->		
+		
+		<!--  If number of locked threads, whatever the the involved lock owners, is greater than [value], generate event -->
+		<!--
+		<rule name="Locks contention" ref="CPY-TPL-001">
+			<thresholds>
+				<threshold type="session value" 
+						   count="1"
+				           value="10" 
+				           level="INFO" 
+				           message="High number of locked threads."/>
+				<threshold type="session value" 
+						   count="5"
+				           value="10"
+				           level="WARNING" 
+				           message="High number of locked threads. Application may be under load. Monitor closely the application."/>
+   			</thresholds>
+		</rule>
+		-->
+
+	</rules>
+
+</monitor>

@@ -35,6 +35,12 @@ If you wish to remove the base master profiles from the Jeyzer Web Analyzer, rem
 The JEYZER_MASTER_PROFILES_DIR_ROOTS variable is by default set in the web\apache-tomcat-9.0.30\bin\setenv.bat|sh file of your Jeyzer installation.
 
 
+Base templates
+---------------------------
+The template directory contains templates for master and shared profiles.
+It contains also a multi-monitor configuration template.
+
+
 Maintenance and discussions
 ---------------------------
 Feel free to submit new profiles, updates, ideas and suggestions at :\
