@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="HSQLDB" version="${project.version}">
+<profile name="HSQLDB" version="LATEST">
 
 		<!-- 
 			Pattern rule appliance by priority :

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Netty" version="${project.version}">
+<profile name="Netty" version="LATEST">
 
 		<!-- 
 			Pattern rule appliance by priority :
