@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Slf4j" version="LATEST">
+<profile name="Slf4j" version="2.0">
 
 		<!-- 
 			Pattern rule appliance by priority :
