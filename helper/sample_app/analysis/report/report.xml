@@ -768,7 +768,7 @@
 		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/monitoring/monitoring-standard-alerts.xml"/>
 		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/monitoring/monitoring-advanced-alerts.xml"/>
 
-		<!-- Monitoring event sequence display -->
+		<!-- Monitoring sequence display -->
 		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-monitoring-all-alerts.xml"/>
 		
 		<!-- Action dashboard -->
