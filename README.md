@@ -1,5 +1,6 @@
 # Base profile repository
 
+The Base repository is used by the [Jeyzer](https://jeyzer.org) analyzer.\
 The Base profile repository is the place holder for the standard shared, master and helper profiles.\
 These profiles are compatible with the current Jeyzer project version.
 
