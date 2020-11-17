@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+		
+<jira jira_enabled="${JEYZER_MONITOR_JIRA_ENABLED}">
+
+	<!-- Implementation and connectivity -->
+	<jira_setup setup_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/publishers/jira/jira_setup.xml"/>
+
+	<!-- JIRA fields -->
+	<target>
+		<project value="JIRA-PROJECT"/>
+		<issue_type value="bug"/>
+	</target>
+	
+	<!-- JIRA actions -->
+	<!--   Use @@ and %% to access process card properties and process jar versions -->
+	<actions event_thresholds="C4, C5, C9, C10">
+	
+		<!-- Create the JIRA item -->
+		<create>
+			<summary_template     directory="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/publishers/jira" name="ticket-summary.vm"/>
+			<description_template directory="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/publishers/jira" name="ticket-description.vm"/>
+			<affect_version value="%%jar-application-name%%"/>
+			
+			<!-- Optional fields -->		
+			<component      value="@@jzr.profile.name@@"/>
+			<!-- Assignee : account id or email -->
+			<assignee value="email@domain.com"/>
+			<!-- Priority : see mapping below -->
+			<priority/>
+			<!-- environment value="@@process-card-property@@"/ -->
+		</create>
+		
+		<!-- Add on a JIRA item a comment and attach the JZR report (optional) -->
+		<!--  JIRA item must specified on the monitoring rule -->
+		<update attachment_enabled="true">
+			<comment_template directory="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/publishers/jira" name="ticket-comment.vm"/>
+		</update>
+		
+	</actions>
+	
+	<!-- JIRA priority mapping. Generic file which can be customized per project -->
+	<priority_mappings priority_mapping_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/publishers/jira/jira_priority_mappings.xml"/>
+
+</jira>
