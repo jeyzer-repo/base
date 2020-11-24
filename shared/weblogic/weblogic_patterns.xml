@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Weblogic" version="LATEST">
+<profile name="Weblogic" version="2.1">
 
 		<!-- 
 			Pattern rule appliance by priority :
