@@ -92,6 +92,7 @@
 				<operation pattern="concurrent.SynchronousQueue.poll" name="Worker waiting for action"/>
 				<operation pattern="java.net.SocketInputStream.socketRead0" name="Socket read"/>
 				<operation pattern="ScheduledThreadPoolExecutor$DelayedWorkQueue.take" name="Worker waiting for queue element"/>
+				<operation pattern="java.util.concurrent.ExecutorCompletionService.take;org.apache.activemq.transport.FutureResponse.getResult" name="Wait for Future task completion" 	priority="910"	type="Task delegation"/>   <!-- Multiple line pattern -->
 				<operation pattern="locks.AbstractQueuedSynchronizer$ConditionObject.await" name="Thread waiting for queue element"/>
 				<operation pattern="activemq.broker.jmx.ManagedRegionBroker.registerDestination" name="Register destination in JMX"/>
 				<operation pattern="activemq.broker.jmx.ManagedRegionBroker.removeConsumer" name="Remove consumer in JMX"/>
@@ -113,7 +114,6 @@
 				<executor pattern="concurrent.ThreadPoolExecutor$Worker" name="Thread pool worker"/>
 				<executor pattern="transport.tcp.TcpTransport.run" name="TCP listener"/>
 				<executor pattern="store.kahadb.MessageDatabase$3.run" name="AMQ Journal Checkpoint Worker"/>
-				<executor pattern="java.util.TimerThread.mainLoop" name="Timer main loop"/>
 				<executor pattern="org.apache.kahadb.journal.DataFileAppender$2.run" name="KAHADB writer"/>
 				<executor pattern="org.apache.activemq.store.kahadb.disk.journal.DataFileAppender$1" name="KAHADB writer"/>
 				<executor pattern="activemq.transport.tcp.TcpTransportServer.run" name="AMQ Server socket listener"/>
@@ -130,7 +130,6 @@
 				<exclude pattern="java.net.SocketInputStream.read;sun.security.ssl.InputRecord.readFully" name="Inactive thread listening on socket"/>	<!-- Multiple line pattern -->
 				<exclude pattern="java.lang.Object.wait;kahadb.journal.DataFileAppender.processQueue" name="Inactive AMQ Kahadb writing thread"/>	<!-- Multiple line pattern -->
 				<exclude pattern="java.lang.Object.wait;kahadb.disk.journal.DataFileAppender.processQueue" name="Inactive AMQ Kahadb writing thread 2"/>	<!-- Multiple line pattern -->
-				<exclude pattern="java.lang.Object.wait;java.util.TimerThread.mainLoop" name="Timer thread waiting"/>	<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
