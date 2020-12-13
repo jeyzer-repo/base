@@ -22,6 +22,7 @@
 				<!-- Jetty -->
 				<function pattern="org.eclipse.jetty.server.Server.doStart" name="Jetty startup"/>
 				<function pattern="org.eclipse.jetty.util.thread.QueuedThreadPool.runJob" name="Jetty job execution"/>
+				<function pattern="org.eclipse.jetty.server.HttpOutput.write" name="Jetty write HTML response"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -42,7 +43,9 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
+				<exclude pattern="org.eclipse.jetty.util.BlockingArrayQueue.poll;org.eclipse.jetty.util.thread.QueuedThreadPool.idleJobPoll;org.eclipse.jetty.util.thread.QueuedThreadPool.access" name="Jetty Worker thread waiting for a task to execute"/>		<!-- Multiple line pattern -->
+				<exclude pattern="org.eclipse.jetty.io.nio.SelectorManager$SelectSet.doSelect;org.eclipse.jetty.io.nio.SelectorManager;org.eclipse.jetty.util.thread.QueuedThreadPool.runJob" name="Jetty thread listening"/>		<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.ServerSocketChannelImpl.accept;org.eclipse.jetty.server.nio.SelectChannelConnector.accept;org.eclipse.jetty.server.AbstractConnector$Acceptor.run" name="Jetty thread listening on socket" size="8"/>	<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->

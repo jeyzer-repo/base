@@ -36,6 +36,7 @@
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<!--executor pattern="HttpServlet.service" name="HTTP request"/-->
+				<executor pattern="com.google.common.eventbus.AsyncEventBus$1.run" name="Google event bus thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->

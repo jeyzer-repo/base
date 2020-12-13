@@ -20,6 +20,7 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<!-- Jersey -->
+				<function pattern="com.sun.jersey.server.impl.application.WebApplicationImpl._handleRequest" name="REST request"/>
 				<function pattern="com.sun.jersey.api.client.WebResource$Builder.post" name="REST post"/>
 				<function pattern="com.sun.jersey.api.client.WebResource$Builder.get" name="REST get"/>
 			</functions>
