@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="iBATIS" version="2.1">
+<profile name="iBATIS" version="LATEST">
 
 		<!-- 
 			Pattern rule appliance by priority :
