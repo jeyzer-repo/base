@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="ambari" version="LATEST">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - function  (6)
+			5 - function_discovery  (5)
+			6 - executor  (4)
+			7 - executor_thread_name (3)
+			8 - operation (2)
+			9 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolumn separator to declare multiple line patterns -->
+			<functions>
+				<function pattern="org.apache.ambari.server.state.cluster.ClusterImpl.getClusterHealthReport" name="Report cluster health"/>
+				<function pattern="org.apache.ambari.server.controller.AmbariManagementControllerImpl.getHostComponents" name="Collect status info from host components"/>
+				<function pattern="org.apache.ambari.view.hive2.actor.LogAggregator.getMoreLogs" name="Aggregate more logs"/>
+				<function pattern="org.apache.ambari.server.events.listeners.alerts.AlertReceivedListener.onAlertEvent" name="Process alert"/>
+				<function pattern="org.apache.ambari.server.agent.HeartbeatMonitor.generateStatusCommands" name="Generate status"/>
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<operation pattern="org.apache.hive.service.rpc.thrift.TCLIService$Client.GetOperationStatus" name="Query operation status"/>
+				<operation pattern="org.apache.ambari.server.state.ConfigHelper.calculateIsStaleConfigs" name="Calculate stale configs"/>
+				<operation pattern="org.apache.ambari.server.state.ConfigHelper.getEffectiveDesiredTags" name="Access effective desired tags"/>
+				<operation pattern="org.apache.ambari.server.orm.dao.HostComponentStateDAO.findById" name="Find host state by id"/>
+				<operation pattern="org.apache.ambari.server.orm.dao.AlertsDAO.findCurrentByHostAndName" name="Find host entity"/>
+			</operations>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<executor pattern="org.apache.ambari.server.agent.HeartbeatMonitor.run" name="Ambari heartbeat monitor thread"/>
+				<executor pattern="org.apache.ambari.server.actionmanager.ActionScheduler.run" name="Ambari action scheduler thread"/>
+			</executors>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude pattern="org.eclipse.jetty.server.Server.join;org.apache.ambari.server.controller.AmbariServer.run" name="Ambari main loop"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.LinkedBlockingDeque.take;sun.nio.fs.AbstractWatchService.take;org.apache.ambari.server.view.ViewDirectoryWatcher;java.util.concurrent.Executors$RunnableAdapter.call" name="Ambari watcher"/>	<!-- Multiple line pattern -->
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!--exclude_thread_name pattern_regex="RMI TCP Accept.*" name="RMI thread"/-->
+				<exclude_thread_name pattern="ambari-action-scheduler" name="Ambari action scheduler" size="3"/>
+				<exclude_thread_name pattern="ambari-hearbeat-monitor" name="Ambari heartbeat monitor" size="3"/>
+				<exclude_thread_name pattern="Server Action Executor" name="Ambari server action executor" size="3"/>
+			</exclude_thread_names>
+		</patterns>
+
+</profile>
