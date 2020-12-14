@@ -21,6 +21,7 @@
 				<function pattern="org.apache.ambari.server.state.cluster.ClusterImpl.getClusterHealthReport" name="Report cluster health"/>
 				<function pattern="org.apache.ambari.server.controller.AmbariManagementControllerImpl.getHostComponents" name="Collect status info from host components"/>
 				<function pattern="org.apache.ambari.view.hive2.actor.LogAggregator.getMoreLogs" name="Aggregate more logs"/>
+				<function pattern="org.apache.ambari.view.hive2.actor.StatementExecutor.runStatement" name="Execute statement"/>
 				<function pattern="org.apache.ambari.server.events.listeners.alerts.AlertReceivedListener.onAlertEvent" name="Process alert"/>
 				<function pattern="org.apache.ambari.server.agent.HeartbeatMonitor.generateStatusCommands" name="Generate status"/>
 			</functions>
@@ -32,10 +33,12 @@
 				<operation pattern="org.apache.ambari.server.state.ConfigHelper.getEffectiveDesiredTags" name="Access effective desired tags"/>
 				<operation pattern="org.apache.ambari.server.orm.dao.HostComponentStateDAO.findById" name="Find host state by id"/>
 				<operation pattern="org.apache.ambari.server.orm.dao.AlertsDAO.findCurrentByHostAndName" name="Find host entity"/>
+				<operation pattern="org.apache.ambari.view.hive20.client.NonPersistentCursor.getNextRows" name="Hive row iteration"/>
 			</operations>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<executor pattern="org.apache.ambari.server.agent.HeartbeatMonitor.run" name="Ambari heartbeat monitor thread"/>
+				<executor pattern="org.apache.ambari.server.agent.HeartbeatProcessor$HeartbeatProcessingTask.run" name="Ambari heartbeat worker thread"/>
 				<executor pattern="org.apache.ambari.server.actionmanager.ActionScheduler.run" name="Ambari action scheduler thread"/>
 			</executors>
 			<excludes>
