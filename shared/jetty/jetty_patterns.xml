@@ -21,7 +21,6 @@
 			<functions>
 				<!-- Jetty -->
 				<function pattern="org.eclipse.jetty.server.Server.doStart" name="Jetty startup"/>
-				<function pattern="org.eclipse.jetty.util.thread.QueuedThreadPool.runJob" name="Jetty job execution"/>
 				<function pattern="org.eclipse.jetty.server.HttpOutput.write" name="Jetty write HTML response"/>
 			</functions>
 			<operations>
@@ -35,7 +34,7 @@
 			</lockers>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
-				<!--executor pattern="HttpServlet.service" name="HTTP request"/-->
+				<executor pattern="org.eclipse.jetty.util.thread.QueuedThreadPool.runJob" name="Jetty job thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->

@@ -25,6 +25,7 @@
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<operation pattern="com.google.gson.Gson.toJson" name="Convert Java object to Json"/>
+				<operation pattern="com.google.gson.stream.JsonWriter.value" name="Write Json object"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->

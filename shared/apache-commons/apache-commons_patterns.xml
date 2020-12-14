@@ -26,6 +26,7 @@
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<!-- Apache commons -->
 				<operation pattern="org.apache.commons.net.ftp.FTPClient._openDataConnection" name="FTP connection creation" type="Network"/>
+				<operation pattern="org.apache.commons.csv.CSVPrinter.printRecord" name="Populate CSV"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->

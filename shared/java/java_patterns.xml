@@ -80,6 +80,7 @@
 				<operation pattern="ZipFile.open" name="Jar or zip file access"												type="File"/>
 				<operation pattern="java.util.zip.ZipFile." name="Zip file access"											type="File"/>
 				<operation pattern="java.util.zip.Inflater" name="Zip decompression"										type="File"/>
+				<operation pattern="java.util.zip.GZIPOutputStream.write" name="Gzip compression"							type="File"/>
 				<operation pattern="java.io.FileInputStream.read" name="File reading"										type="File"/>
 				<operation pattern="java.io.FileInputStream.open" name="File opening"									    type="File"/>
 				<operation pattern="java.io.FileInputStream.close" name="File closing"									    type="File"/>
@@ -124,11 +125,12 @@
 				<operation pattern="java.lang.Object.wait" name="Object wait"																			type="Synchro"/>
 				<operation pattern="java.lang.Object.notifyAll" name="Wakes all threads"/>
 				<operation pattern="java.lang.Object.notify" name="Wakes one thread"/>
-				<operation pattern="sun.security.rsa.RSACore" name="RSA Cryptographic operation"/>
-				<operation pattern="sun.security.ssl.InputRecord.decrypt" name="SSL message decryption"/>
-				<operation pattern="sun.security.x509.X509CertImpl.isSelfIssued" name="SSL certificate check"/>
-				<operation pattern="javax.net.ssl.SSLContext.createSSLEngine" name="SSL engine creation"/>
-				<operation pattern="sun.security.pkcs11" name="PKCS cryptographic operation"/>
+				<operation pattern="sun.security.rsa.RSACore" name="RSA Cryptographic operation" 						type="Crypto"/>
+				<operation pattern="javax.crypto.KeyAgreement.generateSecret" name="Cryptographic key generation" 		type="Crypto"/>
+				<operation pattern="sun.security.ssl.InputRecord.decrypt" name="SSL message decryption"					type="Crypto"/>
+				<operation pattern="sun.security.x509.X509CertImpl.isSelfIssued" name="SSL certificate check"			type="Crypto"/>
+				<operation pattern="javax.net.ssl.SSLContext.createSSLEngine" name="SSL engine creation"				type="Crypto"/>
+				<operation pattern="sun.security.pkcs11" name="PKCS cryptographic operation"							type="Crypto"/>
 				<operation pattern="javax.xml.transform.SecuritySupport.getSystemProperty" name="Java system property access"/>
 				<operation pattern="com.sun.enterprise.resource.PoolManagerImpl.resourceClosed" name="Java pool ressource closing"		type="Resource pool"/>
 				<operation pattern="com.sun.enterprise.resource.PoolManagerImpl.getResourceFromPool" name="Java pool ressource access"	type="Resource pool"/>

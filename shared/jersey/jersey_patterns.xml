@@ -23,6 +23,7 @@
 				<function pattern="com.sun.jersey.server.impl.application.WebApplicationImpl._handleRequest" name="REST request"/>
 				<function pattern="com.sun.jersey.api.client.WebResource$Builder.post" name="REST post"/>
 				<function pattern="com.sun.jersey.api.client.WebResource$Builder.get" name="REST get"/>
+				<function pattern="com.sun.jersey.spi.container.ContainerResponse.write" name="REST write response"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->

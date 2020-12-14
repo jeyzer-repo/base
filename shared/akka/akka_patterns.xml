@@ -24,7 +24,7 @@
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
-				<!--operation pattern="java.lang.String.split" name="String split"		   type="String"/-->
+				<operation pattern="akka.actor.dsl.Inbox$Inbox.receive" name="Hive actor communication call" />
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
