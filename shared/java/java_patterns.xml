@@ -240,6 +240,8 @@
 				<exclude pattern="java.lang.ref.Finalizer$FinalizerThread.run" name="Finalizer"/>
 				<exclude pattern="Reference$ReferenceHandler.run" name="Finalizer - Reference handler"/>
 				<exclude pattern="sun.misc.GC$Daemon.run" name="GC"/>
+				<!-- Java 9+ cleaner -->
+				<exclude pattern="jdk.internal.misc.InnocuousThread.run" name="JVM cleaner" size="5"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
