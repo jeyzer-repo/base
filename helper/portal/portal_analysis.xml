@@ -133,8 +133,8 @@
 			<!-- Discard ALL stacks below the stack size -->
 			<stack_size_interest>
 			
-				<!-- Size strategy : auto or known or master_profile_dependent  -->
-				<!--  master_profile_dependent : strategy will be auto if master profile has the generic state -->
+				<!-- Size strategy : auto or known or master_profile_state_dependent  -->
+				<!--  master_profile_state_dependent : strategy will be auto if master profile has the generic state -->
 				<strategy type="master_profile_state_dependent" >
 				 
 					<!-- Determine automatically the interest size based on the Wait and Timed_Waiting threads -->

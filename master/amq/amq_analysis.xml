@@ -98,7 +98,7 @@
 		<analysis_prefilter>
 			<!-- Discard ALL stacks below the stack size -->
 			<stack_size_interest>
-				<!-- Size strategy : auto or known or master_profile_dependent  -->
+				<!-- Size strategy : auto or known or master_profile_state_dependent  -->
 				<strategy type="known" >
 					<!-- Interest size is known up front -->
 					<known_size_strategy min="3"/>
