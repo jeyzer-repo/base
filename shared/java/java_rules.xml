@@ -217,6 +217,18 @@
 				           message="java.util.Random constructor should not be used.&#10; Prefer java.security.SecureRandom for security reasons."/>
 			</thresholds>
 		</rule>
+		
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="Class lookup percentage" param="Class access" stickers="performance" ref="JZR-SHA-JAVA-017">
+			<narrative>This rule detects any intensive usage of the Java Class forName method which may affect the performance of the application.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="10" 
+				           level="INFO" 
+				           message="Possible contention on the Class forName method.&#10;Class lookup can be at high cost due to lock contention at class loader level.&#10;Desired class may be missing or functionality design could be reviewed to prevent this frequent call."/>
+			</thresholds>
+		</rule>
 
 	</rules>
 
