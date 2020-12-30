@@ -110,6 +110,9 @@
 		
 		<!-- Process jars sheet will be displayed only if the process jar paths file is available -->
 		<!-- <sheet type="process_jars" name="Libraries"/> -->
+		
+		<!-- Process modules sheet will be displayed only if the process modules file is available -->
+		<!--  <sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/modules/modules-with-graph.xml"/> -->
 
 		<!-- Profiles display -->
 		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/analysis-patterns/analysis-patterns.xml"/>
