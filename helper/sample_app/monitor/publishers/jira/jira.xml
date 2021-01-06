@@ -12,7 +12,7 @@
 	</target>
 	
 	<!-- JIRA actions -->
-	<!--   Use @@ and %% to access process card properties and process jar versions -->
+	<!--   Use respectively @@, %% and ## to access process card properties, process jar versions or Java module versions -->
 	<actions event_thresholds="C4, C5, C9, C10">
 	
 		<!-- Create the JIRA item -->

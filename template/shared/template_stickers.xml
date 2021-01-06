@@ -3,7 +3,10 @@
 <stickers group="template">
 
 	<!-- Use this sticker on a rule which must apply on a limited set of versions. Most frequent case in shared profiles -->
-    <!-- sticker name="version-sticker" type="process jar version" jar_name="jar-name" pattern="^2.0.*"/-->
+    <!-- sticker name="some-version-sticker" type="process jar version" jar_name="jar-name" pattern="^2.0.*"/-->
+    
+    <!-- Use this sticker on a rule which must apply on a limited set of versions. Most frequent case in shared profiles -->
+    <!-- sticker name="some-other-version-sticker" type="process module version" module_name="module-name" pattern="^2.0.*"/-->
     
 	<!-- Use this sticker on a rule which must apply only under certain applicative conditions -->
     <!-- sticker name="property-sticker" type="property card" property="my-app-property" pattern="some-pattern-value"/-->

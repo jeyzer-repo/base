@@ -37,6 +37,7 @@
 			</category>
 			<category name="VM 2ndary paths" color="RGB-191-202-136">
 				<field name="Classpath" property="java.class.path"/>
+				<field name="Module path" property="jdk.module.path"/>
 				<field name="Boot classpath" property="sun.boot.class.path"/>
 				<field name="Java library path" property="java.library.path"/>
 				<field name="Java external directories" property="java.ext.dirs"/>
