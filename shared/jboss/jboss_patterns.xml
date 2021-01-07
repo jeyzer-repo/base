@@ -39,6 +39,9 @@
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<!-- JBoss -->
 				<executor pattern="org.jboss.resource.adapter.mail.inflow.NewMsgsWorker.run" name="JBoss message worker"/>
+				<executor pattern="org.jboss.threads.JBossThread.run" name="JBoss thread"/>
+				<executor pattern="org.jboss.modules.ref.References$ReaperThread.run" name="JBoss reaper thread"/>
+				<executor pattern="org.jboss.as.jacorb.service.CorbaORBService$ORBRunner.run" name="JBoss Jacorb embedded service"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -51,6 +54,10 @@
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<!-- JBoss -->
 				<exclude pattern="org.jboss.resource.adapter.mail.inflow.NewMsgsWorker.run" name="JBoss message worker" size="10"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;org.jboss.threads.QueueExecutor.takeTask;org.jboss.threads.QueueExecutor.access;org.jboss.threads.QueueExecutor$Worker.run" name="Worker thread waiting for a task to execute from a blocking queue"/>		<!-- Multiple line pattern -->
+				<exclude pattern="org.jboss.modules.ref.References$ReaperThread.run" name="JBoss reaper thread" size="4"/>
+				<exclude pattern="org.jboss.as.jacorb.service.CorbaORBService$ORBRunner.run" name="JBoss Jacorb embedded service" size="5"/>
+				<exclude pattern="org.jboss.threads.JBossThread.run" name="JBoss thread" size="9"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->

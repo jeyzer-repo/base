@@ -42,6 +42,8 @@
 				<executor pattern="org.apache.catalina.startup.Bootstrap.main" name="Tomcat bootstrap thread"/>
 				<executor pattern="org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run" name="Tomcat background thread"/>
 				<executor pattern="org.apache.tomcat.util.net.NioBlockingSelector$BlockPoller.run" name="Tomcat NIO thread"/>
+				<executor pattern="org.apache.tomcat.util.net.AprEndpoint$Poller.run" name="Tomcat APR Poller thread"/>
+				<executor pattern="org.apache.tomcat.util.net.AprEndpoint$Acceptor.run" name="Tomcat APR Acceptor thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -53,6 +55,8 @@
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
 				<exclude pattern="tomcat.util.net.NioBlockingSelector$BlockPoller.run" name="Tomcat NIO thread" size="7"/>
+				<exclude pattern="org.apache.tomcat.util.net.AprEndpoint$Poller.run" name="Tomcat APR Poller thread" size="3"/>
+				<exclude pattern="org.apache.tomcat.util.net.AprEndpoint$Acceptor.run" name="Tomcat APR Acceptor thread" size="3"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->

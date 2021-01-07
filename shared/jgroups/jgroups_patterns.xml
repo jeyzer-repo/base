@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Jacorb" version="LATEST">
+<profile name="Jgroups" version="LATEST">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -24,9 +24,6 @@
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
-				<!-- Jacorb -->
-				<operation pattern="org.jacorb.orb.giop.GIOPConnection.sendMessage" name="CORBA send message"								type="CORBA"/>
-				<operation pattern="org.jacorb.orb." name="CORBA operation"																	type="CORBA"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -34,12 +31,9 @@
 			</lockers>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
-				<!-- Jacorb -->
-				<executor pattern="org.jacorb.orb.iiop.IIOPListener$Acceptor.run" name="CORBA IIOP Listener"/>
-				<executor pattern="org.jacorb.poa.RequestProcessor.run" name="CORBA Jacorb request thread"/>
-				<executor pattern="org.jacorb.poa.RequestController.run" name="CORBA Jacorb request thread"/>
-				<executor pattern="org.jacorb.util.threadpool.ConsumerTie.run" name="Jacorb tie consumer thread"/>
-				<executor pattern="org.jacorb.poa.AOM$1.run" name="Jacorb POA thread"/>
+				<!--executor pattern="HttpServlet.service" name="HTTP request"/-->
+				<executor pattern="org.jgroups.protocols.UDP$PacketReceiver.run" name="Jgroups UDP receiver thread"/>
+				<executor pattern="org.jgroups.protocols.FD_SOCK$ServerSocketHandler.run" name="Jgroups FD receiver thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -48,9 +42,8 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
-				<exclude pattern="org.jacorb.orb.iiop.IIOPListener$Acceptor.run" name="CORBA IIOP Listener" size="5"/>
-				<exclude pattern="org.jacorb.poa.AOM$1.run" name="Jacorb POA thread" size="5"/>
-				<exclude pattern="org.jacorb.poa.RequestController.run" name="CORBA Jacorb request thread" size="4"/>
+				<exclude pattern="org.jgroups.protocols.UDP$PacketReceiver.run" name="Jgroups UDP receiver thread" size="5"/>
+				<exclude pattern="org.jgroups.protocols.FD_SOCK$ServerSocketHandler.run" name="Jgroups FD receiver thread" size="6"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
