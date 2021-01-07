@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Jetty" version="2.2">
+<profile name="Jetty" version="LATEST">
 
 		<!-- 
 			Pattern rule appliance by priority :

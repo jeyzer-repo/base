@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="MySQL" version="2.2">
+<profile name="MySQL" version="LATEST">
 
 		<!-- 
 			Pattern rule appliance by priority :
