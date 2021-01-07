@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Oracle" version="LATEST">
+<profile name="Oracle" version="2.2">
 
 		<!-- 
 			Pattern rule appliance by priority :

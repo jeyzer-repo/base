@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="XStream" version="LATEST">
+<profile name="XStream" version="2.2">
 
 		<!-- 
 			Pattern rule appliance by priority :
