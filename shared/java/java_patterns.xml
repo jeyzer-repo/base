@@ -38,6 +38,7 @@
 				<function pattern="ssl.ServerHandshaker.clientHello" name="SSL server handshake"/>
 				<function pattern="ssl.ClientHandshaker.serverCertificate" name="SSL client handshake"/>
 				<function pattern="javax.net.ssl.impl.SSLSocketImpl.startHandshake" name="SSL handshake"/>
+				<function pattern="jdk.jfr.internal.JVM.emitEvent" name="JFR publish events"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -214,6 +215,8 @@
 				<executor_thread_name pattern="Main" name="Program main"/>
 				<executor_thread_name pattern="Keep-Alive-Timer" name="HTTP keep alive timer"/>
 				<executor_thread_name pattern="Service Thread" name="JVM service thread"/>
+				<!-- Java 9+ JFR -->
+				<executor_thread_name pattern="JFR Periodic Tasks" name="JFR"/>
 			</executor_thread_names>
 			<excludes>
 				<exclude pattern="sun.nio.fs.LinuxWatchService.poll;sun.nio.fs.LinuxWatchService.access;sun.nio.fs.LinuxWatchService$Poller.run" name="Linux inotify watcher polling"/>		<!-- Multiple line pattern -->
@@ -242,6 +245,8 @@
 				<exclude pattern="sun.misc.GC$Daemon.run" name="GC"/>
 				<!-- Java 9+ cleaner -->
 				<exclude pattern="jdk.internal.misc.InnocuousThread.run" name="JVM cleaner" size="5"/>
+				<!-- Java 9+ JFR -->
+				<exclude pattern="jdk.jfr.internal.PlatformRecorder.lambda$startDiskMonitor" name="JFR disk monitor" size="6"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
