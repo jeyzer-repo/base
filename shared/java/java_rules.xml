@@ -209,7 +209,7 @@
 		</rule>
 		
 		<!--  If operation is detected across current session, generate event. -->
-		<rule name="Operation presence" param_display="Java Util Random usage" param="Random constructor" stickers="code_quality" ref="JZR-SHA-JAVA-016">
+		<rule name="Operation presence" param_display="Java Util Random usage" param="Random constructor" stickers="code_quality, security" ref="JZR-SHA-JAVA-016">
 			<narrative>This rule detects the usage of the java.util.Random constructor which is not recommended for security reasons.</narrative>
 			<thresholds>
 				<threshold type="system signal" 
