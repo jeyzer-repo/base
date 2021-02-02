@@ -231,6 +231,8 @@
 				<exclude pattern="com.sun.jmx.remote.internal.ServerCommunicatorAdmin$Timeout.run" name="JMX"/>
 				<!-- Sun HTTP -->
 				<exclude pattern="sun.net.www.http.KeepAliveCache.run" name="HTTP keep alive timer" size="3"/>
+				<!-- Sun 2D -->
+				<exclude pattern="sun.java2d.Disposer.run" name="Java 2D disposer" size="5"/>
 				<!-- RMI -->
 				<exclude pattern="RMIConnectionImpl.fetchNotifications" name="RMI"/>
 				<exclude pattern="sun.rmi.transport.Transport.serviceCall" name="RMI"/>
