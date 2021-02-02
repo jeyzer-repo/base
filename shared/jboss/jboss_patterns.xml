@@ -30,6 +30,7 @@
 				<!-- JBoss -->
 				<operation pattern="org.jboss.resource.adapter.jdbc.CheckValidConnectionSQL.isValidConnection" name="JBoss JDBC connection testing"/>
 				<operation pattern="org.jboss.classloader.spi.base.BaseClassLoader.getResource" name="JBoss ressource loading"				type="Class loader"/>
+				<operation pattern="org.jboss.jca.adapters.jdbc.WrapperDataSource.getConnection" name="JBoss db connection pool access"/>				
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -58,6 +59,8 @@
 				<exclude pattern="org.jboss.modules.ref.References$ReaperThread.run" name="JBoss reaper thread" size="4"/>
 				<exclude pattern="org.jboss.as.jacorb.service.CorbaORBService$ORBRunner.run" name="JBoss Jacorb embedded service" size="5"/>
 				<exclude pattern="org.jboss.threads.JBossThread.run" name="JBoss thread" size="9"/>
+				<exclude pattern="org.jboss.jca.core.connectionmanager.pool.mcp.PoolFiller.run" name="JCA PoolFiller" size="4"/>
+				<exclude pattern="org.jboss.jca.core.connectionmanager.pool.idle.IdleRemover$IdleRemoverRunner.run" name="JBoss remover thread" size="7"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
