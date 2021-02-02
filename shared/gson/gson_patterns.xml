@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Gson" version="2.3">
+<profile name="Gson" version="LATEST">
 
 		<!-- 
 			Pattern rule appliance by priority :
