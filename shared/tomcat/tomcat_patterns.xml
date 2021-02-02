@@ -57,6 +57,9 @@
 				<exclude pattern="tomcat.util.net.NioBlockingSelector$BlockPoller.run" name="Tomcat NIO thread" size="7"/>
 				<exclude pattern="org.apache.tomcat.util.net.AprEndpoint$Poller.run" name="Tomcat APR Poller thread" size="3"/>
 				<exclude pattern="org.apache.tomcat.util.net.AprEndpoint$Acceptor.run" name="Tomcat APR Acceptor thread" size="3"/>
+				<exclude pattern="org.apache.coyote.ajp.AjpProcessor.process" name="Tomcat AJP processor thread" size="11"/>
+				<exclude pattern="org.apache.tomcat.util.net.JIoEndpoint$Worker.run" name="Tomcat JIoEndpoint worker" size="5"/>
+				<exclude pattern="org.apache.coyote.http11.Http11Processor.process" name="Tomcat HTTP 11 processor" size="5"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->

@@ -22,10 +22,24 @@
 			</thresholds>
 		</rule>
 		
+		<!--  If number of active threads matching the [pattern] is greater than [value] for [count] snapshots or [time], generate event. Applies for thread pools. Pattern is regex -->
+		<rule name="Active named thread limit" extra_info="AJP thread pool" ref="JZR-SHA-TOM-002">
+			<narrative>This rule detects any Tomcat worker thread pool misery.</narrative>
+			<thresholds>
+				<threshold type="global custom"
+						   count="5"
+						   value="20"
+						   pattern="^ajp-.*" 
+				           level="WARNING"
+				           sub_level="7"
+				           message="Tomcat connection pool about to be exhausted. Application may be under load.&#10;Monitor closely the application. You may consider increasing the pool size."/>
+			</thresholds>
+		</rule>
+		
 		<!--  If number of threads (active and inactive) matching the [pattern] is lower or equal than [value] for [count] thread dumps or [time], generate event. Pattern is regex -->
 		<!--  Important : Absent threads rules cannot be complementary as one or the other will wrongly match. Put all patterns under the same regex like below -->
 		<!--
-		<rule name="Absent threads" extra_info="HTTP thread pool" ref="JZR-SHA-TOM-002">
+		<rule name="Absent threads" extra_info="HTTP thread pool" ref="JZR-SHA-TOM-003">
 			<narrative>This rule detects any Tomcat worker thread pool emptiness.</narrative>
 			<thresholds>
 				<threshold type="session custom"
