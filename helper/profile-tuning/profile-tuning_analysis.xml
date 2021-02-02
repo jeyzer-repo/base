@@ -79,17 +79,22 @@
 			<!-- For a same suffix and prefix, the pattern declaration order is important : put the largest date format first -->
 			<!-- ex : thread-dump-<date format>.txt -->
 			<!-- date format must follow java date pattern : http://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html-->
-			<file_timestamp_pattern pattern="thread-dump-&lt;yyyy-MM-dd---HH-mm-ss-SSS-z&gt;.txt"/>
-			<file_timestamp_pattern pattern="thread-dump-&lt;yyyy-MM-dd--HH-mm-ss&gt;.out"/>
+			<file_timestamp_pattern pattern="thread-dump-&lt;yyyy-MM-dd---HH-mm-ss-SSS-z&gt;\.txt"/>
+			<file_timestamp_pattern pattern="thread-dump-&lt;yyyy-MM-dd--HH-mm-ss&gt;\.out"/>
 			<!-- Unix date command output    	 td-Sun Jul  1 12_16_06 UTC 2018.txt -->
-			<file_timestamp_pattern pattern="td-&lt;EEE MMM dd HH_mm_ss z yyyy&gt;.txt"/>
+			<file_timestamp_pattern pattern="td-&lt;EEE MMM dd HH_mm_ss z yyyy&gt;\.txt"/>
 			<!-- IBM core. Suffix is not readable, ignore it. Example : javacore.20141215.155840.26463.0014.txt -->
-			<file_timestamp_pattern pattern="javacore.&lt;yyyyMMdd.HHmmss&gt;.26463.0001.txt" ignoreSuffix="true"/>
+			<file_timestamp_pattern pattern="javacore.&lt;yyyyMMdd.HHmmss&gt;.26463.0001\.txt" ignoreSuffix="true"/>
 
 			<!-- Regular expression file name pattern : time stamp is taken out from file last modified by attribute -->
-			<file_regex_pattern     pattern=".*-thread-dump.out"/>
+			<file_regex_pattern     pattern="\.dmp$"/>
+			<file_regex_pattern     pattern="\.jstack$"/>
+			<file_regex_pattern     pattern="\.txt$"/>
+			<file_regex_pattern     pattern="\.dump$"/>
+			<file_regex_pattern     pattern="\.out$"/>
 			
-			<file_regex_pattern     pattern="thread-dump-.*.out"/>
+			<!-- JMC can generate periodic thread dumps -->
+			<file_regex_pattern     pattern="\.jfr$"/>
 
 		</file_patterns>
 		

@@ -88,7 +88,14 @@
 			<file_timestamp_pattern pattern="javacore.&lt;yyyyMMdd.HHmmss&gt;.26463.0001.txt" ignoreSuffix="true"/>
 			  
 			<!-- Regular expression file name pattern : time stamp is taken out from file last modified by attribute -->
-			<file_regex_pattern     pattern=".*-thread-dump.out"/>
+			<file_regex_pattern     pattern="\.dmp$"/>
+			<file_regex_pattern     pattern="\.jstack$"/>
+			<file_regex_pattern     pattern="\.txt$"/>
+			<file_regex_pattern     pattern="\.dump$"/>
+			<file_regex_pattern     pattern="\.out$"/>
+			
+			<!-- JMC can generate periodic thread dumps -->
+			<file_regex_pattern     pattern="\.jfr$"/>
 			
 		</file_patterns>
 		
