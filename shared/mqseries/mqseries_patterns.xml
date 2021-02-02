@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="MQSeries" version="LATEST">
+<profile name="MQSeries" version="2.3">
 
 		<!-- 
 			Pattern rule appliance by priority :

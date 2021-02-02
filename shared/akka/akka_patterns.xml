@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Akka" version="LATEST">
+<profile name="Akka" version="2.3">
 
 		<!-- 
 			Pattern rule appliance by priority :
