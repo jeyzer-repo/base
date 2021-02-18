@@ -48,6 +48,7 @@
 				<exclude_thread_name pattern="Jeyzer-recorder" name="Jeyzer Recorder"/>
 				<exclude_thread_name pattern="Jeyzer-recorder-archiver" name="Jeyzer Archiver"/>
 				<exclude_thread_name pattern="Jeyzer-recorder-archiver-shutdown" name="Jeyzer Archiver shutdown hook"/>
+				<exclude_thread_name pattern="Jeyzer-recorder-log-watchdog" name="Jeyzer Recorder Log Watchdog"/>
 				<exclude_thread_name pattern="Jeyzer-thread-info-reaper" name="Jeyzer Publisher thread info reaper"/>
 			</exclude_thread_names>
 		</patterns>
