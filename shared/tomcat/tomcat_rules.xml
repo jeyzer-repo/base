@@ -19,6 +19,13 @@
 				           level="WARNING"
 				           sub_level="7"
 				           message="Tomcat connection pool about to be exhausted. Application may be under load.&#10;Monitor closely the application. You may consider increasing the pool size."/>
+				<threshold type="global custom"
+						   count="1"
+						   value="20"
+						   pattern="^http-.*" 
+				           level="INFO"
+				           sub_level="7"
+				           message="Tomcat connection pool under stress."/>
 			</thresholds>
 		</rule>
 		
@@ -33,6 +40,13 @@
 				           level="WARNING"
 				           sub_level="7"
 				           message="Tomcat connection pool about to be exhausted. Application may be under load.&#10;Monitor closely the application. You may consider increasing the pool size."/>
+				<threshold type="global custom"
+						   count="1"
+						   value="20"
+						   pattern="^ajp-.*" 
+				           level="INFO"
+				           sub_level="7"
+				           message="Tomcat connection pool under stress."/>
 			</thresholds>
 		</rule>
 		
