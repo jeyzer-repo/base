@@ -121,11 +121,12 @@
 					<auto_size_strategy>
 						<!-- Set the size once the scan_coverage percentage of the wait/timed_waiting stacks are found in a set of representative snapshot samples -->
 						<!-- Snapshot samples are the - taken randomly - ones which contain the less threads so the less active ones -->
-						<!-- Snapshot samples must be at minimum 5% of the recording to be representative (10 => 200 snapshots, period 30 sec => 100 minutes minimum) -->
-						<!-- If below 5%, the default_size is taken. default_size should be very low value -->
+						<!-- Snapshot samples must represent at minimum the snapshot_sample_percentage % of the recording to be representative. --> 
+						<!-- Default/recommended is 5% (10 => 200 snapshots, period 30 sec => 100 minutes minimum) -->
+						<!-- If below snapshot_sample_percentage %, the default_size is taken. default_size should be very low value -->
 						<!-- stop_if_active_found : as soon as active threads are encountered with same stack size, stop the scan_coverage and retain the reached size -->
 						<!--                        unless your application is fully asynchronous, prefer the activation of the keep_stacks / running -->
-						<scan_coverage snapshot_samples="10" percentage="98" stop_if_active_found="false" default_size="1"/>
+						<scan_coverage snapshot_samples="10" snapshot_sample_percentage="5" percentage="98" stop_if_active_found="false" default_size="1"/>
 					</auto_size_strategy>
 				
 					<!-- Interest size is known up front -->
