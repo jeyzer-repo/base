@@ -21,6 +21,10 @@
 			<functions>
 				<!--function pattern="javax.xml.parsers.DocumentBuilderFactory.newInstance" name="DOM builder loading"/-->
 				<function pattern="org.hibernate.loader.Loader.list" name="Hibernate load list"/>
+				<function pattern="org.hibernate.loader.Loader.loadCollectionBatch" name="Hibernate load collection batch"/>
+				<function pattern="org.hibernate.loader.Loader.loadCollection" name="Hibernate load collection"/>
+				<function pattern="org.hibernate.loader.Loader.loadEntity" name="Hibernate load entity"/>
+				<function pattern="org.hibernate.impl.SessionImpl.flush" name="Hibernate session flush"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
