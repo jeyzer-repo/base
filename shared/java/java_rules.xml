@@ -229,6 +229,31 @@
 				           message="Possible contention on the Class forName method.&#10;Class lookup can be at high cost due to lock contention at class loader level.&#10;Desired class may be missing or functionality design could be reviewed to prevent this frequent call."/>
 			</thresholds>
 		</rule>
+		
+		<!--  If operation regex pattern in the current task is seen more than value, generate event. Pattern is regex -->
+		<rule name="Operation pattern" extra_info="Java method introspection failure" ref="JZR-SHA-JAVA-018">
+			<narrative>This rule detects the failure of method introspection.</narrative>
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="1"
+				           pattern="Java method introspection failure" 
+				           level="INFO"
+				           message="Java introspection failure detected.&#10; This may be false positive if the exception is part of applicative processing.&#10; However, if false positive are frequent, this is then negative performance hit to be reviewed by the application owner.&#10; Note that exception generation is 200-700 slower than any code based solution."/>
+			</thresholds>
+		</rule>
+
+		<!--  If function regex pattern in the current task is seen more than value, generate event. Pattern is regex -->
+		<rule name="Function pattern" extra_info="JVM uncaught exception dispatch" ref="JZR-SHA-JAVA-019">
+			<narrative>This rule detects the JVM dispatching of uncaught exceptions.</narrative>
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="1"
+				           pattern="JVM uncaught exception dispatch" 
+				           level="WARNING"
+				           sub_level="7" 
+				           message="A thread died due to an uncaught exception. The JVM did catch the origination Java exception and forwarded it to a default handler.&#10; You should inspect the logs for exception traces and understand the root cause.&#10; Review also the application code to handle properly such exception.&#10;Note that the exception processing is performed in the initial thread : check its name."/>
+			</thresholds>
+		</rule>
 
 	</rules>
 
