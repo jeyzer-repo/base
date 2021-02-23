@@ -22,6 +22,7 @@
 				<!--function pattern="javax.xml.parsers.DocumentBuilderFactory.newInstance" name="DOM builder loading"/-->
 				<function pattern="org.springframework.batch.repeat.support.ResultHolderResultQueue.put" name="Spring task - put result"/>
 				<function pattern="org.springframework.batch.repeat.support.ResultHolderResultQueue.take" name="Spring task - take result"/>
+				<function pattern="org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver.resolveException" name="Spring - exception processing"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->

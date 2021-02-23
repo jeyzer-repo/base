@@ -9,7 +9,7 @@
 		<!-- ************************************************************************ -->
 
 		<!--  If the list of comma separated functions [functions] is respectively seen in more than [function_appearance_thresholds] parallel threads, generate event. -->
-		<rule name="Multi function contention" extra_info="Spring tasklet deadlock suspiscion" ref="JZR-SHA-SPR-001" ticket ="Spring Github #3769">
+		<rule name="Multi function contention" extra_info="Spring tasklet deadlock suspiscion" ref="JZR-SHA-SPRING-001" ticket ="Spring Github #3769">
 			<narrative>This rule detects a possible deadlock within Spring.</narrative>
 			<thresholds>
 				<threshold type="session custom"
@@ -20,6 +20,18 @@
 				           sub_level="10"
 				           trust_factor="80"
 				           message="Deadlock suspiscion in the Spring tasklet framework. Seen on Spring v4.1.2&#10;Please collect and the context and re-open this ticket :&#10;https://github.com/spring-projects/spring-batch/issues/3769"/>
+			</thresholds>
+		</rule>
+		
+		<!--  If function regex pattern in the current task is seen more than value, generate event. Pattern is regex -->
+		<rule name="Function pattern" extra_info="Spring - exception processing" ref="JZR-SHA-SPRING-002">
+			<narrative>This rule detects the JBoss error logging.</narrative>
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="1"
+				           pattern="Spring - exception processing" 
+				           level="INFO"
+				           message="Java exception handling by Spring detected. Please check the applicative logs."/>
 			</thresholds>
 		</rule>
 
