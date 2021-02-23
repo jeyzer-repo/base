@@ -37,6 +37,7 @@
 				<executor pattern="ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation$ThreadPoolWorker.run" name="IBM MQ client worker"/>
 				<executor pattern="ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation$WorkQueueManagerThread.run" name="IBM MQ client notification listener"/>
 				<executor pattern="ibm.mq.jmqi.remote.impl.RemoteRcvThread.run" name="IBM MQ client receiver"/>
+				<executor pattern="ibm.msg.client.commonservices.workqueue.WorkQueueItem.run" name="IBM MQ worker thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
