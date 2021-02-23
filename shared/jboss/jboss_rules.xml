@@ -7,22 +7,8 @@
 		<!-- ************************************************************************ -->
 		<!--                       JBOSS RULES                                        -->
 		<!-- ************************************************************************ -->
-
-		<!--  If number of active threads matching the [pattern] is greater than [value] for [count] snapshots or [time], generate event. Applies for thread pools. Pattern is regex -->
-		<rule name="Active named thread limit" extra_info="HTTP thread pool" ref="JZR-SHA-JBOS-001">
-			<narrative>This rule detects any JBoss worker thread pool misery.</narrative>
-			<thresholds>
-				<threshold type="global custom"
-						   count="5"
-						   value="20"
-						   pattern="^http-.*" 
-				           level="WARNING"
-				           message="Tomcat connection pool about to be exhausted. Application may be under load.&#10;Monitor closely the application. You may consider increasing the pool size."/>
-			</thresholds>
-		</rule>
-		
 		<!--  If operation regex [pattern] is seen in more than [value] parallel threads for [count] successive times, generate event. -->
-		<rule name="Operation parallel contention" extra_info="JBoss database connection pool access contention" ref="JZR-SHA-JBOS-002">
+		<rule name="Operation parallel contention" extra_info="JBoss database connection pool access contention" ref="JZR-SHA-JBOS-001">
 			<narrative>This rule detects the JBoss database connection pool miseries.</narrative>
 			<thresholds>
 				<threshold type="session custom"
@@ -49,21 +35,17 @@
 			</thresholds>
 		</rule>		
 		
-		<!--  If number of threads (active and inactive) matching the [pattern] is lower or equal than [value] for [count] thread dumps or [time], generate event. Pattern is regex -->
-		<!--  Important : Absent threads rules cannot be complementary as one or the other will wrongly match. Put all patterns under the same regex like below -->
-		<!--
-		<rule name="Absent threads" extra_info="HTTP thread pool" ref="JZR-SHA-JBOS-003">
-			<narrative>This rule detects any JBoss worker thread pool emptiness.</narrative>
+		<!--  If function regex pattern in the current task is seen more than value, generate event. Pattern is regex -->
+		<rule name="Function pattern" extra_info="JBoss error logging" ref="JZR-SHA-JBOS-002">
+			<narrative>This rule detects the JBoss error logging.</narrative>
 			<thresholds>
-				<threshold type="session custom"
-						   count="5"
-						   value="0"
-						   pattern="^http-.*" 
-				           level="CRITICAL"
-				           message="HTTP thread pool is empty or missing. Please check the logs and plan a restart."/>
+				<threshold type="stack pattern" 
+						   count="1"
+				           pattern="JBoss error logging" 
+				           level="INFO"
+				           message="JBoss logged an error. Please check the applicative logs."/>
 			</thresholds>
 		</rule>
-		-->
 
 	</rules>
 

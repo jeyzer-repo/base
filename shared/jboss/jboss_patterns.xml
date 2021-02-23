@@ -23,11 +23,13 @@
 				<function pattern="org.jboss.system.server.profileservice.hotdeploy.HDScanner.scan" name="JBoss hot deploy scanner"/>
 				<function pattern="org.jboss.logging.Log4jService$URLWatchTimerTask.run" name="JBoss log4j file scanner"/>
 				<function pattern="org.jboss.resource.connectionmanager.InternalManagedConnectionPool.fillToMin" name="JBoss db connection pool filling"/>
+				<function pattern="org.jboss.logging.Logger.error" name="JBoss error logging"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<!-- JBoss -->
+				<operation pattern="org.jboss.security.authentication.JBossCachedAuthenticationManager.authenticate" name="JBoss authenticate"/>
 				<operation pattern="org.jboss.resource.adapter.jdbc.CheckValidConnectionSQL.isValidConnection" name="JBoss JDBC connection testing"/>
 				<operation pattern="org.jboss.classloader.spi.base.BaseClassLoader.getResource" name="JBoss ressource loading"				type="Class loader"/>
 				<operation pattern="org.jboss.jca.adapters.jdbc.WrapperDataSource.getConnection" name="JBoss db connection pool access"/>				
@@ -61,6 +63,7 @@
 				<exclude pattern="org.jboss.threads.JBossThread.run" name="JBoss thread" size="9"/>
 				<exclude pattern="org.jboss.jca.core.connectionmanager.pool.mcp.PoolFiller.run" name="JCA PoolFiller" size="4"/>
 				<exclude pattern="org.jboss.jca.core.connectionmanager.pool.idle.IdleRemover$IdleRemoverRunner.run" name="JBoss remover thread" size="7"/>
+				<exclude pattern="org.xnio.nio.WorkerThread.run" name="JBoss XNIO thread" size="7"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
