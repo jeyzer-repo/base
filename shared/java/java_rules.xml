@@ -251,7 +251,7 @@
 				           pattern="JVM uncaught exception dispatch" 
 				           level="WARNING"
 				           sub_level="7" 
-				           message="A thread died due to an uncaught exception. The JVM did catch the origination Java exception and forwarded it to a default handler.&#10; You should inspect the logs for exception traces and understand the root cause.&#10; Review also the application code to handle properly such exception.&#10;Note that the exception processing is performed in the initial thread : check its name."/>
+				           message="A thread died due to an uncaught exception. The JVM did catch the originating Java exception and forwarded it to a default handler.&#10;Often, this is an uncaught Error such as OutOfMemoryError or StackOverflowError.&#10;You should inspect the logs for exception traces and understand the root cause.&#10; Review also the application code to handle properly such exception.&#10;Note that the exception processing is performed in the initial thread : check its name."/>
 			</thresholds>
 		</rule>
 
