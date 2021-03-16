@@ -60,6 +60,9 @@
 	
 			<!-- Optional uncompress -->
 			<translator type="compression" translator_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/translators/compression/uncompress.xml"/>
+			
+			<!-- Optional JFR -->
+			<translator type="jfr" translator_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/translators/jfr/jfr_uncompress.xml"/>
 
 		</translators>
 

@@ -256,7 +256,7 @@
 				<!-- Java 9+ cleaner -->
 				<exclude pattern="jdk.internal.misc.InnocuousThread.run" name="JVM cleaner" size="5"/>
 				<!-- Java 9+ JFR -->
-				<exclude pattern="jdk.jfr.internal.PlatformRecorder.lambda$startDiskMonitor" name="JFR disk monitor" size="6"/>
+				<exclude pattern="jdk.jfr.internal.PlatformRecorder.lambda$startDiskMonitor" name="JFR disk monitor" size="8"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
