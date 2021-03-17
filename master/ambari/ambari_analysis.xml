@@ -92,6 +92,7 @@
 			<file_regex_pattern     pattern="\.jstack$"/>
 			<file_regex_pattern     pattern="\.txt$"/>
 			<file_regex_pattern     pattern="\.dump$"/>
+			<file_regex_pattern     pattern="\.tdump$"/>
 			<file_regex_pattern     pattern="\.out$"/>
 			
 			<!-- JMC can generate periodic thread dumps -->
