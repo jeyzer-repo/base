@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="JBoss" version="LATEST">
+<profile name="JBoss" version="2.4">
 
 		<!-- 
 			Pattern rule appliance by priority :

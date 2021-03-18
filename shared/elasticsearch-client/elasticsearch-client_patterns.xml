@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Elastic Search Client" version="LATEST">
+<profile name="Elastic Search Client" version="2.4">
 
 		<!-- 
 			Pattern rule appliance by priority :
