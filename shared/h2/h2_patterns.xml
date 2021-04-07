@@ -41,6 +41,7 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="org.h2.server.TcpServerThread.run" name="H2 server" size="11"/>
+				<exclude pattern="org.h2.tools.Server.run" name="H2 server" size="9"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
