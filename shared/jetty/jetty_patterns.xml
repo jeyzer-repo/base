@@ -45,6 +45,7 @@
 				<exclude pattern="org.eclipse.jetty.util.BlockingArrayQueue.poll;org.eclipse.jetty.util.thread.QueuedThreadPool.idleJobPoll;org.eclipse.jetty.util.thread.QueuedThreadPool.access" name="Jetty Worker thread waiting for a task to execute"/>		<!-- Multiple line pattern -->
 				<exclude pattern="org.eclipse.jetty.io.nio.SelectorManager$SelectSet.doSelect;org.eclipse.jetty.io.nio.SelectorManager;org.eclipse.jetty.util.thread.QueuedThreadPool.runJob" name="Jetty thread listening"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.ServerSocketChannelImpl.accept;org.eclipse.jetty.server.nio.SelectChannelConnector.accept;org.eclipse.jetty.server.AbstractConnector$Acceptor.run" name="Jetty thread listening on socket" size="8"/>	<!-- Multiple line pattern -->
+				<exclude pattern="org.eclipse.jetty.io.ManagedSelector$SelectorProducer.select;org.eclipse.jetty.io.ManagedSelector$SelectorProducer.produce;org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.produceTask" name="Jetty Eat What You Kill thread waiting for a task to execute"/>	<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
