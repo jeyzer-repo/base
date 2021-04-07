@@ -77,6 +77,7 @@
 				<operation pattern="java.lang.Class.forName" name="Class access"/>
 				<operation pattern="sun.nio.fs.WindowsNativeDispatcher.DeleteFile" name="File delete"						type="File"/>
 				<operation pattern="java.io.WinNTFileSystem.checkAccess" name="File access check"							type="File"/>
+				<operation pattern="java.nio.file.Files.move" name="File move"												type="File"/>
 				<operation pattern="java.io.File.exists" name="File exist check"											type="File"/>
 				<operation pattern="java.io.File.lastModified" name="File last modified check"								type="File"/>
 				<operation pattern="java.io.File.renameTo" name="File renaming"												type="File"/>
@@ -233,7 +234,9 @@
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a linked blocking queue"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a linked blocking queue"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a delayed work queue"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.SynchronousQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.SynchronousQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue (take)"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.SynchronousQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue (poll)"/>		<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.Iocp.getQueuedCompletionStatus;sun.nio.ch.Iocp.access$300;sun.nio.ch.Iocp$EventHandlerTask.run" name="Windows I/O completion wait"/>		<!-- Multiple line pattern -->
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="ThreadImpl.dumpThreads" name="Thread dump"/>
 				<exclude pattern="com.sun.jmx.remote.internal.ServerCommunicatorAdmin$Timeout.run" name="JMX"/>
