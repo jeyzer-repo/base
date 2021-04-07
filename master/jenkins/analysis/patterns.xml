@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="ambari" version="LATEST">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - function  (6)
+			5 - function_discovery  (5)
+			6 - executor  (4)
+			7 - executor_thread_name (3)
+			8 - operation (2)
+			9 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolumn separator to declare multiple line patterns -->
+			<functions>
+				<function pattern="jenkins.scm.SCMCheckoutStrategy.checkout" name="SCM checkout"/>
+				<function pattern="hudson.triggers.SCMTrigger$Runner.runPolling" name="SCM poll"/>
+				<function pattern="hudson.tasks.Maven.perform" name="Maven execution"/>
+				<function pattern="hudson.maven.MavenModuleSetBuild.run" name="Maven run"/>
+				<function pattern="hudson.util.StreamCopyThread.run" name="Stream copy"/>
+				<function pattern="hudson.scm.SubversionSCM.checkout" name="SVN checkout"/>
+				<function pattern="hudson.plugins.fitnesse.FitnesseBuilder.perform" name="Health check"/>
+				<function pattern="org.jenkinsci.plugins.durabletask.FileMonitoringTask$FileMonitoringController" name="Log file watch"/>
+				<function pattern="org.jenkinsci.plugins.workflow.cps.CpsThreadGroup.saveProgram" name="Save program state"/>
+				<function pattern="org.jenkinsci.plugins.workflow.cps.CpsStepContext$3.onSuccess" name="Flow step success"/>
+				<function pattern="hudson.Proc$1.run" name="External process execution"/>
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<operation pattern="hudson.plugins.git.GitSCM.compareRemoteRevisionWithImpl" name="Git compare with remote revision"/>
+				<operation pattern="org.apache.hive.service.rpc.thrift.TCLIService$Client.GetOperationStatus" name="Query operation status"/>
+				<operation pattern="hudson.Proc.joinWithTimeout" name="Execute process with timeout"/>
+				<operation pattern="hudson.remoting.Channel.call" name="Remote Jenkins call"/>
+			</operations>
+			<executors>
+				<executor pattern="org.jenkinsci.plugins.workflow.steps.durable_task.DurableTaskStep$Execution.run" name="Jenkins workflow durable step"/>
+				<executor pattern="hudson.remoting.SynchronousCommandTransport$ReaderThread.run" name="Jenkins command executor"/>
+				<executor pattern="hudson.Proc$1.run" name="Jenkins process executor"/>
+				<executor pattern="hudson.model.Executor.run" name="Jenkins executor"/>
+				<executor pattern="hudson.util.StreamCopyThread.run" name="Jenkins stream copy executor"/>
+				<executor pattern="hudson.remoting.SingleLaneExecutorService$1.run" name="Jenkins lane executor"/>
+				<executor pattern="hudson.util.SequentialExecutionQueue$QueueEntry.run" name="Jenkins sequential executor"/>
+			</executors>
+			<executor_thread_names>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<executor_thread_name pattern="H2 File Lock Watchdog" name="Jenkins H2 File Lock Watchdog"/>
+				<executor_thread_name pattern="QueueSubTaskMetrics" name="Jenkins Queue Sub Task Metrics"/>
+				<executor_thread_name pattern="Jetty (winstone)" name="Jetty wrapper"/>
+				<executor_thread_name pattern="AWT-Windows" name="AWT-Windows"/>
+				<executor_thread_name pattern="LauncherControlThread" name="Jenkins Launcher Control thread"/>
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude pattern="java.net.SocketInputStream.read;com.trilead.ssh2.crypto.cipher.CipherInputStream.fill_buffer" name="Trilead SSH thread" size="12"/>	<!-- Multiple line pattern -->
+				<exclude pattern="hudson.remoting.AbstractSynchronousByteArrayCommandTransport.read;hudson.remoting.SynchronousCommandTransport$ReaderThread.run" name="Jenkins command executor"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;org.jenkinsci.plugins.ssegateway.SubscriptionConfigQueue.lambda$start" name="Jenkins Server Sent Events gateway"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;org.jenkinsci.plugins.pubsub.listeners.SyncQueueListener.lambda$static" name="Jenkins pub sub listener"/>	<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.SelectorImpl.select;org.jenkinsci.remoting.protocol.IOHub.run" name="Jenkins IO hub listener"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.ref.ReferenceQueue.remove;hudson.remoting.RemoteInvocationHandler$Unexporter.run" name="Jenkins phantom reference cleaner"/>	<!-- Multiple line pattern -->
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!--exclude_thread_name pattern_regex="RMI TCP Accept.*" name="RMI thread"/-->
+				<exclude_thread_name pattern="org.jenkinsci.plugins.workflow.steps.durable_task.DurableTaskStep" name="Durable task" size="9"/>
+				<exclude_thread_name pattern="QueueSubTaskMetrics" name="Queue Sub Task Metrics" size="9"/>
+				<exclude_thread_name pattern="Jetty (winstone)" name="Jetty wrapper" size="10"/>
+				<exclude_thread_name pattern="H2 File Lock Watchdog" name="H2 File Lock Watchdog" size="9"/>
+				<exclude_thread_name pattern="AWT-Windows" name="AWT-Windows" size="3"/>
+				<exclude_thread_name pattern_regex="Computer.threadPoolForRemoting \[#.*\]$" name="Thread pool for remoting" size="9"/>
+				<exclude_thread_name pattern_regex="^ForkJoinPool.commonPool-worker-" name="Fork Join Pool worker" size="4"/>
+				<exclude_thread_name pattern_regex="^pool-1-svnkit-thread-" name="SVN kit" size="9"/>
+				<exclude_thread_name pattern_regex="^TCP agent listener" name="TCP agent listener" size="4"/>
+				<exclude_thread_name pattern="LauncherControlThread" name="LauncherControlThread" size="3"/>
+			</exclude_thread_names>
+		</patterns>
+
+</profile>
