@@ -55,6 +55,9 @@
 		
 		<!-- Process modules sheet will be displayed only if the process modules file is available -->
 		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/modules/modules-with-graph.xml"/>
+		
+		<!-- JVM flags sheet will be displayed only if the JVM flags file is available -->
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/jvm-flags/jvm-flags.xml"/>
 
 	</xlsx_report>
 
