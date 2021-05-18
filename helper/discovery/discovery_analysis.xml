@@ -168,6 +168,18 @@
 		<ignored_stacks generation_enabled="false" zip_output_dir="${JEYZER_OUTPUT_DIR}/analysis"/>
 	</thread_stack>
 	
+	<!-- Time zones -->
+	<!--   Ids below can be overridden through the Jeyzer web interface -->
+	<time_zones>
+	
+		<!-- Default recording time zone if not available in the recording. Optional -->
+		<recording_time_zone id="${JEYZER_RECORDING_TIME_ZONE_ID}"/>
+		
+		<!-- Drives the date display in reports and other outputs. Optional -->
+		<display_time_zone   id="${JEYZER_DISPLAY_TIME_ZONE_ID}"/>
+		
+	</time_zones>
+	
 	<!-- Static data setup -->
 	<setup setup_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/setup/default_setup.xml"/>
 
