@@ -22,6 +22,8 @@
 	<rules>
 		<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/advanced_rules.xml"/>
 		<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/standard_rules.xml"/>
+		<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/process_card_rules.xml"/>
+		<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/jvm_flag_rules.xml"/>
 		<rule_sets files="repo://base/@@base-shared-deps@@"/>
 		<all_applicative_rules/>
 		<jeyzer_publisher_rules/>

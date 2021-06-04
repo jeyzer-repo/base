@@ -24,6 +24,7 @@
 		<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/standard_rules.xml"/>
 		<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/advanced_rules.xml"/>
 		<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/process_card_rules.xml"/>
+		<rule_set file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/rules/jvm_flag_rules.xml"/>
 		<!--rule_set file="${JEYZER_BASE_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/monitor/rules/ambari_rules.xml"/-->
 		<dynamic_rule_sets declared_repository_only="true"/>
 	</rules>
