@@ -20,6 +20,7 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<function pattern="oracle.jdbc.OracleDatabaseMetaData.getClientInfoProperties" name="Oracle client info access"/>
+				<function pattern="oracle.jdbc.driver.PhysicalConnection.pingDatabase" name="Oracle database ping"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->

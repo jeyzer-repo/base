@@ -28,6 +28,7 @@
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<!-- Spring -->
+				<operation pattern="org.springframework.data.redis." name="Spring Redis operation"/>
 				<operation pattern="org.springframework." name="Spring framework operation"/>
 			</operations>
 			<lockers>

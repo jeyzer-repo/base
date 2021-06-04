@@ -25,6 +25,7 @@
 				<function pattern="org.hibernate.loader.Loader.loadCollection" name="Hibernate load collection"/>
 				<function pattern="org.hibernate.loader.Loader.loadEntity" name="Hibernate load entity"/>
 				<function pattern="org.hibernate.impl.SessionImpl.flush" name="Hibernate session flush"/>
+				<function pattern="org.hibernate.internal.SessionImpl.flush" name="Hibernate session flush"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->

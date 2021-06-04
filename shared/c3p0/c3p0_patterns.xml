@@ -23,6 +23,7 @@
 				<function pattern="com.mchange.v2.resourcepool.BasicResourcePool.doAcquireAndDecrementPendingAcquiresWithinLockOnSuccess;BasicResourcePool.access;BasicResourcePool$ScatteredAcquireTask.run" name="C3P0 Pool connection access (asynchronous)"/> <!-- Multiple line pattern -->
 				<function pattern="com.mchange.v2.c3p0.impl.C3P0PooledConnectionPool$1PooledConnectionResourcePoolManager.destroyResource;BasicResourcePool$1DestroyResourceTask.run" name="C3P0 Pool connection closure (asynchronous)"/> <!-- Multiple line pattern -->
 				<function pattern="com.mchange.v2.async.ThreadPoolAsynchronousRunner$DeadlockDetector.run" name="C3P0 pool deadlock detection"/>
+				<function pattern="com.mchange.v2.c3p0.AbstractConnectionTester.activeCheckConnection" name="C3P0 pool connection check"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->

@@ -156,6 +156,7 @@
 				<operation pattern="javax.crypto.Mac.doFinal" name="Encryption MAC appliance"							type="Crypto"/>
 				<operation pattern="sun.security.provider.SHA" name="SHA operation"										type="Crypto"/>
 				<operation pattern="sun.net.ssl.internal.ssl.SSLSocketImpl.handleException" name="Buffer error while reading on SSL connection" type="Exception"/>
+				<operation pattern="javax.faces." name="JSF operation"/>
 				<operation pattern="javax.crypto." name="Java cryptographic operation"									type="Crypto"/>
 				<operation pattern="sun.security.ssl." name="SSL operation"/>
 				<operation pattern="java.net." name="Java IO access (network)"											type="Network"/>
@@ -177,6 +178,7 @@
 				<operation pattern="java.util.concurrent.SynchronousQueue.offer" name="Synchronous queue item insertion (can wait for consumption)"	type="Queue"/>
 				<operation pattern="java.util.concurrent.LinkedBlockingQueue.offer" name="Linked blocking queue item insertion (can wait for consumption)"/>
 				<operation pattern="java.lang.Math." name="Java mathematic operation"/>
+				<operation pattern="java.math." name="Java mathematic operation"/>
 				<operation pattern="java.text.SimpleDateFormat." name="Date format operation"/>
 				<operation pattern="sun.util.calendar." name="Calendar operation"/>
 				<operation pattern="com.sun.common.util.logging.LoggingOutputStream$LoggingPrintStream.write" name="Sun logging operation"	type="Log"/>
@@ -188,6 +190,7 @@
 				<operation pattern="java.lang.StringBuffer." name="Java StringBuffer operation"							type="String"/>
 				<operation pattern="java.lang.StringBuilder." name="Java StringBuilder operation"						type="String"/>
 				<operation pattern="java.lang.NoSuchMethodException;java.lang.Class.getDeclaredMethod" name="Java method introspection failure"		type="Exception"/>    <!-- Multiple line pattern -->
+				<operation pattern="java.util.MissingResourceException;java.util.ResourceBundle.getObject" name="Java bundle missing resource"		type="Exception"/>    <!-- Multiple line pattern -->
 				<operation pattern="java.lang.Throwable" name="Java exception generation" 								type="Exception"/>
 				<operation pattern="java.lang.System.identityHashCode" name="Java identity hash code"/>
 				<operation pattern="java.util.regex." name="Java regex operation"										type="String"/>
@@ -239,6 +242,8 @@
 				<exclude pattern="java.util.concurrent.SynchronousQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue (poll)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.Iocp.getQueuedCompletionStatus;sun.nio.ch.Iocp.access$300;sun.nio.ch.Iocp$EventHandlerTask.run" name="Windows I/O completion wait"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.EPoll.epollWait;sun.nio.ch.EPollPort$EventHandlerTask.poll;sun.nio.ch.EPollPort$EventHandlerTask.run" name="Windows E port poll wait"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.LockSupport.parkUntil;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join dormant thread" size="4"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.LockSupport.park;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join unsignalled thread" size="4"/>		<!-- Multiple line pattern -->
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="ThreadImpl.dumpThreads" name="Thread dump"/>
 				<exclude pattern="com.sun.jmx.remote.internal.ServerCommunicatorAdmin$Timeout.run" name="JMX"/>
