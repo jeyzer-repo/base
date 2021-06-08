@@ -120,6 +120,7 @@
 			<file_regex_pattern     pattern="\.dump$"/>
 			<file_regex_pattern     pattern="\.tdump$"/>
 			<file_regex_pattern     pattern="\.out$"/>
+			<file_regex_pattern     pattern="\.tda$"/>
 			
 			<!-- JMC can generate periodic thread dumps -->
 			<file_regex_pattern     pattern="\.jfr$"/>
