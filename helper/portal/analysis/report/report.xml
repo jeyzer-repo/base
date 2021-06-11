@@ -20,12 +20,9 @@
 		
 		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-monitoring-all-alerts.xml"/>
 		
-		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-standard-focus.xml"/>
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-thread-activity.xml"/>
 		
 		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-charts.xml"/>
-		
-		<!-- display java locks and related -->
-		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-locks.xml"/>
 		
 		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-gc-global.xml"/>
 
