@@ -133,7 +133,7 @@
 				<tendency_executor/>
 				<tendency_contention_type/>	
 			</headers>
-			<headers formats="IBM core dump,TDA,default" freeze="true">
+			<headers formats="IBM core dump,JRMC,TDA,default" freeze="true">
 				<thread_counter color="RED">
 					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
 				</thread_counter>
@@ -249,7 +249,7 @@
 				<memory_pool_heap display="Heap size" color="RED"/>
 				<memory_pool_heap_ratio display="Heap usage %" threshold="70" color="RED"/>
 			</headers>
-			<headers formats="Jstack 1.6+,Jstack 1.6+ Hung,JMX,Jstack 1.5">
+			<headers formats="Jstack 1.6+,Jstack 1.6+ Hung,JMX,Jstack 1.5,JRMC">
 				<capture_time color="RED">
 					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
 				</capture_time>
