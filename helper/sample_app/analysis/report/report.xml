@@ -133,7 +133,7 @@
 				<tendency_executor/>
 				<tendency_contention_type/>	
 			</headers>
-			<headers formats="IBM core dump, default" freeze="true">
+			<headers formats="IBM core dump,TDA,default" freeze="true">
 				<thread_counter color="RED">
 					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
 				</thread_counter>
@@ -257,7 +257,7 @@
 					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
 				</thread_counter>
 			</headers>
-			<headers formats="IBM core dump, default">
+			<headers formats="IBM core dump,TDA,default">
 				<thread_counter color="RED">
 					<delta increase_factor="10" increase_color="RGB-255-180-129" decrease_factor="10" decrease_color="RGB-167-255-167"/>
 				</thread_counter>		
