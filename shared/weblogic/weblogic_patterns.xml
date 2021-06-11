@@ -33,6 +33,7 @@
 				<operation pattern="weblogic.jdbc.wrapper." name="Weblogic JDBC driver operation"/>
 				<operation pattern="weblogic.common.resourcepool." name="Weblogic JDBC connection pool operation"							type="Resource pool"/>
 				<operation pattern="weblogic.jdbc.common.internal.ConnectionEnv.test" name="Weblogic JDBC connection testing"/>
+				<operation pattern="com.bea.common.security.internal.service.AuthorizationServiceImpl.isAccessAllowed" name="access check operation"/>
 				<operation pattern="com.certicom.tls.record.handshake." name="SSL handshake"/>
 				<operation pattern="com.certicom.security." name="security operation"/>
 			</operations>
