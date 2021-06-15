@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Tomcat" version="LATEST">
+<profile name="Tomcat" version="2.5">
 
 		<!-- 
 			Pattern rule appliance by priority :

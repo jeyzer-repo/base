@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Hikari" version="LATEST">
+<profile name="Hikari" version="2.5">
 
 		<!-- 
 			Pattern rule appliance by priority :
