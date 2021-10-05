@@ -40,7 +40,7 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
+				<exclude pattern="java.lang.Object.wait,okio.AsyncTimeout.awaitTimeout,okio.AsyncTimeout$Watchdog.run" name="OkHttp okio thread"/>	<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
