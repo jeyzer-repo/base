@@ -9,7 +9,7 @@
 		<!-- ************************************************************************ -->
 
 		<!--  If operation is detected across current session, generate event. -->
-		<rule name="Operation presence" param_display="Instana agent" param="Instana thread dump generation" stickers="performance" ref="JZR-SHA-INSTA-001">
+		<rule name="Operation presence" param_display="Instana agent" param="Instana thread dump generation" stickers="performance, environment" ref="JZR-SHA-INSTA-001">
 			<narrative>This rule detects the usage of the Instana monitoring agent.</narrative>
 			<thresholds>
 				<threshold type="system signal" 
