@@ -20,6 +20,7 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<!--function pattern="javax.xml.parsers.DocumentBuilderFactory.newInstance" name="DOM builder loading"/-->
+				<function pattern="akka.actor.ActorCell.receiveMessage" name="Akka actor message processing" />
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
