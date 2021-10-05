@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Tanuki">
+
+		<!-- ************************************************************************ -->
+		<!--                       TANUKI RULES                                         -->
+		<!-- ************************************************************************ -->
+
+		<!--  If operation is detected across current session, generate event. -->
+		<rule name="Function presence" param_display="Tanuki Windows Service" param="Tanuki backend listen" ref="JZR-SHA-TANUK-001">
+			<narrative>This rule detects the usage of the Tanuki Windows Service wrapper.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           sub_level="6"
+				           message="Program is running as a Windows Service using the Tanuki wrapper."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
