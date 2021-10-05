@@ -9,7 +9,7 @@
 		<!-- ************************************************************************ -->
 
 		<!--  If operation is detected across current session, generate event. -->
-		<rule name="Operation presence" param_display="Wily agent" param="Wily agent heartbeat" stickers="code_quality" ref="JZR-SHA-WILY-001">
+		<rule name="Operation presence" param_display="Wily agent" param="Wily agent heartbeat" stickers="performance, environment" ref="JZR-SHA-WILY-001">
 			<narrative>This rule detects the usage of the CA Wily monitoring agent.</narrative>
 			<thresholds>
 				<threshold type="system signal" 
