@@ -20,6 +20,9 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<function pattern="org.apache.catalina.core.StandardHost.startInternal" name="Tomcat host startup"/>
+				<function pattern="org.apache.catalina.ha.tcp.ReplicationValve.sendReplicationMessage" name="Tomcat cluster send replication message"/>
+				<function pattern="org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor.sendAsyncData" name="Tomcat cluster send async message"/>
+				<function pattern="org.apache.catalina.tribes.transport.ReceiverBase.messageDataReceived" name="Tomcat cluster message processing"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -27,13 +30,18 @@
 				<operation pattern="sun.net.www.protocol.https.Handler.openConnection" name="HTTPS connection opening"						type="Network"/>
 				<operation pattern="org.apache.coyote.http11.InternalOutputBuffer.realWriteBytes" name="Sending HTTP page back to client" 	type="Network"/>
 				<operation pattern="tomcat5.CoyoteRequest.getParameter" name="Http request parameter access"/>
-				<operation pattern="org.apache.catalina.loader.WebappClassLoader.loadClass" name="Class loading"							type="Class loader"/>
-				<operation pattern="tomcat5.CoyoteRequest.doGetSession" name="Tomcat J2EE session access"/>
+				<operation pattern="org.apache.catalina.loader.WebappClassLoader.loadClass" name="Tomcat class loading"						type="Class loader"/>
+				<operation pattern="tomcat5.CoyoteRequest.doGetSession" name="Tomcat 5 J2EE session access"/>
 				<operation pattern="catalina.connector.Request.getSession" name="Tomcat J2EE session access"/>
+				<operation pattern="org.apache.catalina.tribes.group.GroupChannel.send" name="Tomcat cluster message sending"/>
+				<operation pattern="org.apache.catalina.tribes.group.GroupChannel.messageReceived" name="Tomcat cluster message reception"/>
+				<operation pattern="org.apache.catalina.tribes.transport.PooledSender.getSender" name="Tomcat cluster message sender access"/>
+				<operation pattern="org.apache.catalina.tribes.transport.nio.ParallelNioSender.doLoop" name="Tomcat cluster sent message result wait" 	type="Network"/>
+				<operation pattern="org.apache.catalina.tribes.group.interceptors.TcpFailureDetector.memberDisappeared" name="Tomcat cluster member disappearance handling"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
-  				<!-- locker pattern="java.util.concurrent.locks.LockSupport.park" name="LockSupport"/-->
+  				<locker pattern="java.lang.Object.wait;org.apache.catalina.tribes.transport.PooledSender$SenderQueue.getSender" name="Wait for sender"/>
 			</lockers>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
@@ -44,16 +52,16 @@
 				<executor pattern="org.apache.tomcat.util.net.NioBlockingSelector$BlockPoller.run" name="Tomcat NIO thread"/>
 				<executor pattern="org.apache.tomcat.util.net.AprEndpoint$Poller.run" name="Tomcat APR Poller thread"/>
 				<executor pattern="org.apache.tomcat.util.net.AprEndpoint$Acceptor.run" name="Tomcat APR Acceptor thread"/>
+				<executor pattern="org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor" name="Tomcat cluster message dispatched thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
-				<!--executor_thread_name pattern="thread pattern" name="Thread type name"/-->
 				<executor_thread_name pattern_regex=".*-startStop" name="Tomcat start stop thread"/>
 				<executor_thread_name pattern_regex="^http-nio-" name="Tomcat NIO http thread"/>
+				<executor_thread_name pattern_regex="^Tribes-Task-Receiver-" name="Tomcat cluster thread"/>
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
 				<exclude pattern="tomcat.util.net.NioBlockingSelector$BlockPoller.run" name="Tomcat NIO thread" size="7"/>
 				<exclude pattern="org.apache.tomcat.util.net.AprEndpoint$Poller.run" name="Tomcat APR Poller thread" size="3"/>
 				<exclude pattern="org.apache.tomcat.util.net.AprEndpoint$Acceptor.run" name="Tomcat APR Acceptor thread" size="3"/>
@@ -62,11 +70,11 @@
 				<exclude pattern="org.apache.coyote.http11.Http11Processor.process" name="Tomcat HTTP 11 processor" size="5"/>
 				<exclude pattern="org.apache.tomcat.util.threads.TaskQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a Tomcat take blocking queue"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;org.apache.tomcat.util.net.NioEndpoint$Poller.run" name="NIO Endpoint waiting on select"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Thread.sleep;org.apache.catalina.core.StandardServer.await;org.apache.catalina.startup.Catalina.await;org.apache.catalina.startup.Catalina.start" name="Tomcat main waiting"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!-- exclude_thread_name pattern_regex="RMI TCP.*" name="RMI"/-->
 				<exclude_thread_name pattern_regex=".*-startStop" name="Tomcat start stop thread" size="8"/>
 				<exclude_thread_name pattern_regex="^http-nio-" name="Tomcat NIO http thread" size="11"/>
 			</exclude_thread_names>

@@ -50,6 +50,19 @@
 			</thresholds>
 		</rule>
 		
+		<!--  If operation regex pattern in the current task is seen more than value, generate event. Pattern is regex -->
+		<rule name="Operation pattern" extra_info="Tomcat cluster TCP connection" ref="JZR-SHA-TOM-003">
+			<narrative>This rule detects the Tomcat cluster TCP connection issues.</narrative>
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="1"
+				           pattern="Tomcat cluster member disappearance handling" 
+				           level="WARNING"
+				           sub_level="9"
+				           message="Tomcat cluster is TCP connection issues to conect to other cluster node(s)."/>
+			</thresholds>
+		</rule>
+				
 		<!--  If number of threads (active and inactive) matching the [pattern] is lower or equal than [value] for [count] thread dumps or [time], generate event. Pattern is regex -->
 		<!--  Important : Absent threads rules cannot be complementary as one or the other will wrongly match. Put all patterns under the same regex like below -->
 		<!--
