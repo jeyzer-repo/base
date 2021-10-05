@@ -20,11 +20,18 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<!--function pattern="javax.xml.parsers.DocumentBuilderFactory.newInstance" name="DOM builder loading"/-->
+				<function pattern="scala.util.parsing.combinator.RegexParsers.parse" name="Scala regex process"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
-				<!--operation pattern="java.lang.String.split" name="String split"		   type="String"/-->
+				<operation pattern="scala.collection.AbstractIterable.toMap" name="Scala map creation"		  				type="Collection"/>
+				<operation pattern="scala.collection.immutable.TreeMap$.from" name="Scala tree map copy"					type="Collection"/>
+				<operation pattern="scala.collection.immutable.RedBlackTree$Tree" name="Scala red black tree operation"		type="Collection"/>
+				<operation pattern="scala.collection.Iterator.zip" name="Scala zip operation"/>
+				<operation pattern="anorm.RowParser" name="Scala SQL row parsing"/>
+				<operation pattern="scala." name="Scala operation"/>
+				<operation pattern="anorm." name="Scala SQL data operation"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -32,6 +39,7 @@
 			</lockers>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<!-- executor pattern="scala.concurrent.impl.Promise$Transformation.run" name="Scala transformation thread"/ -->
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
