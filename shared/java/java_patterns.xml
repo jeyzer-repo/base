@@ -102,6 +102,7 @@
 				<operation pattern="java.lang.String.split" name="String split"												type="String"/>
 				<operation pattern="java.util.concurrent.CopyOnWriteArrayList" name="Java array list copy"					type="Collection"/>
 				<operation pattern="java.lang.System.arraycopy" name="Java array list copy"									type="Collection"/>
+				<operation pattern="java.util.Arrays.copyOf" name="Java array copy"											type="Collection"/>
 				<operation pattern="java.util.Collections.sort" name="Collection sort"										type="Collection"/>
 				<operation pattern="java.util.WeakHashMap.get" name="Weak hashMap access"									type="Collection"/>
 				<operation pattern="java.util.TimSort.sort" name="Timsort"/>
@@ -190,6 +191,7 @@
 				<operation pattern="java.lang.StringBuffer." name="Java StringBuffer operation"							type="String"/>
 				<operation pattern="java.lang.StringBuilder." name="Java StringBuilder operation"						type="String"/>
 				<operation pattern="java.lang.NoSuchMethodException;java.lang.Class.getDeclaredMethod" name="Java method introspection failure"		type="Exception"/>    <!-- Multiple line pattern -->
+				<operation pattern="java.lang.NoSuchMethodException;java.lang.Class.getMethod" name="Java method introspection failure"				type="Exception"/>    <!-- Multiple line pattern -->
 				<operation pattern="java.util.MissingResourceException;java.util.ResourceBundle.getObject" name="Java bundle missing resource"		type="Exception"/>    <!-- Multiple line pattern -->
 				<operation pattern="java.lang.Throwable" name="Java exception generation" 								type="Exception"/>
 				<operation pattern="java.lang.System.identityHashCode" name="Java identity hash code"/>
@@ -238,14 +240,15 @@
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a linked blocking queue"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue (poll)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a delayed work queue (take)"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.SynchronousQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue (take)"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.SynchronousQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue (take)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.SynchronousQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue (poll)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.Iocp.getQueuedCompletionStatus;sun.nio.ch.Iocp.access$300;sun.nio.ch.Iocp$EventHandlerTask.run" name="Windows I/O completion wait"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.EPoll.epollWait;sun.nio.ch.EPollPort$EventHandlerTask.poll;sun.nio.ch.EPollPort$EventHandlerTask.run" name="Windows E port poll wait"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.locks.LockSupport.parkUntil;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join dormant thread" size="4"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.locks.LockSupport.park;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join unsignalled thread" size="4"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.ForkJoinPool.awaitWork;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join wait for thread" size="4"/>		<!-- Multiple line pattern -->
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<exclude pattern="ThreadImpl.dumpThreads" name="Thread dump"/>
+				<!-- exclude pattern="ThreadImpl.dumpThreads" name="Thread dump"/-->
 				<exclude pattern="com.sun.jmx.remote.internal.ServerCommunicatorAdmin$Timeout.run" name="JMX"/>
 				<!-- Sun HTTP -->
 				<exclude pattern="sun.net.www.http.KeepAliveCache.run" name="HTTP keep alive timer" size="3"/>
