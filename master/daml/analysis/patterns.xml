@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="daml" version="2.6">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - function  (6)
+			5 - function_discovery  (5)
+			6 - executor  (4)
+			7 - executor_thread_name (3)
+			8 - operation (2)
+			9 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolumn separator to declare multiple line patterns -->
+			<functions>
+				<function pattern="com.codahale.metrics.InstrumentedExecutorService$InstrumentedRunnable.run" name="Instrument execution"/>
+				<function pattern="com.daml.platform.apiserver.execution.StoreBackedCommandExecutor.$anonfun$consume" name="Store backed command consume"/>
+				<function pattern="com.daml.platform.apiserver.SpannedIndexService.lookupContractKey" name="Lookup contract key"/>
+				<function pattern="com.daml.platform.store.BaseLedger.lookupKey" name="Base ledger key lookup"/>
+				<function pattern="com.daml.lf.speedy.Speedy$Machine.withOnLedger" name="Ledger access"/>
+				<function pattern="com.daml.platform.store.cache.StateCache.$anonfun$registerEventualCacheUpdate" name="State cache update"/>
+				<function pattern="com.daml.platform.store.appendonlydao.events.ContractsReader.$anonfun$lookupKeyState" name="Contract key state db lookup"/>
+				<function pattern="com.daml.platform.store.appendonlydao.events.TransactionsReader" name="Transaction db access"/>
+				<function pattern="com.daml.platform.store.appendonlydao.DbDispatcher.$anonfun$executeSql" name="SQL execution"/>
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<operation pattern="com.daml." name="Daml operation"/>
+			</operations>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<executor pattern="com.codahale.metrics.InstrumentedExecutorService$InstrumentedRunnable.run" name="Instrument executor service"/>
+			</executors>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!--  exclude pattern="org.eclipse.jetty.server.Server.join;org.apache.server.controller.Server.run" name="Main loop"/-->	<!-- Multiple line pattern -->
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!--exclude_thread_name pattern_regex="RMI TCP Accept.*" name="RMI thread"/-->
+				<!-- exclude_thread_name pattern="action-scheduler" name="Action scheduler" size="3"/-->
+			</exclude_thread_names>
+		</patterns>
+
+</profile>
