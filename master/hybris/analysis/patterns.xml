@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="hybris" version="2.6">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - function  (6)
+			5 - function_discovery  (5)
+			6 - executor  (4)
+			7 - executor_thread_name (3)
+			8 - operation (2)
+			9 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolumn separator to declare multiple line patterns -->
+			<functions>
+				<function pattern="de.hybris.platform.util.Utilities.getExtensionForWebroot" name="Web root extension access"/>
+				<function pattern="javax.servlet.http.HttpServletRequestWrapper.getSession;de.hybris.platform.servicelayer.web.SessionFilter.doFilter" name="Hybris session access"/>
+				<function pattern="java.lang.Object.wait;de.hybris.platform.util.threadpool.PoolableThread.resetAndReturnToPool" name="Hybris thread reset"/>	<!-- Multiple line pattern -->
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<operation pattern="de.hybris." name="Hybris operation"/>
+			</operations>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<executor pattern="de.hybris.platform.util.threadpool.PoolableThread.run" name="Hybris pool thread"/>
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<executor_thread_name pattern_regex="^hybrisHTTP.*" name="Hybris HTTP thread"/>
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude pattern="java.lang.Thread.sleep;de.hybris.platform.cluster.ClusterNodePingUpdater.run" name="Main loop"/>	<!-- Multiple line pattern -->
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!--exclude_thread_name pattern_regex="RMI TCP Accept.*" name="RMI thread"/-->
+				<!--  exclude_thread_name pattern="ambari-action-scheduler" name="Ambari action scheduler" size="3"/-->
+			</exclude_thread_names>
+		</patterns>
+
+</profile>
