@@ -44,6 +44,7 @@
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.SelectedSelectionKeySetSelector.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select loop"/>		<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.SelectedSelectionKeySetSelector.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select2 loop"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
