@@ -179,6 +179,10 @@
 		<!-- Drives the date display in reports and other outputs. Optional -->
 		<display_time_zone   id="${JEYZER_DISPLAY_TIME_ZONE_ID}"/>
 		
+		<!-- Stack ordering : recording (natural one), thread_id, thread_name -->
+		<!-- This will influence all the analysis and therefore the report display -->
+		<sorting key="thread_name"/>
+		
 	</time_zones>
 	
 	<!-- Static data setup -->

@@ -153,6 +153,11 @@
 	
 		<!-- write all discarded stack traces into ignored-stacks.zip -->
 		<ignored_stacks generation_enabled="false" zip_output_dir="${JEYZER_OUTPUT_DIR}/analysis"/>
+		
+		<!-- Stack ordering : recording (natural one), thread_id, thread_name -->
+		<!-- This will influence all the analysis and therefore the report display -->
+		<sorting key="thread_name"/>
+		
 	</thread_stack>
 	
 	<!-- Time zones -->
