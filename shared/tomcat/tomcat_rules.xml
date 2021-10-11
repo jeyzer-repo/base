@@ -59,7 +59,7 @@
 				           pattern="Tomcat cluster member disappearance handling" 
 				           level="WARNING"
 				           sub_level="9"
-				           message="Tomcat cluster is TCP connection issues to conect to other cluster node(s)."/>
+				           message="Tomcat cluster is facing TCP connection issues to connect to other cluster node(s)."/>
 			</thresholds>
 		</rule>
 				
