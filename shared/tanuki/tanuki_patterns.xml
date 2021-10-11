@@ -32,7 +32,7 @@
 			</lockers>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
-				<!--executor pattern="HttpServlet.service" name="HTTP request"/-->
+				<executor pattern="org.tanukisoftware.wrapper.WrapperManager.run" name="Tanuki listener"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
