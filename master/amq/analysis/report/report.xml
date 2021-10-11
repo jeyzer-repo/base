@@ -21,6 +21,8 @@
 		<sheet sheet_config_file="${JEYZER_BASE_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/sheet/sequence-monitoring-alerts.xml"/>
 	
 		<sheet sheet_config_file="${JEYZER_BASE_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/sheet/sequence-functions.xml"/>
+
+		<sheet sheet_config_file="${JEYZER_BASE_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/sheet/group-sequence-stack-groups.xml"/>
 		
 		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-contention-types.xml"/>
 

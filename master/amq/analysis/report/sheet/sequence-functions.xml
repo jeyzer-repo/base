@@ -18,49 +18,7 @@
 			<display>
 
 				<advanced_function display_operation="true" display_contention_type="false">
-					<highlight name="TCP SSL message processing" color="SEA_GREEN"/>
-					<highlight name="Message sending" color="LIGHT_GREEN"/>
-				
-					<highlight name="Add consumer" color="YELLOW"/>
-					<highlight name="Add producer" color="YELLOW"/>
-					<highlight name="Add destination" color="YELLOW"/>
-					<highlight name="Add session" color="YELLOW"/>
-					<highlight name="Add connection" color="YELLOW"/>
-					<highlight name="Remove consumer" color="LEMON_CHIFFON"/>
-					<highlight name="Remove producer" color="LEMON_CHIFFON"/>
-					<highlight name="Remove destination" color="LEMON_CHIFFON"/>
-					<highlight name="Remove session" color="LEMON_CHIFFON"/>
-					<highlight name="Remove connection" color="LEMON_CHIFFON"/>
-					<highlight name="Remove subscription" color="LEMON_CHIFFON"/>
-					<highlight name="Outgoing message processing" color="RGB-132-247-129"/> <!-- middle green -->
-					<highlight name="Incoming message processing" color="LIGHT_GREEN"/>
-					<highlight name="Process message ACK" color="LIGHT_GREEN"/>
-					<highlight name="Incoming txn commit processing" color="LIGHT_GREEN"/>
-					<highlight name="Process producer ACK" color="LIGHT_GREEN"/>
-					<highlight name="Process keep alive" color="LIGHT_GREEN"/>
-
-					<!-- AMQ 5 specific -->
-					<highlight name="Queue flow control timeout waiting" color="RGB-243-91-87"/> <!-- light red -->
-					
-					<highlight name="Queue message expiry" color="RGB-201-117-195"/>  <!-- light purple -->
-					<highlight name="Inactive queue or topic purging" color="RGB-201-117-195"/> <!-- light purple -->
-					
-					<!-- Broker -->
-					<highlight name="Queue message dispatching (internal)" color="RGB-199-221-241"/> <!-- light blue -->
-				
-					<highlight name="IO Exception handling (Inactivity Monitor)" color="RGB-243-91-87"/> <!-- light red -->
-					<highlight name="IO Exception handling (Producer connection stale)" color="RGB-243-91-87"/> <!-- light red -->
-					<highlight name="AMQ stopping connection" color="ROSE"/>
-					<highlight name="About to stop AMQ connection" color="ROSE"/>
-					
-					<highlight name="KAHADB Journal writing" color="LAVENDER"/>
-					<highlight name="KAHADB cleanup" color="LAVENDER"/>
-					<highlight name="KAHADB recover : move all the messages that were in the journal into long term storage" color="LAVENDER"/>
-					<highlight name="KAHADB Journal disk file writing (sync)" color="RGB-223-23-128"/> <!-- dark purple -->
-					<highlight name="KAHADB Journal disk file writing" color="RGB-223-23-128"/> <!-- dark purple -->
-					<highlight name="KAHADB message storage" color="LAVENDER"/>
-					
-					<highlight name="(ATBI)" color="GREY_25_PERCENT"/>
+					<highlights file="${JEYZER_BASE_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/highlights/functions.xml"/>
 				</advanced_function>
 				
 				<!-- Java Lock display -->
