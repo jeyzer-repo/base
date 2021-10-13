@@ -8,16 +8,17 @@
 <!--          4. Set the the analysis application name below with the target profile name             -->
 <!--          5. Set the analysis profile state parameter below to draft                              -->
 <!--          6. Set the pattern dependencies (hibernate, log4j..)                                    -->
-<!--          7. Set any required translator (obfuscation, security..)                                -->
-<!--          8. Make sure that the JEYZER_MASTER_PROFILES_DIR_ROOTS is covering current directory    -->
-<!--          9. Start the Jeyzer Web Analyzer                                                        -->
-<!--          10. Generate JZR reports based on current profile                                       -->
-<!--          11. Fine tune the pre filter below to determine the stack of interest coverage          -->
-<!--          12. Fine tune the current profile based on the tuning sheets (_profile.xml) :           -->
+<!--          7. Set the pattern that identifies your application for the profile redirection         -->
+<!--          8. Set any required translator (obfuscation, security..)                                -->
+<!--          6. Make sure that the JEYZER_MASTER_PROFILES_DIR_ROOTS is covering current directory    -->
+<!--          10. Start the Jeyzer Web Analyzer                                                       -->
+<!--          11. Generate JZR reports based on current profile                                       -->
+<!--          12. Fine tune the pre filter below to determine the stack of interest coverage          -->
+<!--          13. Fine tune the current profile based on the tuning sheets (_profile.xml) :           -->
 <!--              setup the applicative excludes, thread executors, functions and operations          -->
-<!--          13. Activate/create the final applicative sheets for current profile (_report.xml)      -->
-<!--          14. Setup the monitoring rules for current profile (_monitor.xml)                       -->
-<!--          15. Once ready, change the analysis profile state below to production                   -->
+<!--          14. Activate/create the final applicative sheets for current profile (_report.xml)      -->
+<!--          15. Setup the monitoring rules for current profile (_monitor.xml)                       -->
+<!--          16. Once ready, change the analysis profile state below to production                   -->
 <!-- ================================================================================================ -->
 
 <!-- ==================================================== -->
@@ -29,9 +30,6 @@
 
 	<!-- Context information -->
 	<context desc="${JEYZER_TARGET_DESCRIPTION}" issuer="${JEYZER_TARGET_ISSUER}"/>
-	
-	<!-- Discovery mode. If disabled, discovery rules won't be loaded. -->
-	<discovery_mode enabled="true"/>
 	
 	<!-- Dependency sets. Referenced in the analysis patterns and monitoring rules -->
 	<dependencies>
@@ -57,6 +55,26 @@
 		<dynamic_pattern_sets declared_repository_only="true"/>
 	
 	</patterns>
+	
+	<discovery>
+		
+		<!-- Profile redirect allows to load another profile instead of the current one. Suitable for generic profiles -->
+		<profile_redirection enabled="false">
+		
+			<!-- Profile id patterns define the remarkable applicative stack patterns which are used in the profile redirection. Suitable for production profiles  -->
+			<!--   Those stack patterns are typically one or several application package names, which must be unique -->
+			<!--   Optional. If not defined, the current master profile cannot participate in a profile redirection phase -->
+			<id_patterns>
+				<id_pattern value="org.my_application"/>
+				<id_pattern value="com.my_application"/>
+			</id_patterns>
+			
+		</profile_redirection>
+		
+		<!-- Apply rules based keywords provided by the end user -->
+		<discovery_rules enabled="false"/>
+		
+	</discovery>
 
 	<!-- JZR Report configuration -->
 	<report report_config_file="${JEYZER_BASE_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/report.xml"/>

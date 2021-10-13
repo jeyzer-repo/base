@@ -29,7 +29,18 @@
 		<!--   Otherwise, the patterns scanning of all repositories will be achieved to load the appropriate shared profile if any (extra cost) -->
 		<dynamic_pattern_sets declared_repository_only="true"/>
 	
-	</patterns>	
+	</patterns>
+	
+	<discovery>
+		<profile_redirection>
+			<!-- Profile id patterns define the remarkable applicative stack patterns which are used in the profile redirection. Suitable for production profiles  -->
+			<!--   Those stack patterns are typically one or several application package names, which must be unique -->
+			<!--   Optional. If not defined, the current master profile cannot participate in a profile redirection phase -->
+			<id_patterns>
+				<id_pattern value="de.hybris.platform"/>
+			</id_patterns>
+		</profile_redirection>
+	</discovery>
 
 	<!-- JZR Report configuration -->
 	<report report_config_file="${JEYZER_BASE_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/analysis/report/report.xml"/>

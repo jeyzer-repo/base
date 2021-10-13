@@ -10,8 +10,15 @@
 	<!-- Context information -->
 	<context desc="${JEYZER_TARGET_DESCRIPTION}" issuer="${JEYZER_TARGET_ISSUER}"/>
 	
-	<!-- Discovery mode. If disabled, discovery rules won't be loaded. -->
-	<discovery_mode enabled="false"/>
+	<discovery>
+		
+		<!-- Profile redirect allows to load another profile instead of the current one. Suitable for generic profiles -->
+		<profile_redirection enabled="true"/>
+		
+		<!-- Apply rules based keywords provided by the end user -->
+		<discovery_rules enabled="false"/>
+		
+	</discovery>
 	
 	<!-- Dependency sets. Referenced in the analysis patterns and monitoring rules -->
 	<dependencies>

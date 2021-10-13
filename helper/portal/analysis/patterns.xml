@@ -17,7 +17,7 @@
 			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
 	 	-->
 		<patterns>
-			<!-- Discovery functions are loaded only if discovery mode is enabled (cf. discovery_mode) -->
+			<!-- Discovery functions are loaded only if discovery mode is enabled (cf. discovery_rules) -->
 			<discovery_functions>
 				<!-- pattern is a list of keywords, comma separated. Each keyword will issue one discovery rule -->
 				<!-- pattern_regex is optional. Focus can be : method, class, both -->
@@ -34,7 +34,7 @@
 				<!-- <function pattern="any.thread.stack.Extract3;stack.Extract4"  name="Function 3"/> --> <!-- Multiple line pattern -->
 				<!-- <function pattern="any.thread.stack.Extract5"  name="Important Function 5" priority="900"/> -->  <!-- High priority : must be displayed -->
 			</functions>
-			<!-- Discovery functions are loaded only if discovery mode is enabled (cf. discovery_mode) -->
+			<!-- Discovery functions are loaded only if discovery mode is enabled (cf. discovery_rules) -->
 			<discovery_operations>
 				<!-- pattern is a list of keywords, comma separated. Each keyword will issue one discovery rule -->
 				<!-- pattern_regex is optional. Focus can be : method, class, both -->
