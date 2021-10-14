@@ -136,7 +136,7 @@
 			</headers>
 		
 			<row_headers>
-				<group_id action_link="true"/>
+				<group_id group_link="true"/>
 				<executor/>
 				<group_size color="RGB-231-213-137" threshold="10"/> <!-- Light brown -->
 			</row_headers>
