@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Apache-HTTP-client">
+
+		<!-- ************************************************************************ -->
+		<!--                       Apache HTTP Client RULES                           -->
+		<!-- ************************************************************************ -->
+
+		<!--  If number of active threads matching the [pattern] is greater than [value] for [count] snapshots or [time], generate event. Applies for thread pools. Pattern is regex -->
+		<rule name="Active named thread limit" extra_info="Apache Client Connection Watchdog threads" ref="JZR-SHA-APACHE-HTTP-CLT-001" ticket ="Stack over flow 63414102">
+			<narrative>This rule detects any high number of Connection evictor threads.</narrative>
+			<thresholds>	
+			    <threshold type="session custom"
+						   count="1"
+						   value="500"
+						   pattern="^Connection evictor" 
+				           level="WARNING"
+						   sub_level="10"
+				           message="High number of Apache Client Connection threads. Possible thread leakage is happening. Check the HTTP connection pool size. If it is lower than the number of Connection Evictor threads, the thread leakage is confirmed. There is a risk of Out of Memory and slow down on the long term. Plan an application restart for now. Review the server code to prevent this leakage."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
