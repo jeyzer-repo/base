@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Hibernate" version="2.6">
+<profile name="Hibernate" version="2.7">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -26,6 +26,7 @@
 				<function pattern="org.hibernate.loader.Loader.loadEntity" name="Hibernate load entity"/>
 				<function pattern="org.hibernate.impl.SessionImpl.flush" name="Hibernate session flush"/>
 				<function pattern="org.hibernate.internal.SessionImpl.flush" name="Hibernate session flush"/>
+				<function pattern="org.hibernate.loader.plan.exec.internal.AbstractLoadPlanBasedLoader.executeQueryStatement" name="Hibernate query"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
