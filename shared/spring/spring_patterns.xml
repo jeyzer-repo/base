@@ -28,7 +28,7 @@
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
-				<!-- Spring -->
+				<operation pattern="org.springframework.boot.loader.jar." name="Jar access"/>
 				<operation pattern="org.springframework.data.redis." name="Spring Redis operation"/>
 				<operation pattern="org.springframework." name="Spring framework operation"/>
 			</operations>
@@ -47,6 +47,7 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
+				<exclude pattern="java.lang.Thread.sleep;org.apache.catalina.core.StandardServer.await;org.springframework.boot.web.embedded.tomcat.TomcatWebServer$1.run" name="Spring Tomcat main waiting"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
