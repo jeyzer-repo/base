@@ -24,9 +24,11 @@
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
-				<operation pattern="com.mysql.jdbc.ConnectionImpl.execSQL" name="SQL execution"  			   type="MySQL"/>
-				<operation pattern="mysql.jdbc.PreparedStatement.executeUpdate" name="MySQL insert or update"  type="MySQL"/>
-				<operation pattern="mysql.jdbc." name="MySQL operation"		   	   							   type="MySQL"/>
+				<operation pattern="com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery" name="SQL prepared statement execution"  	type="MySQL"/>
+				<operation pattern="com.mysql.jdbc.ConnectionImpl.execSQL" name="SQL execution"  			   							type="MySQL"/>
+				<operation pattern="mysql.jdbc.PreparedStatement.executeUpdate" name="MySQL insert or update"  							type="MySQL"/>
+				<operation pattern="mysql.jdbc." name="MySQL operation"		   	   							   							type="MySQL"/>
+				<operation pattern="com.mysql." name="MySQL operation"		   	   							   							type="MySQL"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -34,7 +36,7 @@
 			</lockers>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
-				<!--executor pattern="line" name="explain"/-->
+				<executor pattern="com.mysql.cj.jdbc.AbandonedConnectionCleanupThread.run" name="MySQL connection cleanup thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -42,7 +44,7 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
+				<exclude pattern="com.mysql.cj.jdbc.AbandonedConnectionCleanupThread.run" name="MySQL connection cleanup thread" size="6"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
