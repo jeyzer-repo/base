@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Java" version="2.6">
+<profile name="Java" version="2.7">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -32,12 +32,15 @@
 				<function pattern="java.util.concurrent.ThreadPoolExecutor.processWorkerExit" name="Thread worker exit"/>
 				<function pattern="com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.getAttribute" name="JMX attribute remote access"/>
 				<function pattern="javax.management.MBeanServerInvocationHandler.findMXBeanProxy" name="MX bean proxy lookup"/>
+				<function pattern="org.xml.sax.helpers.XMLReaderFactory.createXMLReader" name="XML read"/>
 				<function pattern="com.sun.enterprise.resource.pool.PoolManagerImpl.getResource;com.sun.enterprise.connectors.ConnectionManagerImpl.getResource" name="Sun JDBC connection pool access"/>  <!-- Multiple line pattern -->
 				<function pattern="sun.management.GarbageCollectorImpl.createGCNotification" name="JMX GC notification creation"/>
 				<!-- SSL -->
 				<function pattern="ssl.ServerHandshaker.clientHello" name="SSL server handshake"/>
 				<function pattern="ssl.ClientHandshaker.serverCertificate" name="SSL client handshake"/>
 				<function pattern="javax.net.ssl.impl.SSLSocketImpl.startHandshake" name="SSL handshake"/>
+				<function pattern="jdk.management.jfr.FlightRecorderMXBeanImpl.startRecording" name="JFR start recording"/>
+				<function pattern="jdk.management.jfr.FlightRecorderMXBeanImpl.stopRecording(jdk.management.jfr" name="JFR stop recording"/>
 				<function pattern="jdk.jfr.internal.JVM.emitEvent" name="JFR publish events"/>
 				<!-- Others -->
 				<function pattern="java.lang.Thread.dispatchUncaughtException" name="JVM uncaught exception dispatch"/>
@@ -152,6 +155,7 @@
 				<operation pattern="java.util.Random.&lt;init&gt;" name="Random constructor"		                    type="Random generation"/>
 				<operation pattern="java.security.SecureRandom.nextBytes" name="Random number generation"				type="Random generation"/>
 				<operation pattern="sun.security.jca." name="Security certificate operation"							type="Crypto"/>
+				<operation pattern="java.security.Signature.verify" name="Signature verification"						type="Crypto"/>
 				<operation pattern="javax.crypto.JarVerifier.verifySingleJar" name="Jar file signature verification"	type="Crypto"/>
 				<operation pattern="javax.crypto.Mac.update" name="Encryption MAC appliance"							type="Crypto"/>
 				<operation pattern="javax.crypto.Mac.doFinal" name="Encryption MAC appliance"							type="Crypto"/>
