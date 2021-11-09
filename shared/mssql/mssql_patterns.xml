@@ -19,7 +19,7 @@
 		<patterns>
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
-				<function pattern="org.compass.core.lucene.engine.optimizer.DefaultLuceneSearchEngineOptimizer.optimize" name="Search index optimization"/>
+				<!-- function pattern="engine.optimizer.DefaultLuceneSearchEngineOptimizer.optimize" name="Search index optimization"/ -->
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
