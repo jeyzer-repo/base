@@ -22,6 +22,7 @@
 				<field name="Version" property="os.version"/>
 				<field name="Architecture" property="os.arch"/>
 				<field name="# CPUs" property="jzr.ext.process.available.processors"/>
+				<field name="# CPUs" property="jfr.system.cpu.cores"/>
 				<field name="Patch level" property="sun.os.patch.level"/>
 			</category>
 			<category name="JVM" color="RGB-196-227-252">
