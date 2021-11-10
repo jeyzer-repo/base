@@ -39,7 +39,7 @@
 		</rule>
 		
 		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
-		<rule name="Operation global percentage" param_display="Destination map access" param="AMQ destination map access" ref="JZR-APP-AMQ-102">
+		<rule name="Operation global percentage" param_display="Destination map access" param="AMQ destination map access" ref="JZR-APP-AMQ-102" ticket="AMQ-3454">
 			<narrative>This rule detects the AMQ-3454 bug.</narrative>
 			<thresholds>
 				<threshold type="system value" 
