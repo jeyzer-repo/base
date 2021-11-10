@@ -18,6 +18,8 @@
 				<field name="Java home" property="java.home"/>
 				<field name="Runtime name" property="java.runtime.name"/>
 				<field name="VM info" property="java.vm.info"/>
+				<field name="GC old" property="jzr.analysis.gc.old.name"/>
+				<field name="GC young" property="jzr.analysis.gc.young.name"/>
 			</category>	
 			<category name="Regional settings" color="RGB-191-202-136">
 				<field name="Time zone" property="user.timezone"/>
