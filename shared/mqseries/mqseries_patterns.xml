@@ -26,6 +26,9 @@
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<!-- MQSeries -->
 				<operation pattern="ibm.mq.jmqi.remote.impl.RemoteProxyQueue.requestMessages" name="IBM MQ queue fetch"						type="MQSeries"/>
+				<operation pattern="ibm.mq.connector.inbound.ServerSessionPoolImpl.getServerSession" name="IBM MQ server session access"/>
+				<operation pattern="ibm.msg.client.commonservices.Log.Log.log" name="IBM MQ logging" 									type="Log"/>
+				<operation pattern="ibm.mq.connector.services.JCAMessageBuilder.buildWarning" name="IBM MQ warning emit"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -47,6 +50,7 @@
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<!-- MQSeries -->
 				<exclude pattern="com.ibm.mq.jmqi.remote.impl.RemoteTCPConnection.receive" name="MQSeries receive" size="20"/>
+				<exclude pattern="ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation$WorkQueueManagerThread.run" name="IBM MQ " size="5"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
