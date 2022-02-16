@@ -24,6 +24,8 @@
 				<function pattern="org.jboss.logging.Log4jService$URLWatchTimerTask.run" name="JBoss log4j file scanner"/>
 				<function pattern="org.jboss.resource.connectionmanager.InternalManagedConnectionPool.fillToMin" name="JBoss db connection pool filling"/>
 				<function pattern="org.jboss.logging.Logger.error" name="JBoss error logging"/>
+				<function pattern="org.jboss.web.CatalinaLogger_$logger.exceptionDuringService" name="JBoss service exception"/>
+				<function pattern="org.jboss.as.web.security.JBossWebRealm.authenticate" name="JBoss authentication"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
