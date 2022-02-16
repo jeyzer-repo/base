@@ -100,6 +100,7 @@
 				<operation pattern="com.sun.org.apache.xml." name="XML operation"/>
 				<operation pattern="org.apache.xerces." name="XML operation"/>
 				<operation pattern="com.sun.xml.bind.v2.model.impl." name="JAXB operation"/>
+				<operation pattern="javax.xml.bind.JAXBContext.newInstance" name="JAXB init"/>
 				<operation pattern="java.lang.Object.clone" name="Java object cloning"/>
 				<operation pattern="java.lang.AbstractStringBuilder.expandCapacity" name="String builder size expanding"	type="String"/>
 				<operation pattern="java.lang.String.split" name="String split"												type="String"/>
@@ -165,6 +166,7 @@
 				<operation pattern="javax.crypto." name="Java cryptographic operation"									type="Crypto"/>
 				<operation pattern="sun.security.ssl." name="SSL operation"/>
 				<operation pattern="java.net." name="Java IO access (network)"											type="Network"/>
+				<operation pattern="jrockit.net." name="JRockit IO access (network)"									type="Network"/>
 				<!--operation pattern="java.io." name="Java IO access"														type="I/O"/-->
 				<operation pattern="sun.nio.ch.ServerSocketChannelImpl.accept0" name="Server socket listening"			type="Listen"/>
 				<operation pattern="java.io.PrintStream.print" name="print"												type="I/O"/>
@@ -180,8 +182,9 @@
 				<operation pattern="java.util.HashMap." name="Java hash map operation"								    type="Collection"/>
 				<operation pattern="java.util.concurrent.ConcurrentHashMap." name="Java concurrent hashmap operation" 	type="Collection"/>
 				<operation pattern="java.util.concurrent.ConcurrentHashMap$" name="Java concurrent hashmap operation" 	type="Collection"/>
-				<operation pattern="java.util.concurrent.SynchronousQueue.offer" name="Synchronous queue item insertion (can wait for consumption)"	type="Queue"/>
-				<operation pattern="java.util.concurrent.LinkedBlockingQueue.offer" name="Linked blocking queue item insertion (can wait for consumption)"/>
+				<operation pattern="java.util.concurrent.SynchronousQueue.offer" name="Synchronous queue item insertion (can wait for consumption)"			type="Queue"/>
+				<operation pattern="java.util.concurrent.LinkedBlockingQueue.offer" name="Linked blocking queue item insertion (can wait for consumption)"  type="Queue"/>
+				<operation pattern="java.util.concurrent.DelayQueue.offer" name="Delay queue item insertion (can wait for consumption)"						type="Queue"/>
 				<operation pattern="java.lang.Math." name="Java mathematic operation"/>
 				<operation pattern="java.math." name="Java mathematic operation"/>
 				<operation pattern="java.text.SimpleDateFormat." name="Date format operation"/>
@@ -216,6 +219,7 @@
   				<locker pattern="java.util.concurrent.CyclicBarrier.await" name="CyclicBarrier"/>
   				<locker pattern="java.util.concurrent.Semaphore.acquire" name="Semaphore"/>
   				<locker pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.returnResource" name="RWLockDataStructure"/>
+  				<locker pattern="jrockit.vm.Locks.lockFat" name="JRockit fat lock"/>
 			</lockers>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
@@ -243,7 +247,9 @@
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a linked blocking queue"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a linked blocking queue"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue (poll)"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor$Worker.run" name="Worker thread waiting for task execution from a synchronous queue (poll)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a delayed work queue (take)"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor$Worker.run" name="Worker thread waiting for task execution from a delayed work queue (take)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.SynchronousQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue (take)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.SynchronousQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue (poll)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.Iocp.getQueuedCompletionStatus;sun.nio.ch.Iocp.access$300;sun.nio.ch.Iocp$EventHandlerTask.run" name="Windows I/O completion wait"/>		<!-- Multiple line pattern -->
