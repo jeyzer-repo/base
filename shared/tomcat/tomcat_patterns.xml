@@ -23,6 +23,7 @@
 				<function pattern="org.apache.catalina.ha.tcp.ReplicationValve.sendReplicationMessage" name="Tomcat cluster send replication message"/>
 				<function pattern="org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor.sendAsyncData" name="Tomcat cluster send async message"/>
 				<function pattern="org.apache.catalina.tribes.transport.ReceiverBase.messageDataReceived" name="Tomcat cluster message processing"/>
+				<function pattern="org.apache.coyote.ajp.AjpProtocol$AjpConnectionHandler.createProcessor" name="Tomcat AJP processor creation"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -38,6 +39,7 @@
 				<operation pattern="org.apache.catalina.tribes.transport.PooledSender.getSender" name="Tomcat cluster message sender access"/>
 				<operation pattern="org.apache.catalina.tribes.transport.nio.ParallelNioSender.doLoop" name="Tomcat cluster sent message result wait" 	type="Network"/>
 				<operation pattern="org.apache.catalina.tribes.group.interceptors.TcpFailureDetector.memberDisappeared" name="Tomcat cluster member disappearance handling"/>
+				<operation pattern="org.apache.coyote.ajp." name="AJP operation"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -67,6 +69,8 @@
 				<exclude pattern="org.apache.tomcat.util.net.AprEndpoint$Acceptor.run" name="Tomcat APR Acceptor thread" size="3"/>
 				<exclude pattern="org.apache.coyote.ajp.AjpProcessor.process" name="Tomcat AJP processor thread" size="11"/>
 				<exclude pattern="org.apache.tomcat.util.net.JIoEndpoint$Worker.run" name="Tomcat JIoEndpoint worker" size="5"/>
+				<exclude pattern="org.apache.tomcat.util.net.JIoEndpoint$Poller.run" name="Tomcat JIoEndpoint poller" size="3"/>
+				<exclude pattern="org.apache.tomcat.util.net.JIoEndpoint$Acceptor.run" name="Tomcat JIoEndpoint acceptor" size="7"/>
 				<exclude pattern="org.apache.coyote.http11.Http11Processor.process" name="Tomcat HTTP 11 processor" size="5"/>
 				<exclude pattern="org.apache.tomcat.util.threads.TaskQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a Tomcat take blocking queue"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;org.apache.tomcat.util.net.NioEndpoint$Poller.run" name="NIO Endpoint waiting on select"/>		<!-- Multiple line pattern -->
