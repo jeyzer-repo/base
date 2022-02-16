@@ -46,6 +46,18 @@
 				           message="JBoss logged an error. Please check the applicative logs."/>
 			</thresholds>
 		</rule>
+		
+		<!--  If function regex pattern in the current task is seen more than value, generate event. Pattern is regex -->
+		<rule name="Function pattern" extra_info="JBoss service exception" ref="JZR-SHA-JBOS-003">
+			<narrative>This rule detects the generation of JBoss service exceptions.</narrative>
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="1"
+				           pattern="JBoss service exception" 
+				           level="INFO"
+				           message="JBoss thrown an exception upon a request processing. Please check the applicative logs."/>
+			</thresholds>
+		</rule>
 
 	</rules>
 
