@@ -22,7 +22,7 @@
 	
 	<!-- Dependency sets. Referenced in the analysis patterns and monitoring rules -->
 	<dependencies>
-		<set id="base-shared-deps" profiles="tomcat, jetty, glassfish, weblogic, websphere, jboss, spring, camel, mqseries, hibernate, c3p0, db2, jtds, oracle, mssql, mysql, postgresql, guava, guice, slf4j, log4j, apache-commons, jeyzer, java"/>
+		<set id="base-shared-deps" profiles="tomcat, jetty, glassfish, weblogic, websphere, jboss, eclipse, jersey, netty, spring, camel, mqseries, mongodb, hibernate, c3p0, mysql, mssql, postgresql, db2, jtds, oracle, h2, jacorb, hadoop, jgroups, guava, guice, akka, thrift, handlebars, jackrabbit, gson, scala, quartz, xstream, slf4j, log4j, logback, amq, apache-http-client, jodd-http, aws,apache-openejb, apache-commons, bouncy-castle, instana, wily, tanuki, jeyzer, java"/>
 	</dependencies>
 
 	<!-- Analysis patterns. Load order : top to bottom. Pattern rules of the top pattern set apply first. Dynamic patterns are loaded at last -->
