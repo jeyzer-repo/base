@@ -33,9 +33,11 @@
 				<operation pattern="weblogic.jdbc.wrapper." name="Weblogic JDBC driver operation"/>
 				<operation pattern="weblogic.common.resourcepool." name="Weblogic JDBC connection pool operation"							type="Resource pool"/>
 				<operation pattern="weblogic.jdbc.common.internal.ConnectionEnv.test" name="Weblogic JDBC connection testing"/>
+				<operation pattern="weblogic.jdbc.jts.Driver.createLocalConnection" name="Weblogic JDBC connection creation"/>
 				<operation pattern="com.bea.common.security.internal.service.AuthorizationServiceImpl.isAccessAllowed" name="access check operation"/>
 				<operation pattern="com.certicom.tls.record.handshake." name="SSL handshake"/>
 				<operation pattern="com.certicom.security." name="security operation"/>
+				<operation pattern="weblogic.net.http.HttpURLConnection.getResponseCode" name="HTTP response access"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -46,6 +48,8 @@
 				<!-- Weblogic -->
 				<executor pattern="weblogic.Server.main" name="Weblogic bootstrap thread"/>
 				<executor pattern="weblogic.work.ExecuteThread.run" name="Weblogic thread"/>
+				<executor pattern="weblogic.kernel.ExecuteThread.run" name="Weblogic kernel thread"/>
+				<executor pattern="weblogic.timers.internal.TimerThread$Thread.run" name="Weblogic timer thread"/>	
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -53,7 +57,7 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
+				<exclude pattern="jrockit.vm.Locks.monitorEnter;weblogic.socket.EPollSocketMuxer.processSockets;weblogic.socket.SocketReaderRequest.run" name="Weblogic socket reader thread waiting for message to process"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
