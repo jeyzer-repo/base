@@ -19,7 +19,7 @@
 		<patterns>
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
-				<!--function pattern="javax.xml.parsers.DocumentBuilderFactory.newInstance" name="DOM builder loading"/-->
+				<function pattern="org.jgroups.logging.Log4JLogImpl.error" name="Jgroups error logging"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -34,6 +34,7 @@
 				<!--executor pattern="HttpServlet.service" name="HTTP request"/-->
 				<executor pattern="org.jgroups.protocols.UDP$PacketReceiver.run" name="Jgroups UDP receiver thread"/>
 				<executor pattern="org.jgroups.protocols.FD_SOCK$ServerSocketHandler.run" name="Jgroups FD receiver thread"/>
+				<executor pattern="org.jgroups.protocols.TP$MyHandler.run" name="Jgroups transport protocol thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -44,6 +45,8 @@
 				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
 				<exclude pattern="org.jgroups.protocols.UDP$PacketReceiver.run" name="Jgroups UDP receiver thread" size="5"/>
 				<exclude pattern="org.jgroups.protocols.FD_SOCK$ServerSocketHandler.run" name="Jgroups FD receiver thread" size="6"/>
+				<exclude pattern="org.jgroups.protocols.tom.DeliveryThread.run" name="Jgroups delivery thread" size="4"/>
+				<exclude pattern="java.util.concurrent.DelayQueue.take;org.jgroups.util.TimeScheduler3.run" name="Jgroups thread waiting for a task to execute from a delay queue (take)"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
