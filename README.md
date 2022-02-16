@@ -58,5 +58,5 @@ https://jeyzer.org/docs/shared-profile/
 License
 -------
 
-Copyright 2021 Jeyzer.\
+Copyright 2022 Jeyzer.\
 Licensed under the [Mozilla Public License, Version 2.0](https://www.mozilla.org/media/MPL/2.0/index.815ca599c9df.txt)
