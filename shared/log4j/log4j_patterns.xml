@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Log4j" version="2.6">
+<profile name="Log4j" version="2.7">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -28,8 +28,9 @@
 				<!-- Log4j -->
 				<operation pattern="org.apache.log4j.helpers.QuietWriter.flush" name="Log4j flush"											type="Log"/>
 				<operation pattern="org.apache.log4j.MDC.put" name="Log4j MDC"																type="Log"/>
-				<operation pattern="org.apache.log4j." name="Log4j access"																	type="Log"/>
 				<operation pattern="log4j.Category.log" name="Log4j logging"																type="Log"/>
+				<operation pattern="org.apache.logging.log4j." name="Log4j2 access"															type="Log"/>
+				<operation pattern="org.apache.log4j." name="Log4j access"																	type="Log"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Log4j">
+
+		<!-- ************************************************************************ -->
+		<!--                       LOG4J RULES                                       -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If operation is detected across current session, generate event. -->
+		<rule name="Operation presence" param_display="Log4J deprecated version usage" param="Log4j access" ref="JZR-SHA-LOG4J-001" stickers="code_quality, security">
+			<narrative>This rule detects the usage of the first version of Log4J.</narrative>
+			<thresholds>
+				<threshold type="system signal"
+				           level="WARNING"
+				           sub_level="6"
+				           message="Obsolete log4J version is used.&#10;  Make sure to put in place a bridge to Log4J2 or SLF4J while waiting to migrate your code to Log4j2.&#10; You MUST link with a Log4J2 2.17.1+ version (Java 8) to protect your application from the CVE-2021-44228 vulnerability."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
