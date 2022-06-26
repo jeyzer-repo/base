@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Latency-utils">
+
+		<!-- ************************************************************************ -->
+		<!--                       LATENCY UTILS RULES                                -->
+		<!-- ************************************************************************ -->
+
+		<!--  If function is detected across current session, generate event. -->
+		<rule name="Function presence" param_display="Latency utils available" param="Latency utils pause detection" ref="JZR-SHA-LAT-UTILS-001">
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           message="Latency utils is available.&#10; You may track latencies : please check with R&amp;D if not activated or unclear."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
