@@ -75,6 +75,7 @@
 				<exclude pattern="org.apache.tomcat.util.threads.TaskQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a Tomcat take blocking queue"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;org.apache.tomcat.util.net.NioEndpoint$Poller.run" name="NIO Endpoint waiting on select"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.lang.Thread.sleep;org.apache.catalina.core.StandardServer.await;org.apache.catalina.startup.Catalina.await;org.apache.catalina.startup.Catalina.start" name="Tomcat main waiting"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.net.ServerSocket.accept;org.apache.catalina.core.StandardServer.await;org.apache.catalina.startup.Catalina.await;org.apache.catalina.startup.Catalina.start" name="Tomcat main waiting 2"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
