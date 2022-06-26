@@ -267,6 +267,31 @@
 			</thresholds>
 		</rule>
 
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="Java regex percentage" param="Java regex operation" stickers="performance" ref="JZR-SHA-JAVA-021">
+			<narrative>This rule detects any intensive usage of Java regular expressions.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="5" 
+				           level="INFO"
+                           sub_level="6" 						   
+				           message="Possible contention on regular expressions.&#10;You may ask the R&#38;D to review it."/>
+				<threshold type="system value" 
+						   count="1"
+				           value="25" 
+				           level="WARNING"
+						   sub_level="6"						   
+				           message="Important contention on regular expressions.&#10;Please ask the R&#38;D to review it and see if it can be improved."/>
+				<threshold type="system value" 
+						   count="1"
+				           value="50" 
+				           level="WARNING"
+						   sub_level="10"						   
+				           message="High contention on regular expressions.&#10;Some regular expression is probably not optimal.&#10;Please ask the R&#38;D to review it and see if it can be improved."/>
+			</thresholds>
+		</rule>
+
 	</rules>
 
 </monitor>

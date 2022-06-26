@@ -65,6 +65,7 @@
 				<operation pattern="Runtime.freeMemory" name="Access available memory"/>
 				<operation pattern="com.sun.jmx.mbeanserver.JmxMBeanServer.registerMBean" name="Register MX bean"			type="JMX"/>
 				<operation pattern="com.sun.jmx.mbeanserver.JmxMBeanServer.unregisterMBean" name="Unregister MX bean"		type="JMX"/>
+				<operation pattern="javax.servlet.ServletRequestWrapper.getParameter" name="Servlet get param"/>
 				<operation pattern="java.net.HttpURLConnection.getResponseCode" name="HTTP response wait"					type="Network"/>
 				<operation pattern="java.net.NetworkInterface.getNetworkInterfaces" name="Get machine network interfaces"	type="Network"/>
 				<operation pattern="java.net.InetAddress.getByName" name="IP lookup"										type="Network"/>
@@ -93,6 +94,7 @@
 				<operation pattern="java.io.FileInputStream.close" name="File closing"									    type="File"/>
 				<operation pattern="java.io.FileOutputStream.open" name="File opening"									    type="File"/>
 				<operation pattern="java.io.FileOutputStream.write" name="File writing"									    type="File"/>
+				<operation pattern="java.io.RandomAccessFile.read" name="File reading"										type="File"/>
 				<operation pattern="java.io.RandomAccessFile.open" name="File opening"										type="File"/>
 				<operation pattern="java.io.RandomAccessFile.close" name="File closing"										type="File"/>
 				<operation pattern="DOMParser.parse" name="XML parsing"/>
@@ -107,6 +109,7 @@
 				<operation pattern="java.util.concurrent.CopyOnWriteArrayList" name="Java array list copy"					type="Collection"/>
 				<operation pattern="java.lang.System.arraycopy" name="Java array list copy"									type="Collection"/>
 				<operation pattern="java.util.Arrays.copyOf" name="Java array copy"											type="Collection"/>
+				<operation pattern="java.util.Arrays.equals" name="Java array equals"										type="Collection"/>
 				<operation pattern="java.util.Collections.sort" name="Collection sort"										type="Collection"/>
 				<operation pattern="java.util.WeakHashMap.get" name="Weak hashMap access"									type="Collection"/>
 				<operation pattern="java.util.TimSort.sort" name="Timsort"/>
@@ -185,6 +188,7 @@
 				<operation pattern="java.util.concurrent.SynchronousQueue.offer" name="Synchronous queue item insertion (can wait for consumption)"			type="Queue"/>
 				<operation pattern="java.util.concurrent.LinkedBlockingQueue.offer" name="Linked blocking queue item insertion (can wait for consumption)"  type="Queue"/>
 				<operation pattern="java.util.concurrent.DelayQueue.offer" name="Delay queue item insertion (can wait for consumption)"						type="Queue"/>
+				<operation pattern="jdk.jfr.internal.JVM.emitEvent" name="JVM event published"/>
 				<operation pattern="java.lang.Math." name="Java mathematic operation"/>
 				<operation pattern="java.math." name="Java mathematic operation"/>
 				<operation pattern="java.text.SimpleDateFormat." name="Date format operation"/>
@@ -218,6 +222,8 @@
   				<locker pattern="java.util.concurrent.CountDownLatch.await" name="CountDownLatch"/>
   				<locker pattern="java.util.concurrent.CyclicBarrier.await" name="CyclicBarrier"/>
   				<locker pattern="java.util.concurrent.Semaphore.acquire" name="Semaphore"/>
+				<!-- try lock with timeout -->
+				<locker pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer.tryAcquireSharedNanos;java.util.concurrent.Semaphore.tryAcquire" name="Semaphore"/>
   				<locker pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.returnResource" name="RWLockDataStructure"/>
   				<locker pattern="jrockit.vm.Locks.lockFat" name="JRockit fat lock"/>
 			</lockers>
