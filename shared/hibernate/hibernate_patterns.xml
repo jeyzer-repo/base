@@ -34,6 +34,7 @@
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<!-- Hibernate -->
 				<operation pattern="org.hibernate.action.internal.EntityUpdateAction.execute" name="Hibernate SQL update"/>
+				<operation pattern="org.hibernate.internal.SessionImpl.executeNativeUpdate" name="Hibernate SQL native update"/>
 				<operation pattern="org.hibernate.action.internal.EntityInsertAction.execute" name="Hibernate SQL insert"/>
 				<operation pattern="org.hibernate.impl.CriteriaImpl.list" name="Hibernate SQL fetch"/>
 				<operation pattern="org.hibernate.internal.CriteriaImpl.list" name="Hibernate SQL fetch"/>
@@ -47,6 +48,7 @@
 				<operation pattern="org.hibernate.impl.ScrollableResultsImpl.next" name="Hibernate result set fetch"/>
 				<operation pattern="org.hibernate.internal.SessionImpl.close" name="Hibernate session closure"/>
 				<operation pattern="org.hibernate.jpa.internal.TransactionImpl.commit" name="Hibernate transaction commit"/>
+				<operation pattern="org.hibernate.cache.ehcache.internal.StorageAccessImpl.putIntoCache" name="Hibernate cache update"/>
 				<operation pattern="org.hibernate." name="Hibernate operation"/>
 			</operations>
 			<lockers>
