@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="Apache-HTTP-core" version="2.7">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - locker  (7)
+			5 - function  (6)
+			6 - function_discovery  (5)
+			7 - executor  (4)
+			8 - executor_thread_name (3)
+			9 - operation (2)
+			10 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
+			<functions>
+				<function pattern="java.lang.Thread.sleep;org.apache.http.impl.client.IdleConnectionEvictor$1.run" name="Connection watch suspended"/>
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<!-- operation pattern="org.apache.commons.net.ftp.FTPClient._openDataConnection" name="FTP connection creation" type="Network"/-->
+			</operations>
+			<lockers>
+				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
+  				<!-- locker pattern="java.util.concurrent.locks.LockSupport.park" name="LockSupport"/-->
+			</lockers>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<executor pattern="org.apache.http.impl.nio.reactor.BaseIOReactor.execute" name="Reactor IO executor"/>
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<executor_thread_name pattern="Connection evictor" name="Connection watchdog"/>
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude pattern="sun.nio.ch.SelectorImpl.select;org.apache.http.impl.nio.reactor.AbstractMultiworkerIOReactor.execute;org.apache.synapse.transport.passthru.PassThrough" name="PassThrough" size="7"/>
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!-- exclude_thread_name pattern_regex="RMI TCP.*" name="RMI"/-->
+				<exclude_thread_name pattern_regex="^HTTPS-Listener I/O dispatcher.*" name="HTTPS listener" size="8"/>
+				<exclude_thread_name pattern_regex="^HTTPS-Sender I/O dispatcher.*"   name="HTTPS sender" size="8"/>
+				<exclude_thread_name pattern_regex="^HTTP-Listener I/O dispatcher.*"  name="HTTP listener" size="8"/>
+				<exclude_thread_name pattern_regex="^HTTP-Sender I/O dispatcher.*"    name="HTTP sender" size="8"/>
+			</exclude_thread_names>
+		</patterns>
+
+</profile>
