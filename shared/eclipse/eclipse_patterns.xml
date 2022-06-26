@@ -25,7 +25,7 @@
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
-				<!-- operation pattern="HikariPool.addConnection" name="Hikari pool JDBC connection creation"/-->
+				<operation pattern="org.eclipse.osgi.internal.loader.ModuleClassLoader.getResources" name="Module loading"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Eclipse">
+
+		<!-- ************************************************************************ -->
+		<!--                       Eclipse RULES                                      -->
+		<!-- ************************************************************************ -->
+
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Module loading" ref="JZR-SHA-ECLIPSE-001">
+			<thresholds>
+				<threshold type="session custom"
+						   count="5"
+						   value="5"
+				           pattern="Module loading" 
+				           level="CRITICAL"
+				           sub_level="6" 
+				           message="Important contention on the resource loading through the Eclipse module loader.&#10;Please ask R&#38;D to review the resource loading sequence and design.&#10;See also Eclipse performance bug 550729"/>
+				<threshold type="session custom"
+						   count="2"
+						   value="5"
+				           pattern="Module loading" 
+				           level="WARNING"
+				           sub_level="7"
+				           message="Contention on the resource loading through the Eclipse module loader.&#10;Please ask R&#38;D to review the resource loading sequence and design.&#10;See also Eclipse performance bug 550729"/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
