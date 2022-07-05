@@ -97,6 +97,8 @@
 				<operation pattern="java.io.RandomAccessFile.read" name="File reading"										type="File"/>
 				<operation pattern="java.io.RandomAccessFile.open" name="File opening"										type="File"/>
 				<operation pattern="java.io.RandomAccessFile.close" name="File closing"										type="File"/>
+				<operation pattern="com.sun.imageio.plugins.png.PNGImageReader.read" name="PNG image read"					type="File"/>
+				<operation pattern="com.sun.imageio.plugins.png.PNGImageWriter.write" name="PNG image write"				type="File"/>
 				<operation pattern="DOMParser.parse" name="XML parsing"/>
 				<operation pattern="org.apache.xerces.parsers.XMLParser.parse" name="XML parsing"/>
 				<operation pattern="com.sun.org.apache.xml." name="XML operation"/>
@@ -261,8 +263,9 @@
 				<exclude pattern="sun.nio.ch.Iocp.getQueuedCompletionStatus;sun.nio.ch.Iocp.access$300;sun.nio.ch.Iocp$EventHandlerTask.run" name="Windows I/O completion wait"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.EPoll.epollWait;sun.nio.ch.EPollPort$EventHandlerTask.poll;sun.nio.ch.EPollPort$EventHandlerTask.run" name="Windows E port poll wait"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.locks.LockSupport.parkUntil;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join dormant thread" size="4"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.LockSupport.parkUntil;java.util.concurrent.ForkJoinPool.awaitWork;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join dormant thread 2" size="5"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.locks.LockSupport.park;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join unsignalled thread" size="4"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.ForkJoinPool.awaitWork;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join wait for thread" size="4"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.ForkJoinPool.awaitWork;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join wait for thread" size="5"/>		<!-- Multiple line pattern -->
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<!-- exclude pattern="ThreadImpl.dumpThreads" name="Thread dump"/-->
 				<exclude pattern="com.sun.jmx.remote.internal.ServerCommunicatorAdmin$Timeout.run" name="JMX"/>
