@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Synapse">
+
+		<!-- ************************************************************************ -->
+		<!--                       SYNAPSE RULES                                      -->
+		<!-- ************************************************************************ -->
+
+		<!--  If operation is detected across current session, generate event. -->
+		<rule name="Operation presence" param_display="Synapse ESB deprecation" param="Synapse mediation" ref="JZR-SHA-SYNAPSE-001">
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           message="The Apache Synapse ESB in not maintained since 2017 and is probably containing security issues.&#10; Please check with your Security Officer if any remediation is required."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
