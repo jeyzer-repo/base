@@ -41,6 +41,8 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="sun.nio.ch.SelectorImpl.select;org.apache.http.impl.nio.reactor.AbstractMultiworkerIOReactor.execute;org.apache.synapse.transport.passthru.PassThrough" name="PassThrough" size="7"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.select;org.apache.http.impl.nio.reactor.AbstractIOReactor.execute;org.apache.http.impl.nio.reactor.BaseIOReactor.execute;org.apache.http.impl.nio.reactor.AbstractMultiworkerIOReactor$Worker.run" name="Reactor worker" size="8"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.select;org.apache.http.impl.nio.reactor.AbstractMultiworkerIOReactor.execute;org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager.execute;org.apache.http.impl.nio.client.CloseableHttpAsyncClientBase$1.run" name="Pooling client connection manager" size="8"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
