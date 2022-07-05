@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="GraalVM">
+
+		<!-- ************************************************************************ -->
+		<!--                       WILY RULES                                         -->
+		<!-- ************************************************************************ -->
+
+		<!--  If operation is detected across current session, generate event. -->
+		<rule name="Operation presence" param_display="GraalVM profiling active" param="GraalVM profiling" stickers="performance, environment" ref="JZR-SHA-GRAALVM-001">
+			<narrative>This rule detects the usage of the GraalVM profiling.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="WARNING"
+				           sub_level="8"
+				           message="GraalVM profiling is enabled.&#10; Make sure it is used on purpose as it can affect the application performance."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
