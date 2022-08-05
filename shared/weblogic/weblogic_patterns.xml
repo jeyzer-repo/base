@@ -35,7 +35,7 @@
 				<operation pattern="weblogic.jdbc.common.internal.ConnectionEnv.test" name="Weblogic JDBC connection testing"/>
 				<operation pattern="weblogic.jdbc.jts.Driver.createLocalConnection" name="Weblogic JDBC connection creation"/>
 				<operation pattern="com.bea.common.security.internal.service.AuthorizationServiceImpl.isAccessAllowed" name="access check operation"/>
-				<operation pattern="com.certicom.tls.record.handshake." name="SSL handshake"/>
+				<operation pattern="com.certicom.tls.record.handshake." name="SSL certicom handshake"/>
 				<operation pattern="com.certicom.security." name="security operation"/>
 				<operation pattern="weblogic.net.http.HttpURLConnection.getResponseCode" name="HTTP response access"/>
 			</operations>
