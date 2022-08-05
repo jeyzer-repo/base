@@ -19,7 +19,7 @@
 		<patterns>
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
-				<function pattern="java.lang.Thread.sleep;org.apache.http.impl.client.IdleConnectionEvictor$1.run" name="Connection watch suspended"/>
+				<function pattern="java.lang.Thread.sleep;org.apache.http.impl.client.IdleConnectionEvictor$1.run" name="Server connection watch suspended"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -36,7 +36,7 @@
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
-				<executor_thread_name pattern="Connection evictor" name="Connection watchdog"/>
+				<executor_thread_name pattern="Connection evictor" name="Server connection watchdog"/>
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
