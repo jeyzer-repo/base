@@ -60,6 +60,7 @@
 				<!-- JBoss -->
 				<exclude pattern="org.jboss.resource.adapter.mail.inflow.NewMsgsWorker.run" name="JBoss message worker" size="10"/>
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;org.jboss.threads.QueueExecutor.takeTask;org.jboss.threads.QueueExecutor.access;org.jboss.threads.QueueExecutor$Worker.run" name="Worker thread waiting for a task to execute from a blocking queue"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;org.jboss.threads.EnhancedQueueExecutor$PoolThreadNode.park;org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run" name="Worker thread waiting for a task to execute from a JBoss enhanced queue"/>		<!-- Multiple line pattern -->
 				<exclude pattern="org.jboss.modules.ref.References$ReaperThread.run" name="JBoss reaper thread" size="4"/>
 				<exclude pattern="org.jboss.as.jacorb.service.CorbaORBService$ORBRunner.run" name="JBoss Jacorb embedded service" size="5"/>
 				<exclude pattern="org.jboss.threads.JBossThread.run" name="JBoss thread" size="9"/>
