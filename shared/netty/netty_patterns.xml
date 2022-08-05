@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Netty" version="2.6">
+<profile name="Netty" version="2.7">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -34,7 +34,7 @@
 			</lockers>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
-				<!-- executor pattern="line" name="explanation"/ -->
+				<executor pattern="io.netty.util.concurrent.FastThreadLocalRunnable.run" name="Netty thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -49,6 +49,7 @@
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;io.netty.util.concurrent.SingleThreadEventExecutor.takeTask;io.netty.util.concurrent.DefaultEventExecutor.run" name="Netty executor 2"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.lang.Thread.sleep;io.netty.util.HashedWheelTimer$Worker.waitForNextTick;io.netty.util.HashedWheelTimer$Worker.run" name="Netty wheel timer"/>		<!-- Multiple line pattern -->
 				<exclude pattern="io.netty.channel.epoll.Native.epollWait;io.netty.channel.epoll.EpollEventLoop.epollWaitNoTimerChange;io.netty.channel.epoll.EpollEventLoop.run" name="Netty event loop" size="9"/>		<!-- Multiple line pattern -->
+				<exclude pattern="io.netty.channel.epoll.EpollEventLoop.epollWait;io.netty.channel.epoll.EpollEventLoop.run;io.netty.util.concurrent.SingleThreadEventExecutor$4.run" name="Netty fast thread event loop" size="8"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
