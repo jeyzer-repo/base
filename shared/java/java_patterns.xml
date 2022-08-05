@@ -37,6 +37,7 @@
 				<function pattern="sun.management.GarbageCollectorImpl.createGCNotification" name="JMX GC notification creation"/>
 				<!-- SSL -->
 				<function pattern="ssl.ServerHandshaker.clientHello" name="SSL server handshake"/>
+				<function pattern="sun.security.ssl.ClientHello$ClientHelloConsumer.consume" name="SSL server handshake"/>
 				<function pattern="ssl.ClientHandshaker.serverCertificate" name="SSL client handshake"/>
 				<function pattern="javax.net.ssl.impl.SSLSocketImpl.startHandshake" name="SSL handshake"/>
 				<function pattern="jdk.management.jfr.FlightRecorderMXBeanImpl.startRecording" name="JFR start recording"/>
@@ -170,6 +171,7 @@
 				<operation pattern="javax.faces." name="JSF operation"/>
 				<operation pattern="javax.crypto." name="Java cryptographic operation"									type="Crypto"/>
 				<operation pattern="sun.security.ssl." name="SSL operation"/>
+				<operation pattern="sun.security.util.math." name="Security math operation"								type="Crypto"/>
 				<operation pattern="java.net." name="Java IO access (network)"											type="Network"/>
 				<operation pattern="jrockit.net." name="JRockit IO access (network)"									type="Network"/>
 				<!--operation pattern="java.io." name="Java IO access"														type="I/O"/-->
@@ -238,6 +240,7 @@
 				<executor pattern="javax.management.timer.TimerAlarmClock.run" name="Javax clock timer thread"/>
 				<executor pattern="java.util.TimerThread.mainLoop" name="Timer main loop"/>
 				<executor pattern="java.lang.Thread.dispatchUncaughtException" name="JVM uncaugth exception thread"/>
+				<executor pattern="jdk.jfr.internal.dcmd.DCmdStart.execute" name="JFR thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
