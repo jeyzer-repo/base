@@ -4,6 +4,7 @@
 
 		<!-- 
 			Pattern rule appliance by priority :
+			0 - locker (1004)
 			1 - stack_size_interest (1003)
 			2 - exclude_thread_name (1002)
 			3 - exclude (1001)
