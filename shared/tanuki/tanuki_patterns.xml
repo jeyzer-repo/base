@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Tanuki" version="2.7">
+<profile name="Tanuki" version="2.8">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -41,7 +41,7 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!-- exclude pattern="com.agent.javatrace.SpanCollector$SpanCollectorRunnable.sleepNanos;com.javatrace.SpanCollector$SpanCollectorRunnable.run" name="Instana collector waiting"/-->		<!-- Multiple line pattern -->
+				<exclude pattern="org.tanukisoftware.wrapper.WrapperManager$3.run" name="Tanuki manager thread" size="2"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
