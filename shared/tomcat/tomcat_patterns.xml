@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Tomcat" version="2.7">
+<profile name="Tomcat" version="2.8">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -66,9 +66,11 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="tomcat.util.net.NioBlockingSelector$BlockPoller.run" name="Tomcat NIO thread" size="7"/>
+				<exclude pattern="org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run" name="Tomcat container background thread" size="3"/>
 				<exclude pattern="org.apache.tomcat.util.net.AprEndpoint$Poller.run" name="Tomcat APR Poller thread" size="3"/>
 				<exclude pattern="org.apache.tomcat.util.net.AprEndpoint$Acceptor.run" name="Tomcat APR Acceptor thread" size="3"/>
 				<exclude pattern="org.apache.coyote.ajp.AjpProcessor.process" name="Tomcat AJP processor thread" size="11"/>
+				<exclude pattern="org.apache.coyote.AbstractProtocol$AsyncTimeout.run" name="Tomcat Coyote timer thread" size="3"/>
 				<exclude pattern="org.apache.tomcat.util.net.JIoEndpoint$Worker.run" name="Tomcat JIoEndpoint worker" size="5"/>
 				<exclude pattern="org.apache.tomcat.util.net.JIoEndpoint$Poller.run" name="Tomcat JIoEndpoint poller" size="3"/>
 				<exclude pattern="org.apache.tomcat.util.net.JIoEndpoint$Acceptor.run" name="Tomcat JIoEndpoint acceptor" size="7"/>
@@ -78,6 +80,8 @@
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;org.apache.tomcat.util.net.NioEndpoint$Poller.run" name="NIO Endpoint waiting on select"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.lang.Thread.sleep;org.apache.catalina.core.StandardServer.await;org.apache.catalina.startup.Catalina.await;org.apache.catalina.startup.Catalina.start" name="Tomcat main waiting"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.net.ServerSocket.accept;org.apache.catalina.core.StandardServer.await;org.apache.catalina.startup.Catalina.await;org.apache.catalina.startup.Catalina.start" name="Tomcat main waiting 2"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;org.apache.tomcat.util.threads.TaskQueue.take;org.apache.tomcat.util.threads.TaskQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Tomcat worker thread waiting for a task to execute from a link blocking queue"/>		<!-- Multiple line pattern -->				
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireSharedInterruptibly;java.util.concurrent.CountDownLatch.await;sun.nio.ch.PendingFuture.get;org.apache.tomcat.util.net.Nio2Endpoint$Acceptor.run" name="Tomcat NIO2 acceptor thread waiting for a client to connect"/>		<!-- Multiple line pattern -->				
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
