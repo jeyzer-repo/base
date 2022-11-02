@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Java" version="2.7">
+<profile name="Java" version="2.8">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -42,7 +42,8 @@
 				<function pattern="ssl.ClientHandshaker.serverCertificate" name="SSL client handshake"/>
 				<function pattern="javax.net.ssl.impl.SSLSocketImpl.startHandshake" name="SSL handshake"/>
 				<function pattern="jdk.management.jfr.FlightRecorderMXBeanImpl.startRecording" name="JFR start recording"/>
-				<function pattern="jdk.management.jfr.FlightRecorderMXBeanImpl.stopRecording(jdk.management.jfr" name="JFR stop recording"/>
+				<function pattern="jdk.management.jfr.FlightRecorderMXBeanImpl.stopRecording" name="JFR stop recording"/>
+				<function pattern="jdk.jfr.internal.PlatformRecording.stop" name="JFR platform stop recording"/>
 				<function pattern="jdk.jfr.internal.JVM.emitEvent" name="JFR publish events"/>
 				<!-- Others -->
 				<function pattern="java.lang.Thread.dispatchUncaughtException" name="JVM uncaught exception dispatch"/>
@@ -256,8 +257,10 @@
 				<!-- Timers, waiting -->
 				<exclude pattern="java.lang.Object.wait;java.util.TimerThread.mainLoop" name="Timer thread waiting"/>		<!-- Multiple line pattern -->
 				<!-- Thread pools, waiting -->
+				<exclude pattern="java.util.concurrent.ArrayBlockingQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from an array blocking queue"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.ArrayBlockingQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from an array blocking queue (poll)"/>		<!-- Multiple line pattern -->				
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a linked blocking queue"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a linked blocking queue"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a linked blocking queue (poll)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue (poll)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor$Worker.run" name="Worker thread waiting for task execution from a synchronous queue (poll)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a delayed work queue (take)"/>		<!-- Multiple line pattern -->
@@ -266,6 +269,7 @@
 				<exclude pattern="java.util.concurrent.SynchronousQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue (poll)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.Iocp.getQueuedCompletionStatus;sun.nio.ch.Iocp.access$300;sun.nio.ch.Iocp$EventHandlerTask.run" name="Windows I/O completion wait"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.EPoll.epollWait;sun.nio.ch.EPollPort$EventHandlerTask.poll;sun.nio.ch.EPollPort$EventHandlerTask.run" name="Windows E port poll wait"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;sun.nio.ch.EPollPort$EventHandlerTask.run" name="Windows E port poll wait 2"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.locks.LockSupport.parkUntil;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join dormant thread" size="4"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.locks.LockSupport.parkUntil;java.util.concurrent.ForkJoinPool.awaitWork;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join dormant thread 2" size="5"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.locks.LockSupport.park;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join unsignalled thread" size="4"/>		<!-- Multiple line pattern -->
