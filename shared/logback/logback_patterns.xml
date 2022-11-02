@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Logback" version="2.7">
+<profile name="Logback" version="2.8">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -25,7 +25,9 @@
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
-				<!-- operation pattern="org.apache.log4j.helpers.QuietWriter.flush" name="Log4j flush"											type="Log"/ -->
+				<operation pattern="ch.qos.logback.classic.Logger.info" name="Logback info logging"											type="Log"/>
+				<operation pattern="ch.qos.logback.classic.Logger.debug" name="Logback debug logging"										type="Log"/>
+				<operation pattern="ch.qos.logback.core.OutputStreamAppender.writeBytes" name="Logback bytes writing"						type="Log"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
