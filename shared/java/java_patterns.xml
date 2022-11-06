@@ -47,6 +47,9 @@
 				<function pattern="jdk.jfr.internal.JVM.emitEvent" name="JFR publish events"/>
 				<!-- Others -->
 				<function pattern="java.lang.Thread.dispatchUncaughtException" name="JVM uncaught exception dispatch"/>
+				<function pattern="java.lang.Shutdown.shutdown" name="JVM shutdown in progress"/>
+				<function pattern="sun.net.dns.ResolverConfigurationImpl.notifyAddrChange0" name="Wait for DNS update"/>
+				<function pattern="java.util.logging.LogManager.reset" name="Java logger reset"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -143,6 +146,7 @@
 				<operation pattern="java.lang.Object.notifyAll" name="Wakes all threads"/>
 				<operation pattern="java.lang.Object.notify" name="Wakes one thread"/>
 				<operation pattern="javax.security.auth.login.LoginContext.login" name="Auth login"/>
+				<operation pattern="sun.net.www.protocol.https.HttpsClient.New" name="HTTPS connection creation"        type="Network"/>
 				<operation pattern="sun.security.rsa.RSACore" name="RSA Cryptographic operation" 						type="Crypto"/>
 				<operation pattern="javax.crypto.KeyAgreement.generateSecret" name="Cryptographic key generation" 		type="Crypto"/>
 				<operation pattern="sun.security.ssl.InputRecord.decrypt" name="SSL message decryption"					type="Crypto"/>
@@ -243,12 +247,16 @@
 				<executor pattern="java.util.TimerThread.mainLoop" name="Timer main loop"/>
 				<executor pattern="java.lang.Thread.dispatchUncaughtException" name="JVM uncaugth exception thread"/>
 				<executor pattern="jdk.jfr.internal.dcmd.DCmdStart.execute" name="JFR thread"/>
+				<executor pattern="java.lang.Shutdown.shutdown" name="Java shutdown thread"/>
+				<executor pattern="jdk.jfr.internal.ShutdownHook.run" name="JFR shutdown thread"/>
+				<executor pattern="sun.net.dns.ResolverConfigurationImpl$AddressChangeListener.run" name="DNS change listener"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
 				<executor_thread_name pattern="Main" name="Program main"/>
 				<executor_thread_name pattern="Keep-Alive-Timer" name="HTTP keep alive timer"/>
 				<executor_thread_name pattern="Service Thread" name="JVM service thread"/>
+				<executor_thread_name pattern="Logging-Cleaner" name="Java logging cleaner"/>
 				<!-- Java 9+ JFR -->
 				<executor_thread_name pattern="JFR Periodic Tasks" name="JFR"/>
 			</executor_thread_names>
@@ -279,6 +287,7 @@
 				<exclude pattern="com.sun.jmx.remote.internal.ServerCommunicatorAdmin$Timeout.run" name="JMX"/>
 				<!-- Sun HTTP -->
 				<exclude pattern="sun.net.www.http.KeepAliveCache.run" name="HTTP keep alive timer" size="3"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;sun.net.httpserver.ServerImpl$Dispatcher.run" name="HTTP server select loop" size="7"/>
 				<!-- Sun 2D -->
 				<exclude pattern="sun.java2d.Disposer.run" name="Java 2D disposer" size="5"/>
 				<!-- RMI -->
