@@ -40,7 +40,39 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireSharedInterruptibly;java.util.concurrent.Semaphore.acquire;org.apache.hadoop.hbase.ipc.FastPathBalancedQueueRpcExecutor$FastPathHandler.getCallRunner" name="Hadoop fast path handler waiting"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.hadoop.hbase.ipc.RpcExecutor$Handler.getCallRunner;org.apache.hadoop.hbase.ipc.RpcExecutor$Handler.run" name="RpcExecutor waiting"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.hadoop.hbase.regionserver.wal.FSHLog$SyncRunner.run" name="FSHLog waiting"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;org.apache.hadoop.hbase.util.StealJobQueue.take" name="Steal job queue waiting"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;org.apache.hadoop.hbase.io.hfile.bucket.BucketCache.getRAMQueueEntries" name="Bucket Cache waiting for RAM entries"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.DelayQueue.poll;java.util.concurrent.DelayQueue.poll;org.apache.hadoop.hbase.regionserver.MemStoreFlusher$FlushHandler.run" name="MemStoreFlusher waiting"/>
+				<exclude pattern="java.lang.Object.wait;org.apache.hadoop.hbase.io.hfile.LruBlockCache$EvictionThread.run" name="LruBlockCache EvictionThread waiting"/>
+				<exclude pattern="java.lang.Thread.sleep;org.apache.hadoop.hbase.regionserver.LeaseManager.run" name="LeaseManager sleeping"/>
+				<exclude pattern="java.lang.Thread.sleep;org.apache.hadoop.hbase.monitoring.TaskMonitor$MonitorRunnable.run" name="TaskMonitor MonitorRunnable sleeping"/>
+				<exclude pattern="java.util.concurrent.SynchronousQueue$TransferStack.awaitFulfill;java.util.concurrent.SynchronousQueue$TransferStack.transfer;java.util.concurrent.SynchronousQueue.poll;org.apache.hbase.thirdparty.org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.reservedWait" name="ReservedThreadExecutor ReservedThread wait"/>
+				<exclude pattern="java.lang.Object.wait;org.apache.hadoop.ipc.Client$Connection.waitForWork;org.apache.hadoop.ipc.Client$Connection.run" name="Hadoop client wait for work"/>
+				<exclude pattern="java.lang.Object.wait;org.apache.hadoop.hdfs.DataStreamer.run" name="Data streamer wait"/>
+				<exclude pattern="java.lang.Object.wait;org.apache.hadoop.hbase.util.Sleeper.sleep;org.apache.hadoop.hbase.util.Sleeper.sleep;org.apache.hadoop.hbase.regionserver.HRegionServer.run" name="HRegionServer sleep"/>
+				<exclude pattern="java.lang.Thread.join;org.apache.hadoop.hbase.regionserver.HRegionServerCommandLine.start;org.apache.hadoop.hbase.regionserver.HRegionServerCommandLine.run;org.apache.hadoop.util.ToolRunner.run;org.apache.hadoop.hbase.util.ServerCommandLine.doMain" name="ServerCommandLine main waiting"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.hadoop.hbase.regionserver.RemoteProcedureResultReporter.run" name="RemoteProcedureResultReporter waiting"/>
+				<exclude pattern="java.lang.Thread.sleep;org.apache.hadoop.hbase.util.JvmPauseMonitor$Monitor.run" name="JvmPauseMonitor sleeping"/>
+				<exclude pattern="java.lang.Object.wait;org.apache.hadoop.hbase.wal.AbstractWALRoller.run" name="AbstractWALRoller waiting"/>
+				<exclude pattern="org.apache.hadoop.net.unix.DomainSocketWatcher.doPoll0;org.apache.hadoop.net.unix.DomainSocketWatcher.access$900;org.apache.hadoop.net.unix.DomainSocketWatcher$2.run" name="Unix DomainSocketWatcher polling"/>
+				<exclude pattern="java.lang.Thread.sleep;org.apache.hadoop.hdfs.client.impl.LeaseRenewer.run" name="LeaseRenewer sleeping"/>
+				<!-- Zookeeper -->
+				<exclude pattern="java.lang.Thread.sleep;org.apache.zookeeper.Login$1.run" name="Zookeeper login sleeping"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;org.apache.zookeeper.ClientCnxnSocketNIO.doTransport;org.apache.zookeeper.ClientCnxn$SendThread.run" name="Zookeeper ClientCnxnSocketNIO sender select"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.zookeeper.ClientCnxn$EventThread.run" name="Zookeeper ClientCnxn event select"/>
+				<exclude pattern="java.lang.Object.wait;org.apache.hadoop.hbase.zookeeper.ZKLeaderManager.waitToBecomeLeader;org.apache.hadoop.hbase.security.token.AuthenticationTokenSecretManager$LeaderElector.run" name="Zookeeper LeaderElector wait"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.DelayQueue.poll;org.apache.hadoop.hbase.zookeeper.ReadOnlyZKClient.run" name="Zookeeper ReadOnlyZKClient polling"/>
+				<!-- Ranger -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.ArrayBlockingQueue.poll;org.apache.ranger.audit.queue.AuditBatchQueue.runLogAudit;org.apache.ranger.audit.queue.AuditBatchQueue.run" name="Ranger AuditBatchQueue polling"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.LinkedBlockingQueue.poll;org.apache.ranger.audit.queue.AuditFileSpool.runLogAudit;org.apache.ranger.audit.queue.AuditFileSpool.run" name="Ranger AuditFileSpool polling"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.LinkedBlockingQueue.poll;org.apache.ranger.audit.queue.AuditSummaryQueue.runLogAudit;org.apache.ranger.audit.queue.AuditSummaryQueue.run" name="Ranger AuditSummaryQueue polling"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.ranger.plugin.contextenricher.RangerTagEnricher$RangerTagRefresher.run" name="Ranger RangerTagEnricher RangerTagRefresher waiting to take"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.ranger.audit.queue.AuditAsyncQueue.runLogAudit;org.apache.ranger.audit.queue.AuditAsyncQueue.run" name="Ranger AuditAsyncQueue waiting to take"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.ranger.plugin.util.PolicyRefresher.run" name="Ranger PolicyRefresher waiting to take"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireSharedInterruptibly;java.util.concurrent.Semaphore.acquire;org.apache.ranger.audit.provider.AuditProviderFactory$RangerAsyncAuditCleanup.run" name="Ranger RangerAsyncAuditCleanup semaphore"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
