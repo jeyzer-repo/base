@@ -39,7 +39,8 @@
 			</lockers>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
-				<!--executor pattern="HttpServlet.service" name="HTTP request"/-->
+				<executor pattern="org.springframework.scheduling.concurrent.ReschedulingRunnable.run" name="Spring scheduler"/>
+				<executor pattern="org.springframework.boot.loader.MainMethodRunner.run" name="Spring boot main"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
