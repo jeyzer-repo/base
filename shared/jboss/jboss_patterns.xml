@@ -27,6 +27,8 @@
 				<function pattern="org.jboss.logging.Logger.error" name="JBoss error logging"/>
 				<function pattern="org.jboss.web.CatalinaLogger_$logger.exceptionDuringService" name="JBoss service exception"/>
 				<function pattern="org.jboss.as.web.security.JBossWebRealm.authenticate" name="JBoss authentication"/>
+				<function pattern="org.jboss.weld.bootstrap.WeldRuntime.shutdown" name="JBoss Weld runtime shutdown"/>
+				<function pattern="org.jboss.weld.environment.se.WeldContainer.shutdown" name="JBoss Weld container shutdown"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -36,6 +38,7 @@
 				<operation pattern="org.jboss.resource.adapter.jdbc.CheckValidConnectionSQL.isValidConnection" name="JBoss JDBC connection testing"/>
 				<operation pattern="org.jboss.classloader.spi.base.BaseClassLoader.getResource" name="JBoss ressource loading"				type="Class loader"/>
 				<operation pattern="org.jboss.jca.adapters.jdbc.WrapperDataSource.getConnection" name="JBoss db connection pool access"/>				
+				<operation pattern="org.jboss.logging.Logger.getLogger" name="JBoss get logger"/>				
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -48,6 +51,7 @@
 				<executor pattern="org.jboss.threads.JBossThread.run" name="JBoss thread"/>
 				<executor pattern="org.jboss.modules.ref.References$ReaperThread.run" name="JBoss reaper thread"/>
 				<executor pattern="org.jboss.as.jacorb.service.CorbaORBService$ORBRunner.run" name="JBoss Jacorb embedded service"/>
+				<executor pattern="org.jboss.weld.environment.se.WeldContainer$ShutdownHook.run" name="JBoss Weld shutdown thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
