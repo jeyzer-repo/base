@@ -25,7 +25,7 @@
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
-				<!-- operation pattern="org.apache.pulsar." name="Pulsar operation" /-->
+				<operation pattern="org.apache.qpid.jms.JmsMessageConsumer.receive" name="JMS message reception"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -42,6 +42,7 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="org.apache.qpid.proton.reactor.impl.SelectorImpl.select;org.apache.qpid.proton.reactor.impl.IOHandler.handleQuiesced;org.apache.qpid.proton.reactor.impl.IOHandler.onUnhandled" name="Qpid reactor select loop"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;org.apache.qpid.jms.provider.ProgressiveProviderFuture.sync;org.apache.qpid.jms.JmsConnection.pull;org.apache.qpid.jms.JmsConnection.pull;org.apache.qpid.jms.JmsMessageConsumer.performPullIfRequired" name="Qpid JMS consumption wait"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
