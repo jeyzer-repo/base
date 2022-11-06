@@ -21,7 +21,9 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<!-- Log4j -->
+				<function pattern="org.apache.logging.log4j.core.util.DefaultShutdownCallbackRegistry.run" name="Log4j shutdown"/>
 				<function pattern="org.apache.log4j.RollingFileAppender.subAppend" name="Log4j rolling file appending"/>
+				<function pattern="org.apache.logging.log4j.core.LoggerContext.stop" name="Log4j context stop"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -39,7 +41,7 @@
 			</lockers>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
-				<!--executor pattern="HttpServlet.service" name="HTTP request"/-->
+				<executor pattern="org.apache.logging.log4j.core.util.DefaultShutdownCallbackRegistry.run" name="Log4j shutdown thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
