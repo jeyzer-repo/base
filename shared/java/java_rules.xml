@@ -287,8 +287,21 @@
 						   count="1"
 				           value="50" 
 				           level="WARNING"
-						   sub_level="10"						   
+						   sub_level="10"
 				           message="High contention on regular expressions.&#10;Some regular expression is probably not optimal.&#10;Please ask the R&#38;D to review it and see if it can be improved."/>
+			</thresholds>
+		</rule>
+		
+		<!--  If task duration longer than [count] or [time], generate event. Value has no meaning -->
+		<rule name="Long running task" ref="JZR-SHA-JAVA-022">
+			<thresholds>
+				<threshold type="action value"
+						   time="30s"
+						   value="1"
+						   function="JVM shutdown in progress" 
+				           level="WARNING"
+						   sub_level="10"
+				           message="JVM shutdown is slow. You may investigate any performance issue there."/>
 			</thresholds>
 		</rule>
 
