@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Jetty" version="2.7">
+<profile name="Jetty" version="2.8">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -48,6 +48,8 @@
 				<exclude pattern="sun.nio.ch.ServerSocketChannelImpl.accept;org.eclipse.jetty.server.nio.SelectChannelConnector.accept;org.eclipse.jetty.server.AbstractConnector$Acceptor.run" name="Jetty thread listening on socket" size="8"/>	<!-- Multiple line pattern -->
 				<exclude pattern="org.eclipse.jetty.io.ManagedSelector$SelectorProducer.select;org.eclipse.jetty.io.ManagedSelector$SelectorProducer.produce;org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.produceTask" name="Jetty Eat What You Kill thread waiting for a task to execute"/>	<!-- Multiple line pattern -->
 				<exclude pattern="org.eclipse.jetty.io.ManagedSelector$SelectorProducer.select;org.eclipse.jetty.io.ManagedSelector$SelectorProducer.produce;org.eclipse.jetty.util.thread.strategy.ExecuteProduceConsume.executeProduceConsume" name="Jetty Execute Produce Consume waiting for a task to execute"/>	<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.ServerSocketChannelImpl.accept;org.eclipse.jetty.server.ServerConnector.accept;org.eclipse.jetty.server.AbstractConnector$Acceptor.run" name="Jetty Accteptor listening to a connection"/>	<!-- Multiple line pattern -->
+				<exclude pattern="org.eclipse.jetty.io.ManagedSelector$SelectorProducer.select;org.eclipse.jetty.io.ManagedSelector$SelectorProducer.produce;org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.produceTask;org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.tryProduce;org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.produce" name="Jetty producer waiting for a task to execute"/>	<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
