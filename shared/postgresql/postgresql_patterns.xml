@@ -27,6 +27,8 @@
 				<operation pattern="org.postgresql.core.v3.QueryExecutorImpl.processResults" name="PostgreSQL result processing"	type="PostgreSQL"/>
 				<operation pattern="org.postgresql.jdbc.PgPreparedStatement.executeQuery" name="PostgreSQL query"		   	   		type="PostgreSQL"/>
 				<operation pattern="org.postgresql.jdbc.PgConnection.commit" name="PostgreSQL commit"		   	   		   			type="PostgreSQL"/>
+				<operation pattern="org.postgresql.jdbc.PgPreparedStatement.executeQuery" name="PostgreSQL query"		   	   		type="PostgreSQL"/>
+				<operation pattern="org.postgresql.jdbc.PgPreparedStatement.executeUpdate" name="PostgreSQL update"		   	   		type="PostgreSQL"/>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<!--operation pattern="java.lang.String.split" name="String split"		   type="String"/-->
