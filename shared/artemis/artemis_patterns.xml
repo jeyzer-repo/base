@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="Artemis" version="2.8">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			0 - locker (1004)
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - function  (6)
+			5 - function_discovery  (5)
+			6 - executor  (4)
+			7 - executor_thread_name (3)
+			8 - operation (2)
+			9 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolumn separator to declare multiple line patterns -->
+			<functions>
+				<!-- Artemis -->
+				<function pattern="artemis.core.io.buffer.TimedBuffer.flush" name="AMQ data flush"/>
+				<function pattern="artemis.core.server.impl.ServerConsumerImpl.deliverStandardMessage" name="Outgoing message processing"/>
+				<function pattern="artemis.utils.ActiveMQThreadPoolExecutor$ThreadPoolQueue.poll" name="Wait for task"/>
+				<function pattern="artemis.core.journal.impl.JournalImpl.appendRecord" name="Journal writing"/>
+				<function pattern="artemis.core.protocol.core.ServerSessionPacketHandler.onSessionAcknowledge" name="Session acknowledge"/>
+				<function pattern="artemis.core.protocol.core.ServerSessionPacketHandler.doConfirmAndResponse" name="Received message confirmation"/>
+				<function pattern="org.apache.activemq.artemis.core.server.cluster.impl.BroadcastGroupImpl.broadcastConnectors" name="Broadcast updates to connectors"/>
+				
+				<function pattern="transport.tcp.TcpTransport.readCommand" name="TCP read"/>
+				<function pattern="internal.ssl.SSLSocketImpl.readRecord" name="TCP SSL read"/>
+				<function pattern="transport.tcp.SslTransport.doConsume" name="TCP SSL message processing"/>
+				<function pattern="java.util.TimerThread.mainLoop(Timer.java:509)" name="Timer thread on hold"/>
+				<function pattern="ssl.internal.ssl.SSLServerSocketImpl.accept" name="SSL Server socket listening"/>
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				
+				<!-- Artemis -->
+				<operation pattern="artemis.core.io.buffer.TimedBuffer.checkSize" name="File buffer size check"/>
+				<operation pattern="artemis.core.persistence.impl.journal.AbstractJournalStorageManager.storeAcknowledgeTransactional" name="Store Ack in journal"/>
+				<operation pattern="org.apache.activemq.artemis.core.persistence." name="Persistence operation"/>
+			</operations>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<!-- Artemis -->
+				<executor pattern="org.apache.activemq.artemis.core.io.buffer.TimedBuffer$CheckTimer.run" name="Artemis buffer thread"/>
+				<executor pattern="org.apache.activemq.artemis.core.server.cluster.impl.BroadcastGroupImpl.run" name="Artemis buffer thread"/>
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<!-- Artemis -->
+				<executor_thread_name pattern="AMQ Netty thread" name="activemq-netty-threads\)$"/>
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->				
+				<exclude pattern="java.lang.Thread.sleep;net.sf.ehcache.distribution.jms.JMSCacheReplicator.replicationThreadMain" name="JMS cache replicator sleep"/>	
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.LinkedBlockingQueue.poll;org.apache.activemq.artemis.utils.ActiveMQThreadPoolExecutor$ThreadPoolQueue.poll" name="Artemis thread pool waiting for task" size="10"/>	
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!-- Artemis -->
+				<exclude_thread_name pattern_regex="activemq-netty-threads" name="Artemis netty thread" size="11"/>
+				<exclude_thread_name pattern_regex="ActiveMQ-server-org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl" name="Artemis server impl thread" size="10"/>
+				<exclude_thread_name pattern_regex="activemq-buffer-timeout" name="Artemis buffer timout thread" size="8"/>
+				<exclude_thread_name pattern_regex="activemq-failure-check-thread" name="Artemis filure check thread" size="6"/>
+			</exclude_thread_names>
+		</patterns>
+
+</profile>
