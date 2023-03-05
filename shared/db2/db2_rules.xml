@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="DB2">
+
+		<!-- ************************************************************************ -->
+		<!--                       DB2 RULES                                   -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If percentage of contention type is greater or equal to [value] across current session, generate event. -->
+		<rule name="Contention type global percentage" param_display="DB2 access" param="DB2" stickers="performance" ref="JZR-SHA-DB2-001">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="50" 
+				           level="INFO"
+				           sub_level="7" 
+				           message="Important DB2 access contention.&#10; You may review the related actions."/>
+			</thresholds>
+		</rule>	
+
+	</rules>
+
+</monitor>

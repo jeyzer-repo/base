@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Oracle">
+
+		<!-- ************************************************************************ -->
+		<!--                       Oracle RULES                                   -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If percentage of contention type is greater or equal to [value] across current session, generate event. -->
+		<rule name="Contention type global percentage" param_display="Oracle access" param="Oracle" stickers="performance" ref="JZR-SHA-ORA-001">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="50" 
+				           level="INFO"
+				           sub_level="7" 
+				           message="Important Oracle access contention.&#10; You may review the related actions."/>
+			</thresholds>
+		</rule>	
+
+	</rules>
+
+</monitor>
