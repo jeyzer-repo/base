@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="Kotlinx" version="2.8">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			0 - locker (1004)
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - locker  (7)
+			5 - function  (6)
+			6 - function_discovery  (5)
+			7 - executor  (4)
+			8 - executor_thread_name (3)
+			9 - operation (2)
+			10 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
+			<functions>
+				<!-- Lucene -->
+				<!--function pattern="org.compass.core.lucene.engine.optimizer.DefaultLuceneSearchEngineOptimizer.optimize" name="Search index optimization"/-->
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<!--operation pattern="java.lang.String.split" name="String split"		   type="String"/-->
+			</operations>
+			<lockers>
+				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
+  				<!-- locker pattern="java.util.concurrent.locks.LockSupport.park" name="LockSupport"/-->
+			</lockers>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<!-- Lucene -->
+				<!--executor pattern="org.compass.core.lucene.engine.optimizer.LuceneSearchEngineOptimizerManager$ScheduledOptimizeRunnable.run" name="Lucene search optimizer scheduled thread"/-->
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<!--executor_thread_name pattern="thread pattern" name="Thread type name"/-->
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.park;kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.tryPark;kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker" name="Kotlinx scheduler waiting" size="6"/>
+				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;kotlinx.coroutines.DefaultExecutor.run" name="Kotlinx default executor waiting" size="4"/>
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!-- exclude_thread_name pattern_regex="RMI TCP.*" name="RMI"/-->
+				<!-- exclude_thread_name pattern="JMX server connection timeout" name="RMI"/-->
+			</exclude_thread_names>
+		</patterns>
+
+</profile>
