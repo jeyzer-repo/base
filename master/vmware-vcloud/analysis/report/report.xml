@@ -47,7 +47,7 @@
 		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/top-stacks/top-stacks.xml"/>
 
 		<!--  display the merged actions and their related stacks as a tree -->
-		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/profiling/atbi-profiling-with-graph.xml"/>
+		<!-- sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/profiling/atbi-profiling-with-graph.xml"/-->
 		
 		<!--  display the merged actions and their related stacks as a tree -->
 		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/profiling/action-profiling-with-graph.xml"/>
