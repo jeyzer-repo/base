@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="IntelliJ">
+
+		<!-- ************************************************************************ -->
+		<!--                        APPLICATIVE INTELLIJ RULES                        -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If function is detected across current session, generate event. -->
+		<rule name="Function presence" param_display="Intellij wrong monitoring ?" param="Intellij wait for executed process end" ref="JZR-SHA-INTJ-001">
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           message="Current analysis focuses on the Intellij editor and not any launched process that you would like to investigate.&#10; If the latter case is true, please target the right process id with JFR or jstack."/>
+			</thresholds>
+		</rule>
+		
+	</rules>
+
+</monitor>
