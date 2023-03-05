@@ -39,6 +39,7 @@
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<executor pattern="io.netty.util.concurrent.FastThreadLocalRunnable.run" name="Netty thread"/>
+				<executor pattern="io.netty.util.ThreadDeathWatcher$Watcher.run" name="Netty ThreadDeathWatcher thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -49,11 +50,16 @@
 				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.SelectedSelectionKeySetSelector.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select loop"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.SelectedSelectionKeySetSelector.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select2 loop"/>		<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.EPoll.wait;sun.nio.ch.EPollSelectorImpl.doSelect;sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select3 loop"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;io.netty.util.concurrent.SingleThreadEventExecutor.takeTask;io.netty.util.concurrent.DefaultEventExecutor.run" name="Netty executor"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;io.netty.util.concurrent.SingleThreadEventExecutor.takeTask;io.netty.util.concurrent.DefaultEventExecutor.run" name="Netty executor 2"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.lang.Thread.sleep;io.netty.util.HashedWheelTimer$Worker.waitForNextTick;io.netty.util.HashedWheelTimer$Worker.run" name="Netty wheel timer"/>		<!-- Multiple line pattern -->
 				<exclude pattern="io.netty.channel.epoll.Native.epollWait;io.netty.channel.epoll.EpollEventLoop.epollWaitNoTimerChange;io.netty.channel.epoll.EpollEventLoop.run" name="Netty event loop" size="9"/>		<!-- Multiple line pattern -->
 				<exclude pattern="io.netty.channel.epoll.EpollEventLoop.epollWait;io.netty.channel.epoll.EpollEventLoop.run;io.netty.util.concurrent.SingleThreadEventExecutor$4.run" name="Netty fast thread event loop" size="8"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Thread.sleep;io.netty.util.ThreadDeathWatcher$Watcher.run" name="Netty ThreadDeathWatcher" size="4"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.SynchronousQueue$TransferStack.awaitFulfill;java.util.concurrent.SynchronousQueue$TransferStack.transfer;java.util.concurrent.SynchronousQueue.poll;org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.reservedWait;org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run;org.eclipse.jetty.util.thread.QueuedThreadPool.runJob" name="Netty Reserved executor" size="10"/>		<!-- Multiple line pattern -->
+				<exclude pattern="org.jboss.netty.util.HashedWheelTimer$Worker.waitForNextTick;org.jboss.netty.util.HashedWheelTimer$Worker.run;org.jboss.netty.util.ThreadRenamingRunnable.run" name="Netty Thread renaming" size="5"/>
+				<exclude pattern="org.jboss.netty.channel.socket.nio.AbstractNioSelector.select;org.jboss.netty.channel.socket.nio.AbstractNioSelector.run;org.jboss.netty.channel.socket.nio.AbstractNioWorker.run;org.jboss.netty.channel.socket.nio.NioWorker.run;org.jboss.netty.util.ThreadRenamingRunnable.run" name="Netty Thread renaming poller" size="15"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
