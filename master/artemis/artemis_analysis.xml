@@ -37,7 +37,8 @@
 			<!--   Those stack patterns are typically one or several application package names, which must be unique -->
 			<!--   Optional. If not defined, the current master profile cannot participate in a profile redirection phase -->
 			<id_patterns>
-				<id_pattern value="org.apache.activemq.artemis.utils.ActiveMQThreadFactory$1.run"/>
+				<!-- No main in Artemis. ActiveMQThreadFactory is not enough -->
+				<!-- id_pattern value="org.apache.activemq.artemis.utils.ActiveMQThreadFactory$1.run"/ -->
 			</id_patterns>
 		</profile_redirection>
 	</discovery>
