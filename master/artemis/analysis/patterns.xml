@@ -26,6 +26,7 @@
 				<function pattern="artemis.core.journal.impl.JournalImpl.appendRecord" name="Journal writing"/>
 				<function pattern="artemis.core.protocol.core.ServerSessionPacketHandler.onSessionAcknowledge" name="Session acknowledge"/>
 				<function pattern="artemis.core.protocol.core.ServerSessionPacketHandler.doConfirmAndResponse" name="Received message confirmation"/>
+				<function pattern="org.apache.activemq.artemis.core.server.cluster.impl.BroadcastGroupImpl.broadcastConnectors" name="Broadcast updates to connectors"/>
 				
 				<!--
 				<function pattern="activemq.broker.TransportConnection.doStop" name="AMQ stopping connection"/>
@@ -150,6 +151,8 @@
 				<exclude pattern="java.net.SocketInputStream.read;sun.security.ssl.InputRecord.readFully" name="Inactive thread listening on socket"/>	
 				<exclude pattern="java.lang.Object.wait;kahadb.journal.DataFileAppender.processQueue" name="Inactive AMQ Kahadb writing thread"/>	
 				<exclude pattern="java.lang.Object.wait;kahadb.disk.journal.DataFileAppender.processQueue" name="Inactive AMQ Kahadb writing thread 2"/>	
+				
+				<exclude pattern="java.lang.Thread.sleep;net.sf.ehcache.distribution.jms.JMSCacheReplicator.replicationThreadMain" name="JMS cache replicator sleep"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
