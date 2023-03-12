@@ -22,7 +22,7 @@
 	
 	<!-- Dependency sets. Referenced in the analysis patterns and monitoring rules -->
 	<dependencies>
-		<set id="base-shared-deps" profiles="tomcat, jetty, glassfish, weblogic, websphere, jboss, eclipse, jersey, netty, quarkus, spring, kafka, camel, mqseries, mongodb, hibernate, elasticsearch, c3p0, mysql, mssql, postgresql, db2, jtds, oracle, h2, jacorb, hadoop, jgroups, guava, guice, adobe, akka, thrift, handlebars, jackrabbit, gson, scala, quartz, felix, sling, xstream, slf4j, log4j, logback, amq, zmq, rabbitmq, synapse, pulsar, qpid, apache-http-client, apache-http-core, okhttp, jodd-http, jackson, aws, azure, reactor, apache-openejb, apache-commons, bouncy-castle, kotlinx, instana, latency-utils, lmax, wily, graalvm, tanuki, intellij, jeyzer, java"/>
+		<set id="base-shared-deps" profiles="tomcat, jetty, glassfish, weblogic, websphere, jboss, eclipse, jersey, netty, quarkus, spring, kafka, camel, mqseries, mongodb, hibernate, elasticsearch, c3p0, mysql, mssql, postgresql, db2, jtds, oracle, h2, jacorb, hadoop, jgroups, guava, guice, adobe, akka, thrift, handlebars, jackrabbit, gson, scala, quartz, felix, sling, xstream, slf4j, log4j, logback, amq, zmq, rabbitmq, synapse, pulsar, qpid, curator, apache-http-client, apache-http-core, okhttp, jodd-http, jackson, aws, azure, reactor, apache-openejb, apache-commons, bouncy-castle, kotlinx, instana, latency-utils, lmax, wily, graalvm, tanuki, intellij, jeyzer, java"/>
 	</dependencies>
 	
 	<!-- Analysis patterns. Load order : top to bottom. Pattern rules of the top pattern set apply first. Dynamic patterns are loaded at last -->
@@ -161,7 +161,7 @@
 		<!-- Log unidentified stacks (unknown function, operation or executor) -->
 		<!--   order by file : stacks may appear multiple times.               --> 
 		<!--            frequency : each stack is printed only once            -->
-		<ufo generation_enabled="false" zip_output_dir="${JEYZER_OUTPUT_DIR}/analysis" order_by="frequency"/>
+		<ufo generation_enabled="true" zip_output_dir="${JEYZER_OUTPUT_DIR}/analysis" order_by="frequency"/>
 	
 		<!-- write all discarded stack traces into ignored-stacks.zip -->
 		<ignored_stacks generation_enabled="false" zip_output_dir="${JEYZER_OUTPUT_DIR}/analysis"/>
