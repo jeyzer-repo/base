@@ -95,6 +95,7 @@
 				<operation pattern="java.util.zip.ZipFile." name="Zip file access"											type="File"/>
 				<operation pattern="java.util.zip.Inflater" name="Zip decompression"										type="File"/>
 				<operation pattern="java.util.zip.GZIPOutputStream.write" name="Gzip compression"							type="File"/>
+				<operation pattern="jdk.nio.zipfs.ZipFileSystemProvider.getFileSystem" name="Zip file system access"		type="File"/>
 				<operation pattern="java.io.FileInputStream.read" name="File reading"										type="File"/>
 				<operation pattern="java.io.FileInputStream.open" name="File opening"									    type="File"/>
 				<operation pattern="java.io.FileInputStream.close" name="File closing"									    type="File"/>
@@ -229,6 +230,7 @@
 				<operation pattern="sun.reflect." name="Java reflection operation"/>
 				<operation pattern="java.reflect." name="Java reflection operation"/>
 				<operation pattern="java.lang.reflect." name="Java reflection operation"/>
+				<operation pattern="sun.nio.fs.WindowsNativeDispatcher." name="Windows native operation"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
