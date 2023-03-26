@@ -304,6 +304,20 @@
 				           message="JVM shutdown is slow. You may investigate any performance issue there."/>
 			</thresholds>
 		</rule>
+		
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Slow zip file system access" ref="JZR-SHA-JAVA-023">
+			<narrative>This rule detects contention on the file system access through the ZipFileSystemProvider.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Zip file system access" 
+				           level="WARNING"
+				           sub_level="6"
+				           message="Threads accessing files through the ZipFileSystemProvider get locked on an internal synchronized map."/>
+			</thresholds>
+		</rule>
 
 	</rules>
 
