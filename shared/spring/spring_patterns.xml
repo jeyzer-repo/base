@@ -25,6 +25,8 @@
 				<function pattern="org.springframework.batch.repeat.support.ResultHolderResultQueue.take" name="Spring task - take result"/>
 				<function pattern="org.springframework.web.servlet.handler.AbstractHandlerExceptionResolver.resolveException" name="Spring - exception processing"/>
 				<function pattern="org.springframework.jms.listener.AbstractPollingMessageListenerContainer.receiveMessage" name="Spring - listening for message"/>
+				<function pattern="org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization" name="Spring - bean factory init"/>
+				<function pattern="org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance" name="Spring - create bean"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
