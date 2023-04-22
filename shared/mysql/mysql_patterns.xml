@@ -26,6 +26,7 @@
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<operation pattern="com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery" name="SQL prepared statement execution"  	type="MySQL"/>
+				<operation pattern="com.mysql.cj.jdbc.ConnectionImpl.createNewIO" name="Create db connection"  							type="MySQL"/>
 				<operation pattern="com.mysql.jdbc.ConnectionImpl.execSQL" name="SQL execution"  			   							type="MySQL"/>
 				<operation pattern="mysql.jdbc.PreparedStatement.executeUpdate" name="MySQL insert or update"  							type="MySQL"/>
 				<operation pattern="mysql.jdbc." name="MySQL operation"		   	   							   							type="MySQL"/>
