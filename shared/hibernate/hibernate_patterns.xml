@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Hibernate" version="2.7">
+<profile name="Hibernate" version="3.0">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -21,6 +21,7 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<!--function pattern="javax.xml.parsers.DocumentBuilderFactory.newInstance" name="DOM builder loading"/-->
+				<function pattern="org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build" name="Hibernate entity manager build"/>
 				<function pattern="org.hibernate.loader.Loader.list" name="Hibernate load list"/>
 				<function pattern="org.hibernate.loader.Loader.loadCollectionBatch" name="Hibernate load collection batch"/>
 				<function pattern="org.hibernate.loader.Loader.loadCollection" name="Hibernate load collection"/>
@@ -29,6 +30,9 @@
 				<function pattern="org.hibernate.impl.SessionImpl.flush" name="Hibernate session flush"/>
 				<function pattern="org.hibernate.internal.SessionImpl.flush" name="Hibernate session flush"/>
 				<function pattern="org.hibernate.loader.plan.exec.internal.AbstractLoadPlanBasedLoader.executeQueryStatement" name="Hibernate query"/>
+			    <function pattern="org.hibernate.persister.internal.PersisterFactoryImpl.createEntityPersister" name="Hibernate create entity persister"/>
+				<function pattern="org.hibernate.internal.SessionFactoryImpl.prepareEventListeners" name="Hibernate create event listeners"/>
+				<function pattern="org.hibernate.service.internal.AbstractServiceRegistryImpl.createService" name="Hibernate create service"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -50,6 +54,7 @@
 				<operation pattern="org.hibernate.internal.SessionImpl.close" name="Hibernate session closure"/>
 				<operation pattern="org.hibernate.jpa.internal.TransactionImpl.commit" name="Hibernate transaction commit"/>
 				<operation pattern="org.hibernate.cache.ehcache.internal.StorageAccessImpl.putIntoCache" name="Hibernate cache update"/>
+				<operation pattern="org.hibernate.engine.query.spi.QueryPlanCache.getHQLQueryPlan" name="Hibernate HQL query plan access"/>
 				<operation pattern="org.hibernate." name="Hibernate operation"/>
 			</operations>
 			<lockers>
