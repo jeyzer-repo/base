@@ -83,6 +83,7 @@
 				<operation pattern="Class.newInstance" name="Class loading"													type="Class loader"/>
 				<operation pattern="java.lang.ClassLoader.getResource" name="Class loader ressource access"					type="Class loader"/>
 				<operation pattern="java.lang.ClassLoader.loadClass" name="Class loading"									type="Class loader"/>
+				<operation pattern="java.lang.ClassLoader.defineClass" name="Class byte loading"							type="Class loader"/>
 				<operation pattern="java.util.jar.JarFile.getManifest" name="Jar manifest loading"							type="Class loader"/>
 				<operation pattern="java.lang.Class.forName" name="Class access"/>
 				<operation pattern="sun.nio.fs.WindowsNativeDispatcher.DeleteFile" name="File delete"						type="File"/>
@@ -267,7 +268,6 @@
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
 				<executor_thread_name pattern="Main" name="Program main"/>
 				<executor_thread_name pattern="Keep-Alive-Timer" name="HTTP keep alive timer"/>
-				<executor_thread_name pattern="Service Thread" name="JVM service thread"/>
 				<executor_thread_name pattern="Logging-Cleaner" name="Java logging cleaner"/>
 				<!-- Java 9+ JFR -->
 				<executor_thread_name pattern="JFR Periodic Tasks" name="JFR"/>
