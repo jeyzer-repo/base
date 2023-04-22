@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Camel" version="2.7">
+<profile name="Camel" version="3.0">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -24,6 +24,7 @@
 				<function pattern="org.apache.camel.component.jms.JmsProducer.doSend" name="JMS message send (Camel)"/>
 				<function pattern="org.apache.camel.processor.DelegateAsyncProcessor.process;org.apache.camel.component.jms.EndpointMessageListener.onMessage" name="JMS message processing (Camel async)"/> <!-- Multiple line pattern -->
 				<function pattern="org.apache.camel.component.bean.BeanProcessor.process" name="Camel bean processing"/>
+				<function pattern="org.apache.camel.component.file.GenericFileConsumer.poll" name="Camel file consumer poll"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
