@@ -22,13 +22,18 @@
 			<functions>
 				<!-- JBoss -->
 				<function pattern="org.jboss.system.server.profileservice.hotdeploy.HDScanner.scan" name="JBoss hot deploy scanner"/>
+				<function pattern="org.jboss.as.server.deployment.scanner.FileSystemDeploymentService.scan" name="JBoss deploy scan"/>
 				<function pattern="org.jboss.logging.Log4jService$URLWatchTimerTask.run" name="JBoss log4j file scanner"/>
 				<function pattern="org.jboss.resource.connectionmanager.InternalManagedConnectionPool.fillToMin" name="JBoss db connection pool filling"/>
+				<function pattern="org.jboss.jca.core.connectionmanager.pool.mcp.PoolFiller.run" name="JBoss fill db pool"/>
 				<function pattern="org.jboss.logging.Logger.error" name="JBoss error logging"/>
+				<function pattern="org.jboss.jca.core.connectionmanager.pool.mcp.SemaphoreConcurrentLinkedDequeManagedConnectionPool.validateConnections" name="JBoss validate db connection"/>
 				<function pattern="org.jboss.web.CatalinaLogger_$logger.exceptionDuringService" name="JBoss service exception"/>
 				<function pattern="org.jboss.as.web.security.JBossWebRealm.authenticate" name="JBoss authentication"/>
 				<function pattern="org.jboss.weld.bootstrap.WeldRuntime.shutdown" name="JBoss Weld runtime shutdown"/>
 				<function pattern="org.jboss.weld.environment.se.WeldContainer.shutdown" name="JBoss Weld container shutdown"/>
+				<function pattern="org.jboss.as.server.ServerService.boot" name="JBoss start"/>
+				<function pattern="org.wildfly.clustering.service.FunctionalService.start" name="JBoss service start"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -39,6 +44,9 @@
 				<operation pattern="org.jboss.classloader.spi.base.BaseClassLoader.getResource" name="JBoss ressource loading"				type="Class loader"/>
 				<operation pattern="org.jboss.jca.adapters.jdbc.WrapperDataSource.getConnection" name="JBoss db connection pool access"/>				
 				<operation pattern="org.jboss.logging.Logger.getLogger" name="JBoss get logger"/>				
+				<operation pattern="org.jboss.as.controller.ModelControllerImpl.awaitContainerStateChangeReport" name="Wait for start sequence end"/>				
+				<operation pattern="org.jboss.modules.JarFileResourceLoader.getClassSpec" name="Jar file get class spec"/>
+				<operation pattern="org.jboss.modules.ModuleClassLoader.findClass" name="JBoss module class load"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -52,6 +60,9 @@
 				<executor pattern="org.jboss.modules.ref.References$ReaperThread.run" name="JBoss reaper thread"/>
 				<executor pattern="org.jboss.as.jacorb.service.CorbaORBService$ORBRunner.run" name="JBoss Jacorb embedded service"/>
 				<executor pattern="org.jboss.weld.environment.se.WeldContainer$ShutdownHook.run" name="JBoss Weld shutdown thread"/>
+				<executor pattern="org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run" name="JBoss service thread"/>
+				<executor pattern="org.jboss.as.server.ServerService.boot" name="JBoss boot thread"/>
+				<executor pattern="org.jboss.jca.core.connectionmanager.pool.validator.ConnectionValidator$ConnectionValidatorRunner.run" name="JBoss connection validator"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -72,6 +83,10 @@
 				<exclude pattern="org.jboss.jca.core.connectionmanager.pool.mcp.PoolFiller.run" name="JCA PoolFiller" size="4"/>
 				<exclude pattern="org.jboss.jca.core.connectionmanager.pool.idle.IdleRemover$IdleRemoverRunner.run" name="JBoss remover thread" size="7"/>
 				<exclude pattern="org.xnio.nio.WorkerThread.run" name="JBoss XNIO thread" size="7"/>
+				<!-- JBoss 7 -->
+				<exclude pattern="java.util.concurrent.CountDownLatch.await;org.jboss.as.controller.ParallelBootOperationStepHandler$ParallelBootTransaction;org.jboss.as.controller.ParallelBootOperationStepHandler$ParallelBootTask.run;org.jboss.threads.ContextClassLoaderSavingRunnable.run" name="JBoss context class loader" size="14"/>
+				<exclude pattern="java.util.concurrent.CountDownLatch.await;org.jboss.as.controller.ParallelBootOperationStepHandler$ParallelBootTransactionControl.operationPrepared;org.jboss.as.controller.ModelController$OperationTransactionControl.operationPrepared;org.jboss.as.controller.AbstractOperationContext.executeDoneStage" name="JBoss task startup thread" size="18"/>
+				<exclude pattern="java.util.concurrent.CountDownLatch.await;org.jboss.as.server.deployment.scanner.DeploymentScannerAdd$BootTimeScannerDeployment$1.call;org.jboss.as.server.deployment.scanner.DeploymentScannerAdd$BootTimeScannerDeployment$1.call;java.util.concurrent.FutureTask.run" name="JBoss scan startup thread" size="18"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
