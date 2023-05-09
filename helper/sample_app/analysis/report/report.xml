@@ -23,6 +23,7 @@
 				<field name="Architecture" property="os.arch"/>
 				<field name="# CPUs" property="jzr.ext.process.available.processors"/>
 				<field name="# CPUs" property="jfr.system.cpu.cores"/>
+				<field name="Max FDs" property="jzr.ext.system.unix.max.file.descriptor.count"/>
 				<field name="Patch level" property="sun.os.patch.level"/>
 			</category>
 			<category name="JVM" color="RGB-196-227-252">
@@ -113,6 +114,10 @@
 				<garbage_collection_time_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-all-time-percent.xml"/>
 				<garbage_collection_health_indication header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/gc/gc-last-all-health-indication.xml"/>
 
+				<!-- File descriptors (Unix) -->
+				<section_delimiter title="File descriptors" color="RGB-201-208-168"/>
+				<open_file_descriptor_counter header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/open-file-descriptor-counter.xml"/>
+				<file_descriptor_usage_percent header_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/headers/file-descriptor-usage-percent.xml"/>
 			</headers>
 			<headers formats="Jstack 1.6+,Jstack 1.6+ Hung,JMX,Jstack 1.5,JRMC,TDA" title_column_index="1">
 				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
