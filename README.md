@@ -33,7 +33,7 @@ https://github.com/jeyzer-repo/base/master \
 https://github.com/jeyzer-repo/base/helper
 
 If you wish to remove the base master profiles from the Jeyzer Web Analyzer, remove the JEYZER_BASE_MASTER_PROFILES_DIR and JEYZER_BASE_HELPER_PROFILES_DIR references from the JEYZER_MASTER_PROFILES_DIR_ROOTS environment variable.\
-The JEYZER_MASTER_PROFILES_DIR_ROOTS variable is by default set in the web\apache-tomcat-9.0.41\bin\setenv.bat|sh file of your Jeyzer installation.
+The JEYZER_MASTER_PROFILES_DIR_ROOTS variable is by default set in the web\apache-tomcat-9.0.73\bin\setenv.bat|sh file of your Jeyzer installation.
 
 
 Base templates
