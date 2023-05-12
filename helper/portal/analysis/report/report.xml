@@ -23,6 +23,8 @@
 		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/group-sequence/group-sequence-thread-activity.xml"/>
 		
 		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-thread-activity.xml"/>
+
+		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-contention-types.xml"/>
 		
 		<sheet sheet_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/report/sheet/sequence/sequence-charts.xml"/>
 		
