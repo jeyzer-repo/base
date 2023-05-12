@@ -7,13 +7,14 @@
 		<!-- ************************************************************************ -->
 		<!--                       SYNAPSE RULES                                      -->
 		<!-- ************************************************************************ -->
-
-		<!--  If operation is detected across current session, generate event. -->
-		<rule name="Operation presence" param_display="Synapse ESB deprecation" param="Synapse mediation" ref="JZR-SHA-SYNAPSE-001">
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="Synapse" param="Synapse" stickers="code_quality" ref="JZR-SHA-SYNAPSE-001">
+			<narrative>This rule detects the Synapse ESB usage.</narrative>
 			<thresholds>
 				<threshold type="system signal" 
-				           level="INFO"
-				           message="The Apache Synapse ESB in not maintained since 2017 and is probably containing security issues.&#10; Please check with your Security Officer if any remediation is required."/>
+				           level="INFO" 
+				           message="The Apache Synapse ESB in not maintained since 2017 and is probably containing security vulnerabilities.&#10; Please check with your Security Officer if any remediation is required."/>
 			</thresholds>
 		</rule>
 
