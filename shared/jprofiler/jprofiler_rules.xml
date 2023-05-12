@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="JProfiler">
+
+		<!-- ************************************************************************ -->
+		<!--                       JPROFILER RULES                                    -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="JProfiler" param="JProfiler" stickers="code_quality" ref="JZR-SHA-JPROF-001">
+			<narrative>This rule detects the JProfiler agent usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           message="JProfiler monitoring agent is used.&#10; Make sure it is configured properly to not impact the application performance."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
