@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Netty" version="2.8">
+<profile name="Netty" version="3.0">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -50,7 +50,8 @@
 				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.SelectedSelectionKeySetSelector.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select loop"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.SelectedSelectionKeySetSelector.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select2 loop"/>		<!-- Multiple line pattern -->
-				<exclude pattern="sun.nio.ch.EPoll.wait;sun.nio.ch.EPollSelectorImpl.doSelect;sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select3 loop"/>		<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select3 loop" size="10"/>
+				<exclude pattern="sun.nio.ch.EPoll.wait;sun.nio.ch.EPollSelectorImpl.doSelect;sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select4 loop"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;io.netty.util.concurrent.SingleThreadEventExecutor.takeTask;io.netty.util.concurrent.DefaultEventExecutor.run" name="Netty executor"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;io.netty.util.concurrent.SingleThreadEventExecutor.takeTask;io.netty.util.concurrent.DefaultEventExecutor.run" name="Netty executor 2"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.lang.Thread.sleep;io.netty.util.HashedWheelTimer$Worker.waitForNextTick;io.netty.util.HashedWheelTimer$Worker.run" name="Netty wheel timer"/>		<!-- Multiple line pattern -->
