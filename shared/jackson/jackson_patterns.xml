@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Jackson" version="2.7">
+<profile name="Jackson" version="3.0">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -21,6 +21,8 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<function pattern="com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString" name="JSON conversion to String" />
+				<function pattern="com.fasterxml.jackson.databind.ObjectWriter.writeValue" name="JSON write value" />
+				<function pattern="com.fasterxml.jackson.databind.ObjectMapper.convertValue" name="JSON convert value" />
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
