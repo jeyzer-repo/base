@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="AMQ" version="2.7">
+<profile name="AMQ" version="3.0">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -72,6 +72,9 @@
 				<function pattern="amqextensions.security.JaasAuthenticationBroker.login" name="JAAS login"/>
 				<!-- Abstract on AMQ 5.11 -->
 				<function pattern="activemq.transport.AbstractInactivityMonitor.onException" name="IO Exception handling (Inactivity Monitor)"/>
+				<!-- 6.3.0 -->
+				<function pattern="io.fabric8.mq.fabric.ActiveMQServiceFactory.createBroker" name="Create broker"/>
+				<function pattern="io.fabric8.patch.management.impl.GitPatchManagementServiceImpl.ensurePatchManagementInitialized" name="Initialize patch mgmt"/>
 				<!-- Commons -->
 				<function pattern="apache.activemq.transport.tcp.TcpTransport.oneway" name="TCP message processing"/>
 				<function pattern="transport.tcp.TcpTransport.readCommand" name="TCP read"/>
@@ -109,6 +112,7 @@
 				<operation pattern="activemq.broker.region.AbstractRegion.getDestinations" name="AMQ destinations map access"/>
 				<operation pattern="activemq.broker.region.RegionBroker.getDestinationMap" name="AMQ destination map access"/>
 				<operation pattern="activemq.broker.jmx.BrokerMBeanSupport.createProducerName" name="Producer name creation"/>
+				<!-- 6.3.0 -->
 			</operations>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
@@ -131,6 +135,10 @@
 				<exclude pattern="java.net.SocketInputStream.read;sun.security.ssl.InputRecord.readFully" name="Inactive thread listening on socket"/>	<!-- Multiple line pattern -->
 				<exclude pattern="java.lang.Object.wait;kahadb.journal.DataFileAppender.processQueue" name="Inactive AMQ Kahadb writing thread"/>	<!-- Multiple line pattern -->
 				<exclude pattern="java.lang.Object.wait;kahadb.disk.journal.DataFileAppender.processQueue" name="Inactive AMQ Kahadb writing thread 2"/>	<!-- Multiple line pattern -->
+				<!-- 6.3.0 -->
+				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;org.apache.activemq.transport.nio.SelectorWorker.run" name="AMQ NIO selector waiting" size="9"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Object.wait;org.apache.activemq.store.kahadb.scheduler.JobSchedulerImpl$ScheduleTime.pause;org.apache.activemq.store.kahadb.scheduler.JobSchedulerImpl.mainLoop;org.apache.activemq.store.kahadb.scheduler.JobSchedulerImpl.run" name="AMQ Kahadb job scheduler waiting" size="5"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.net.SocketInputStream.read;org.apache.activemq.transport.tcp.TcpBufferedInputStream.fill;org.apache.activemq.transport.tcp.TcpTransport$2.fill;org.apache.activemq.transport.tcp.TcpBufferedInputStream.read;org.apache.activemq.transport.tcp.TcpTransport$2.read;java.io.DataInputStream.readInt;org.apache.activemq.openwire.OpenWireFormat.unmarshal;org.apache.activemq.transport.tcp.TcpTransport.readCommand" name="Inactive thread listening on socket 3" size="14"/>	<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
