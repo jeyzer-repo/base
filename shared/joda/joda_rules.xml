@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Joda">
+
+		<!-- ************************************************************************ -->
+		<!--                       JODA RULES                                         -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="Joda" param="Joda" stickers="code_quality" ref="JZR-SHA-JODA-001">
+			<narrative>This rule detects the Joda library usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           message="The Joda library is now deprecated.&#10;From Java SE 8 onwards, it is recommended to migrate to Java.time (JSR-310) - a core part of the JDK.&#10;Please inform the R&#38;D team."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
