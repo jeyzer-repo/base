@@ -122,9 +122,10 @@
 				<operation pattern="java.util.Arrays.equals" name="Java array equals"										type="Collection"/>
 				<operation pattern="java.util.Collections.sort" name="Collection sort"										type="Collection"/>
 				<operation pattern="java.util.WeakHashMap.get" name="Weak hashMap access"									type="Collection"/>
+				<operation pattern="java.util.concurrent.atomic.AtomicReferenceArray.get" name="Atomic ref array access"	type="Collection"/>
 				<operation pattern="java.util.TimSort.sort" name="Timsort"/>
 				<operation pattern="java.lang.Thread.start" name="Java thread spawning-creation"/>
-				<operation pattern="java.lang.Thread.init" name="Java thread creation"/>
+				<operation pattern="java.lang.Thread.&lt;init&gt;" name="Java thread creation"/>
 				<operation pattern="java.lang.Thread.sleep" name="Thread on hold (sleep)"/>
 				<operation pattern="java.lang.Thread.join" name="Waiting for other thread to terminate"									type="Synchro"/>
 				<operation pattern="java.lang.Thread.isInterrupted" name="Thread waiting for interruption"								type="Synchro"/>
@@ -133,6 +134,8 @@
 				<operation pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.returnResource" name="Blocked on RW lock to get a resource from the pool" priority="910"		type="Resource pool"/>
 				<operation pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.getResource" name="Blocked on RW lock to get a resource from the pool" priority="910"		type="Resource pool"/>
 				<operation pattern="java.util.concurrent.FutureTask.awaitDone" name="Wait for Future task completion" 										priority="910"	type="Task delegation"/>
+				<operation pattern="java.util.concurrent.CompletableFuture.get" name="Wait for Future result" 												priority="910"	type="Task delegation"/>
+				<operation pattern="java.util.concurrent.CompletableFuture.waitingGet" name="Wait for Future result" 										priority="910"	type="Task delegation"/>
 				<operation pattern="java.util.concurrent.locks.ReentrantReadWriteLock$WriteLock.lock" name="Blocked on RW lock (Writer)" priority="910"	type="Synchro"/>
 				<operation pattern="java.util.concurrent.locks.ReentrantReadWriteLock$ReadLock.lock" name="Blocked on RW lock (Reader)" priority="910"	type="Synchro"/>
 				<operation pattern="java.util.concurrent.locks.ReentrantLock.unlock" name="Reentrant unlock" priority="910"/>
@@ -189,7 +192,8 @@
 				<operation pattern="jrockit.net." name="JRockit IO access (network)"									type="Network"/>
 				<!--operation pattern="java.io." name="Java IO access"														type="I/O"/-->
 				<operation pattern="sun.nio.ch.ServerSocketChannelImpl.accept0" name="Server socket listening"			type="Listen"/>
-				<operation pattern="java.io.PrintStream.print" name="print"												type="I/O"/>
+				<operation pattern="java.io.PrintStream.print" name="Print"												type="I/O"/>
+				<operation pattern="java.io.PipedInputStream.read" name="Read pipe input"								type="I/O"/>
 				<operation pattern="HashMap.get" name="Hash map access"													type="Collection"/>
 				<operation pattern="Hashtable.get" name="Hash table access"												type="Collection"/>
 				<operation pattern="Hashtable.containsKey" name="Hash table access"										type="Collection"/>
@@ -210,7 +214,9 @@
 				<operation pattern="jdk.jfr.internal.JVM.emitEvent" name="JVM event published"/>
 				<operation pattern="java.lang.Math." name="Java mathematic operation"/>
 				<operation pattern="java.math." name="Java mathematic operation"/>
+				<operation pattern="java.text.SimpleDateFormat.&lt;init&gt;" name="Simple date format creation"/>
 				<operation pattern="java.text.SimpleDateFormat." name="Date format operation"/>
+				<operation pattern="java.time.format.DateTimeFormatter.parse" name="Parse date time"/>
 				<operation pattern="sun.util.calendar." name="Calendar operation"/>
 				<operation pattern="com.sun.common.util.logging.LoggingOutputStream$LoggingPrintStream.write" name="Sun logging operation"	type="Log"/>
 				<operation pattern="sun.nio.ch.FileChannelImpl.force" name="Physical file writing" 						type="File"/>
@@ -244,6 +250,9 @@
   				<locker pattern="java.util.concurrent.CountDownLatch.await" name="CountDownLatch"/>
   				<locker pattern="java.util.concurrent.CyclicBarrier.await" name="CyclicBarrier"/>
   				<locker pattern="java.util.concurrent.Semaphore.acquire" name="Semaphore"/>
+  				<locker pattern="java.util.concurrent.Phaser.arriveAndAwaitAdvance" name="Phaser"/>
+  				<locker pattern="java.util.concurrent.Phaser.awaitAdvanceInterruptibly" name="Phaser"/>
+  				<locker pattern="java.util.concurrent.Phaser.awaitAdvance" name="Phaser"/>
 				<!-- try lock with timeout -->
 				<locker pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer.tryAcquireSharedNanos;java.util.concurrent.Semaphore.tryAcquire" name="Semaphore"/>
   				<locker pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.returnResource" name="RWLockDataStructure"/>
@@ -287,11 +296,14 @@
 				<exclude pattern="java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor$Worker.run" name="Worker thread waiting for task execution from a delayed work queue (take)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.SynchronousQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue (take)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.SynchronousQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue (poll)"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.LinkedBlockingDeque.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a linked blocking dequeue (take)"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.LinkedBlockingDeque.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a linked blocking dequeue (poll)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.Iocp.getQueuedCompletionStatus;sun.nio.ch.Iocp.access$300;sun.nio.ch.Iocp$EventHandlerTask.run" name="Windows I/O completion wait"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.EPoll.epollWait;sun.nio.ch.EPollPort$EventHandlerTask.poll;sun.nio.ch.EPollPort$EventHandlerTask.run" name="Windows E port poll wait"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;sun.nio.ch.EPollPort$EventHandlerTask.run" name="Windows E port poll wait 2"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.locks.LockSupport.parkUntil;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join dormant thread" size="4"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.locks.LockSupport.parkUntil;java.util.concurrent.ForkJoinPool.awaitWork;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join dormant thread 2" size="5"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.LockSupport.park;java.util.concurrent.ForkJoinPool.awaitWork;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join dormant thread 2" size="5"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.LockSupport.parkUntil;java.util.concurrent.ForkJoinPool.awaitWork;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join dormant thread 3" size="5"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.locks.LockSupport.park;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join unsignalled thread" size="4"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.fs.MacOSXWatchService.CFRunLoopRun;sun.nio.fs.MacOSXWatchService$CFRunLoopThread.run" name="MacOS XWatch Service lookibg for file changes" size="2"/>		<!-- Multiple line pattern -->
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
