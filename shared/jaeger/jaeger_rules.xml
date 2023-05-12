@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Jaeger">
+
+		<!-- ************************************************************************ -->
+		<!--                       JAEGER RULES                                         -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="Jaeger" param="Jaeger" stickers="code_quality" ref="JZR-SHA-JAEG-001">
+			<narrative>This rule detects the Jaeger client library usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           message="The Jaeger tracing client library is deprecated since 2022&#10;The Open Telemetry SDK must now be used&#10;Please inform the R&#38;D to plan the adequate migration to Open Telemetry SDK."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
