@@ -83,6 +83,8 @@
 				<exclude pattern="org.jboss.jca.core.connectionmanager.pool.mcp.PoolFiller.run" name="JCA PoolFiller" size="4"/>
 				<exclude pattern="org.jboss.jca.core.connectionmanager.pool.idle.IdleRemover$IdleRemoverRunner.run" name="JBoss remover thread" size="7"/>
 				<exclude pattern="org.xnio.nio.WorkerThread.run" name="JBoss XNIO thread" size="7"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;org.jboss.netty.channel.socket.nio.NioServerBoss.select;org.jboss.netty.channel.socket.nio.AbstractNioSelector.run;org.jboss.netty.channel.socket.nio.NioServerBoss.run" name="JBoss Netty Server thread" size="12"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.select;org.jboss.netty.channel.socket.nio.SelectorUtil.select;org.jboss.netty.channel.socket.nio.AbstractNioSelector.select;org.jboss.netty.channel.socket.nio.AbstractNioSelector.run;org.jboss.netty.channel.socket.nio.NioClientBoss.run" name="JBoss Netty Client thread" size="13"/>
 				<!-- JBoss 7 -->
 				<exclude pattern="java.util.concurrent.CountDownLatch.await;org.jboss.as.controller.ParallelBootOperationStepHandler$ParallelBootTransaction;org.jboss.as.controller.ParallelBootOperationStepHandler$ParallelBootTask.run;org.jboss.threads.ContextClassLoaderSavingRunnable.run" name="JBoss context class loader" size="14"/>
 				<exclude pattern="java.util.concurrent.CountDownLatch.await;org.jboss.as.controller.ParallelBootOperationStepHandler$ParallelBootTransactionControl.operationPrepared;org.jboss.as.controller.ModelController$OperationTransactionControl.operationPrepared;org.jboss.as.controller.AbstractOperationContext.executeDoneStage" name="JBoss task startup thread" size="18"/>
