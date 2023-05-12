@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Oracle" version="2.8">
+<profile name="Oracle" version="3.0">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -22,6 +22,13 @@
 			<functions>
 				<function pattern="oracle.jdbc.OracleDatabaseMetaData.getClientInfoProperties" name="Oracle client info access"/>
 				<function pattern="oracle.jdbc.driver.PhysicalConnection.pingDatabase" name="Oracle database ping"/>
+				<function pattern="oracle.odi.runtime.agent.processor.impl.ColumnMetadataFetchUtils$JDBCColumnsMetadataFetch.fetchColumns" name="Oracle ODI fetch columns"/>
+				<function pattern="oracle.odi.runtime.agent.execution.SessionTask.executeOdiCommand" name="Oracle ODI command exec"/>
+				<function pattern="oracle.odi.adp.rest.jersey.web.controller.v1.BulkLoadController.cleanObjectsBulkLoadById" name="Oracle ODI clean objects bulk load by id"/>
+				<function pattern="oracle.odi.adp.rest.jersey.web.controller.v1.BulkLoadController.generateObjectsBulkLoadById" name="Oracle ODI generate objects bulk load by id"/>
+				<function pattern="oracle.odi.adp.rest.common.web.controller.BulkLoadControllerImpl.generateTopLevelPackage" name="Oracle ODI generate top level package"/>
+				<function pattern="oracle.odi.adp.rest.jersey.web.controller.v1.JobController.getSessionDetailsByGlobalId" name="Oracle ODI get session details by id"/>
+				<function pattern="oracle.odi.adp.rest.jersey.web.controller.v1.BulkLoadController.restGenerateChunkBulkLoadById" name="Oracle ODI generate chunk bulk load by id"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -33,10 +40,13 @@
 				<operation pattern="oracle.jdbc.driver.PhysicalConnection.close" name="Oracle connection closure" priority="901"			type="Oracle"/>
 				<operation pattern="oracle.net.ns.Packet.receive" name="Oracle result wait" 			priority="900"						type="Oracle"/>
 				<operation pattern="oracle.net.ns.NetInputStream.read" name="Oracle read"   			priority="900"						type="Oracle"/>
+				<operation pattern="oracle.net.nt.SSLSocketChannel.read" name="Oracle read"   			priority="900"						type="Oracle"/>
 				<operation pattern="oracle.jdbc.driver.T4CTTIdcb.receive" name="Oracle data received"  	priority="900"						type="Oracle"/>
 				<operation pattern="oracle.net.ns.DataPacket.send" name="Oracle data sending"  			priority="900"						type="Oracle"/>
 				<operation pattern="oracle.net.ns.NetOutputStream.write" name="Oracle data sending"  	priority="900"						type="Oracle"/>
+				<operation pattern="oracle.net.nt.SSLSocketChannel.write" name="Oracle data sending"  	priority="900"						type="Oracle"/>
 				<operation pattern="oracle.jdbc.driver." name="Oracle JDBC driver operation"  			priority="900"/>
+				<operation pattern="oracle.odi." name="Oracle ODI driver operation"  					priority="900"/>
 				<operation pattern="oracle.jdbc.driver.ScrollableResultSet" name="Oracle result set java access"/>
 				<operation pattern="oracle.sql.CharacterSet.stringToAL32UTF8" name="Oracle UTF8 conversion"/>
 			</operations>
@@ -46,7 +56,8 @@
 			</lockers>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
-				<executor pattern="oracle.jdbc.driver.BlockSource$ThreadedCachingBlockSource$BlockReleaser.run" name=""/>
+				<executor pattern="oracle.jdbc.driver.BlockSource$ThreadedCachingBlockSource$BlockReleaser.run" name="Oracle Cache releaser"/>
+				<executor pattern="oracle.odi.runtime.agent.execution.job.OdiJob.call" name="Oracle ODI job"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -67,12 +78,18 @@
 				<exclude pattern="java.lang.Thread.sleep;oracle.ucp.actors.InterruptableActor.lambda$buildControlThread$1" name="Oracle UCP Interruptable Actor" size="4"/>
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;oracle.ucp.actors.InterruptableActor.lambda$buildControlThread$1" name="Oracle UCP Interruptable Actor 2" size="6"/>
 				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.DelayQueue.poll;oracle.ons.ThreadPoolWorkloadManager$ExecutorThread.run" name="Oracle ONS task" size="5"/>
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;oracle.odi.runtime.agent.execution.job.threadpool.odi.OdiMinCachedThreadPool$CustomOfferBlockingQueue.take;oracle.odi.runtime.agent.execution.job.threadpool.odi.OdiMinCachedThreadPool$CustomOfferBlockingQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Oracle ODI task" size="10"/>
+				<exclude pattern="java.util.concurrent.LinkedBlockingDeque.take;sun.nio.fs.AbstractWatchService.take;oracle.odi.connector.driver.directory.ConnectorDriverDirWatcher.pollEvents;oracle.odi.connector.driver.directory.ConnectorDriverDirWatcher.run" name="Oracle ODI watcher" size="13"/>
+				<exclude pattern="java.lang.Thread.sleep;oracle.core.ojdl.BufferedLogWriter$LogFlusher.run;java.lang.Thread.run" name="Oracle ODJL Log flusher" size="3"/>
+				<exclude pattern="java.lang.Thread.sleep;oracle.odi.core.persistence.OdiChangeNotificationManager$MonitorClass.run;java.lang.Thread.run" name="Oracle ODI Notification Manager" size="3"/>
+				<exclude pattern="java.lang.Thread.sleep;oracle.odi.runtime.agent.execution.cache.SessionBlueprintCache$SessionBlueprintCacheMonitor.run;java.lang.Thread.run" name="Oracle Cache Monitor" size="3"/>
+				<exclude pattern="java.lang.Object.wait;com.sunopsis.tools.core.SnpsSemaphore.get;com.sunopsis.timer.SnpsAbstractScheduler.run;oracle.odi.runtime.agent.scheduler.OdiAgentScheduler.run" name="Oracle ODI Agent scheduler" size="6"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<!-- exclude_thread_name pattern_regex="RMI TCP.*" name="RMI"/-->
-				<!-- exclude_thread_name pattern="JMX server connection timeout" name="RMI"/-->
+				<exclude_thread_name pattern="UCP Clock" name="Oracle UCP Clock" size="4"/>
 			</exclude_thread_names>
 		</patterns>
 
