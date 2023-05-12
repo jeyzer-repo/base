@@ -39,7 +39,7 @@
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
-				<executor_thread_name pattern="ResponseProcessor for block BP" name="Hadoop Block Resp processor"/>
+				<executor_thread_name pattern="ResponseProcessor for block BP" name="Hadoop block resp processor"/>
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
