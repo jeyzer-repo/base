@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Jacorb">
+
+		<!-- ************************************************************************ -->
+		<!--                       JACORB RULES                                         -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="Jacorb" param="Jacorb" stickers="code_quality" ref="JZR-SHA-JACO-001">
+			<narrative>This rule detects the JacORB client library usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           message="The JacORB library is now deprecated (along side with CORBA).&#10;Last release is from 2017 and may therefore contain security vulnerabilities&#10;Please inform the R&#38;D to plan the adequate migration to another communication media."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>

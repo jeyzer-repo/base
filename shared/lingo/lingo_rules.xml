@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Lingo">
+
+		<!-- ************************************************************************ -->
+		<!--                       LINGO RULES                                         -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="Lingo" param="Lingo" stickers="code_quality" ref="JZR-SHA-LING-001">
+			<narrative>This rule detects the Lingo JMS client library usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           message="The Lingo library is now deprecated.&#10;Last release is from 2007 and may therefore contain security vulnerabilities&#10;Please inform the R&#38;D to plan the adequate migration to a more recent JMS client library."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>

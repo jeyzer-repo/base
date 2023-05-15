@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Jakarta-Oro">
+
+		<!-- ************************************************************************ -->
+		<!--                       JAKARTA-ORO RULES                                         -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="Jakarta-Oro" param="Jakarta-Oro" stickers="code_quality" ref="JZR-SHA-ORO-001">
+			<narrative>This rule detects the Jakarta Oro client library usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           message="The Jakarta Oro library is now deprecated.&#10;Last release is from 2010 and may therefore contain security vulnerabilities&#10;Please inform the R&#38;D to plan the adequate migration to another text processing library."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>

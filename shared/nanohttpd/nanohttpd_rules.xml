@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="NanoHTTPD">
+
+		<!-- ************************************************************************ -->
+		<!--                       NanoHTTPD RULES                                         -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="NanoHTTPD" param="NanoHTTPD" stickers="code_quality" ref="JZR-SHA-NANO-001">
+			<narrative>This rule detects the NanoHTTPD server usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           message="The NanoHTTPD is now deprecated : last release is from 2017.&#10;It may therefore contain security vulnerabilities&#10;Please inform the R&#38;D to plan the adequate migration to a more recent HTTP light server."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>

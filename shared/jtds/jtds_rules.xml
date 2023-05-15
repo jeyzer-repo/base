@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="JTDS">
+
+		<!-- ************************************************************************ -->
+		<!--                       JTDS RULES                                         -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="JTDS" param="JTDS" stickers="code_quality" ref="JZR-SHA-JTDS-001">
+			<narrative>This rule detects the jTDS client library usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           message="The jTDS library is now deprecated.&#10;Last release is from 2013 and may therefore contain security vulnerabilities&#10;Tha application is probably using an old version of Sybase or Microsoft SQL Server.&#10;Please inform the R&#38;D to plan the adequate migration to a more recent JDBC driver library."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
