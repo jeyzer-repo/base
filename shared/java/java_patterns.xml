@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Java" version="3.0">
+<profile name="Java" version="3.1-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -50,6 +50,7 @@
 				<function pattern="java.lang.Shutdown.shutdown" name="JVM shutdown in progress"/>
 				<function pattern="sun.net.dns.ResolverConfigurationImpl.notifyAddrChange0" name="Wait for DNS update"/>
 				<function pattern="java.util.logging.LogManager.reset" name="Java logger reset"/>
+				<function pattern="java.lang.ApplicationShutdownHooks.runHooks" name="Shutdown hook execution"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -65,7 +66,6 @@
 				<operation pattern="java.lang.Runtime.exit" name="JVM stopping" priority="900"/>
 				<operation pattern="java.lang.System.exit"  name="JVM stopping" priority="900"/>
 				<operation pattern="java.lang.Runtime.halt" name="JVM stopping" priority="900"/>
-				<operation pattern="java.lang.ApplicationShutdownHooks.runHooks" name="Shutdown hook execution"/>
 				<operation pattern="java.io.UnixFileSystem.delete" name="File deletion" priority="900"						type="File"/>
 				<operation pattern="javax.xml.parsers.SAXParserFactory.newInstance" name="SAX parser factory creation"/>
 				<operation pattern="Runtime.freeMemory" name="Access available memory"/>
@@ -90,8 +90,11 @@
 				<operation pattern="java.io.WinNTFileSystem.checkAccess" name="File access check"							type="File"/>
 				<operation pattern="java.nio.file.Files.move" name="File move"												type="File"/>
 				<operation pattern="java.io.File.exists" name="File exist check"											type="File"/>
+				<operation pattern="java.nio.file.Files.exists" name="File exist check"										type="File"/>
 				<operation pattern="java.io.File.lastModified" name="File last modified check"								type="File"/>
 				<operation pattern="java.io.File.renameTo" name="File renaming"												type="File"/>
+				<operation pattern="java.io.File.listFiles" name="File listing"												type="File"/>
+				<operation pattern="java.io.File.list" name="File listing"													type="File"/>
 				<operation pattern="ZipFile.open" name="Jar or zip file access"												type="File"/>
 				<operation pattern="java.util.zip.ZipFile." name="Zip file access"											type="File"/>
 				<operation pattern="java.util.zip.Inflater" name="Zip decompression"										type="File"/>
@@ -184,6 +187,7 @@
 				<operation pattern="sun.net.ssl.internal.ssl.SSLSocketImpl.handleException" name="Buffer error while reading on SSL connection" type="Exception"/>
 				<operation pattern="javax.faces." name="JSF operation"/>
 				<operation pattern="javax.crypto." name="Java cryptographic operation"									type="Crypto"/>
+				<operation pattern="com.sun.crypto." name="Java cryptographic operation"								type="Crypto"/>
 				<operation pattern="java.security.MessageDigest." name="Crypto algorithm operation"						type="Crypto"/>
 				<operation pattern="sun.security.ssl." name="SSL operation"/>
 				<operation pattern="sun.security.util.math." name="Security math operation"								type="Crypto"/>
@@ -277,6 +281,7 @@
 				<executor_thread_name pattern="Main" name="Program main"/>
 				<executor_thread_name pattern="Keep-Alive-Timer" name="HTTP keep alive timer"/>
 				<executor_thread_name pattern="Logging-Cleaner" name="Java logging cleaner"/>
+				<executor_thread_name pattern="SIGTERM handler" name="JVM termination thread"/>
 				<!-- Java 9+ JFR -->
 				<executor_thread_name pattern="JFR Periodic Tasks" name="JFR"/>
 			</executor_thread_names>
