@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Tomcat" version="3.0">
+<profile name="Tomcat" version="3.1-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -21,10 +21,13 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<function pattern="org.apache.catalina.core.StandardHost.startInternal" name="Tomcat host startup"/>
+				<function pattern="org.apache.catalina.startup.HostConfig.lifecycleEvent" name="Tomcat host startup"/>
+				<function pattern="org.apache.catalina.startup.Catalina.start" name="Tomcat startup"/>
 				<function pattern="org.apache.catalina.ha.tcp.ReplicationValve.sendReplicationMessage" name="Tomcat cluster send replication message"/>
 				<function pattern="org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor.sendAsyncData" name="Tomcat cluster send async message"/>
 				<function pattern="org.apache.catalina.tribes.transport.ReceiverBase.messageDataReceived" name="Tomcat cluster message processing"/>
 				<function pattern="org.apache.coyote.ajp.AjpProtocol$AjpConnectionHandler.createProcessor" name="Tomcat AJP processor creation"/>
+				<function pattern="org.apache.catalina.webresources.StandardRoot.gc" name="Tomcat web resource gc"/>
 				<function pattern="org.apache.catalina.users.MemoryUserDatabase.backgroundProcess" name="Tomcat in memory db"/>
 				<function pattern="org.apache.tomcat.util.net.SocketWrapperBase.close" name="Tomcat close socket"/>
 			</functions>
@@ -86,6 +89,7 @@
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;org.apache.tomcat.util.threads.TaskQueue.take;org.apache.tomcat.util.threads.TaskQueue.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Tomcat worker thread waiting for a task to execute from a link blocking queue"/>		<!-- Multiple line pattern -->				
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireSharedInterruptibly;java.util.concurrent.CountDownLatch.await;sun.nio.ch.PendingFuture.get;org.apache.tomcat.util.net.Nio2Endpoint$Acceptor.run" name="Tomcat NIO2 acceptor thread waiting for a client to connect"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.LinkedBlockingDeque.pollFirst;java.util.concurrent.LinkedBlockingDeque.poll;org.apache.juli.AsyncFileHandler$LoggerThread.run" name="Tomcat JULI file writer waiting"/>		<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.ServerSocketChannelImpl.accept;org.apache.tomcat.util.net.NioEndpoint$Acceptor.run;java.lang.Thread.run" name="Tomcat server waiting"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
