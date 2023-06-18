@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="JBoss" version="3.0">
+<profile name="JBoss" version="3.1-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -28,12 +28,14 @@
 				<function pattern="org.jboss.jca.core.connectionmanager.pool.mcp.PoolFiller.run" name="JBoss fill db pool"/>
 				<function pattern="org.jboss.logging.Logger.error" name="JBoss error logging"/>
 				<function pattern="org.jboss.jca.core.connectionmanager.pool.mcp.SemaphoreConcurrentLinkedDequeManagedConnectionPool.validateConnections" name="JBoss validate db connection"/>
+				<function pattern="org.jboss.jca.core.connectionmanager.pool.mcp.SemaphoreConcurrentLinkedDequeManagedConnectionPool.removeIdleConnections" name="JBoss remove db connection"/>
 				<function pattern="org.jboss.web.CatalinaLogger_$logger.exceptionDuringService" name="JBoss service exception"/>
 				<function pattern="org.jboss.as.web.security.JBossWebRealm.authenticate" name="JBoss authentication"/>
 				<function pattern="org.jboss.weld.bootstrap.WeldRuntime.shutdown" name="JBoss Weld runtime shutdown"/>
 				<function pattern="org.jboss.weld.environment.se.WeldContainer.shutdown" name="JBoss Weld container shutdown"/>
 				<function pattern="org.jboss.as.server.ServerService.boot" name="JBoss start"/>
 				<function pattern="org.wildfly.clustering.service.FunctionalService.start" name="JBoss service start"/>
+				<function pattern="org.jboss.msc.service.ServiceControllerImpl$StartTask.startService" name="JBoss service start"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -63,6 +65,7 @@
 				<executor pattern="org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run" name="JBoss service thread"/>
 				<executor pattern="org.jboss.as.server.ServerService.boot" name="JBoss boot thread"/>
 				<executor pattern="org.jboss.jca.core.connectionmanager.pool.validator.ConnectionValidator$ConnectionValidatorRunner.run" name="JBoss connection validator"/>
+				<executor pattern="org.jboss.jca.core.connectionmanager.pool.idle.IdleRemover$IdleRemoverRunner.run" name="JBoss connection remover"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
