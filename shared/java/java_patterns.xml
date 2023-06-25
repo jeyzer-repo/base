@@ -323,6 +323,10 @@
 				<exclude pattern="java.lang.Object.wait;sun.java2d.metal.MTLRenderQueue$QueueFlusher.run;java.lang.Thread.run" name="Java 2D render queue waiting" size="3"/>
 				<!-- AWT -->
 				<exclude pattern="java.lang.Object.wait;sun.awt.AWTAutoShutdown.run" name="AWT shutdown hook" size="4"/>
+				<!-- LDAP -->
+				<exclude pattern="com.sun.jndi.ldap.AbstractLdapNamingEnumeration.getNextBatch;com.sun.jndi.ldap.AbstractLdapNamingEnumeration.hasMoreImpl;com.sun.jndi.ldap.AbstractLdapNamingEnumeration.hasMore;com.sun.jndi.ldap.NamingEventNotifier.run" name="LDAP notifier" size="14"/>
+				<exclude pattern="java.lang.Object.wait;com.sun.jndi.ldap.EventQueue.dequeue;com.sun.jndi.ldap.EventQueue.run" name="LDAP event dequeue" size="5"/>
+				<exclude pattern="sun.security.ssl.SSLSocketImpl$AppInputStream.read;java.io.BufferedInputStream.fill;java.io.BufferedInputStream.read1;java.io.BufferedInputStream.read;com.sun.jndi.ldap.Connection.run" name="LDAP SSL connect wait" size="14"/>
 				<!-- RMI -->
 				<exclude pattern="RMIConnectionImpl.fetchNotifications" name="RMI"/>
 				<exclude pattern="sun.rmi.transport.Transport.serviceCall" name="RMI"/>
