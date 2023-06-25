@@ -3,6 +3,7 @@
 		<highlights>
 		
 			<highlight name="TCP SSL message processing" color="SEA_GREEN"/>
+			<highlight name="Message processing" color="SEA_GREEN"/>
 			<highlight name="Message sending" color="LIGHT_GREEN"/>
 		
 			<highlight name="Add consumer" color="YELLOW"/>

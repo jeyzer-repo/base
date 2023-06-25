@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="AMQ" version="3.0">
+<profile name="AMQ" version="3.1-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -58,6 +58,7 @@
 				<function pattern="kahadb.journal.Journal.write" name="KAHADB Journal writing"/>
 				<function pattern="java.io.FileDescriptor.sync;kahadb.journal.DataFileAppender.processQueue" name="KAHADB Journal disk file writing (sync)"/> <!-- Multiple line pattern -->
 				<function pattern="activemq.util.RecoverableRandomAccessFile.sync;kahadb.disk.journal.DataFileAppender.processQueue" name="KAHADB Journal disk file writing (sync)"/> <!-- Multiple line pattern -->
+				<function pattern="activemq.store.kahadb.disk.journal.DataFileAppender.processQueue" name="KAHADB Journal disk file writing (sync)"/> <!-- Multiple line pattern -->
 				<function pattern="java.io.RandomAccessFile.write;kahadb.journal.DataFileAppender.processQueue" name="KAHADB Journal disk file writing"/> <!-- Multiple line pattern -->
 				<!-- 5.11.1 -->
 				<function pattern="java.io.RandomAccessFile.write;apache.activemq.util.RecoverableRandomAccessFile.write;kahadb.disk.journal.DataFileAppender.processQueue" name="KAHADB Journal disk file writing"/> <!-- Multiple line pattern -->
@@ -73,6 +74,7 @@
 				<!-- Abstract on AMQ 5.11 -->
 				<function pattern="activemq.transport.AbstractInactivityMonitor.onException" name="IO Exception handling (Inactivity Monitor)"/>
 				<!-- 6.3.0 -->
+				<function pattern="activemq.store.kahadb.KahaDBStore.doStart" name="KAHADB start"/>
 				<function pattern="io.fabric8.mq.fabric.ActiveMQServiceFactory.createBroker" name="Create broker"/>
 				<function pattern="io.fabric8.patch.management.impl.GitPatchManagementServiceImpl.ensurePatchManagementInitialized" name="Initialize patch mgmt"/>
 				<!-- Commons -->
@@ -80,6 +82,7 @@
 				<function pattern="transport.tcp.TcpTransport.readCommand" name="TCP read"/>
 				<function pattern="internal.ssl.SSLSocketImpl.readRecord" name="TCP SSL read"/>
 				<function pattern="transport.tcp.SslTransport.doConsume" name="TCP SSL message processing"/>
+				<function pattern="activemq.transport.TransportSupport.doConsume" name="Message processing"/>
 				<function pattern="java.util.TimerThread.mainLoop(Timer.java:509)" name="Timer thread on hold"/>
 				<function pattern="ssl.internal.ssl.SSLServerSocketImpl.accept" name="SSL Server socket listening"/>
 			</functions>
@@ -105,13 +108,16 @@
 				<operation pattern="activemq.advisory.AdvisoryBroker.addConsumer" name="Add consumer in Advisory"/>
 				<operation pattern="activemq.broker.region.RegionBroker.addDestination" name="Add destination"/>
 				<operation pattern="activemq.broker.region.Topic.addSubscription" name="Add topic subscription"/>
-				<operation pattern="org.apache.kahadb.page.PageFile.writeBatch" name="KAHADB Journal page file flush writing"/>
+				<operation pattern="org.apache.kahadb.page.PageFile.writeBatch" name="KAHADB Journal page file flush writing"	type="File"/>
+				<operation pattern="store.kahadb.disk.page.PageFile.writeBatch" name="KAHADB Journal page file flush writing" 	type="File"/>
 				<operation pattern="store.kahadb.MessageDatabase.updateIndex" name="KAHADB database index update"/>
+				<operation pattern="store.kahadb.MessageDatabase.checkpointAckMessageFileMap" name="KAHADB database ack message file map location access"/>
 				<operation pattern="kahadb.util.DataByteArrayOutputStream.writeUTF" name="KAHADB file writing"/>
 				<operation pattern="activemq.broker.region.AbstractRegion.lookup" name="AMQ destination lookup"/>
 				<operation pattern="activemq.broker.region.AbstractRegion.getDestinations" name="AMQ destinations map access"/>
 				<operation pattern="activemq.broker.region.RegionBroker.getDestinationMap" name="AMQ destination map access"/>
 				<operation pattern="activemq.broker.jmx.BrokerMBeanSupport.createProducerName" name="Producer name creation"/>
+				<operation pattern="activemq.thread.TaskRunnerFactory$1.newThread" name="AMQ thread creation"/>
 				<!-- 6.3.0 -->
 			</operations>
 			<executors>
@@ -160,6 +166,7 @@
 				<exclude_thread_name pattern_regex="^Notifier-MulticastDiscoveryAgent-.*" name="ActiveMQ Multicast discovery agent advertiser inactive" size="8"/>
 				<exclude_thread_name pattern_regex="Usage Async Task" name="Usage Async Task inactive" size="8"/>
 				<exclude_thread_name pattern_regex="^ActiveMQ Task" name="ActiveMQ Task inactive" size="10"/>
+				<exclude_thread_name pattern_regex="^ActiveMQ NIO Worker" name="ActiveMQ NIO worker inactive" size="4"/>
 								
 			</exclude_thread_names>
 		</patterns>
