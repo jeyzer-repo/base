@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Karaf" version="3.0">
+<profile name="Karaf" version="3.1-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -34,6 +34,7 @@
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<executor pattern="org.apache.karaf.main.Main$1.run" name="Karaf main thread"/>
+				<executor pattern="org.apache.karaf.shell.console.jline.Console.run" name="Karaf console thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -45,6 +46,9 @@
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.karaf.service.guard.impl.GuardProxyCatalog$ServiceProxyCreatorCustomizer$1.run" name="Karaf proxy creator" size="6"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.net.ServerSocket.implAccept;java.net.ServerSocket.accept;org.apache.karaf.main.Main$ShutdownSocketThread.run" name="Karaf shutdown thread waiting" size="5"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.lang.Thread.sleep;org.apache.karaf.main.Main.doLock;org.apache.karaf.main.Main.lock;org.apache.karaf.main.Main$1.run" name="Karaf main thread" size="4"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Object.wait;jline.internal.NonBlockingInputStream.run;java.lang.Thread.run" name="Karaf input thread" size="3"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Thread.sleep;org.apache.karaf.shell.console.jline.Console$Pipe.run;java.lang.Thread.run" name="Karaf console pipe thread" size="3"/>		<!-- Multiple line pattern -->
+				<exclude pattern="jline.console.ConsoleReader.readLine;org.apache.karaf.shell.console.jline.Console.readAndParseCommand;org.apache.karaf.shell.console.jline.Console.run;org.apache.karaf.shell.ssh.ShellFactoryImpl$ShellImpl$1.runConsole" name="Karaf console" size="21"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
