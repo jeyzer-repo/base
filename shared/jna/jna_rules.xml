@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="JNA">
+
+		<!-- ************************************************************************ -->
+		<!--                       JNA RULES                                          -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="JNA" param="JNA" stickers="performance" ref="JZR-SHA-JNA-001">
+			<narrative>This rule detects the JNA library usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           message="The JNA library permits to perfom native access calls.&#10;If performance of your application is a concern in this area, you may prefer the standard JNI library usage (up to x10 speedup).&#10;JNI usage implies applicative code changes, to be discussed with R&#38;D."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
