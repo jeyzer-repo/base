@@ -29,6 +29,7 @@
 				<function pattern="org.jboss.logging.Logger.error" name="JBoss error logging"/>
 				<function pattern="org.jboss.jca.core.connectionmanager.pool.mcp.SemaphoreConcurrentLinkedDequeManagedConnectionPool.validateConnections" name="JBoss validate db connection"/>
 				<function pattern="org.jboss.jca.core.connectionmanager.pool.mcp.SemaphoreConcurrentLinkedDequeManagedConnectionPool.removeIdleConnections" name="JBoss remove db connection"/>
+				<function pattern="org.jboss.vfs.TempFileProvider$DeleteTask.run" name="JBoss temp files deletion"/>
 				<function pattern="org.jboss.web.CatalinaLogger_$logger.exceptionDuringService" name="JBoss service exception"/>
 				<function pattern="org.jboss.as.web.security.JBossWebRealm.authenticate" name="JBoss authentication"/>
 				<function pattern="org.jboss.weld.bootstrap.WeldRuntime.shutdown" name="JBoss Weld runtime shutdown"/>
@@ -66,6 +67,7 @@
 				<executor pattern="org.jboss.as.server.ServerService.boot" name="JBoss boot thread"/>
 				<executor pattern="org.jboss.jca.core.connectionmanager.pool.validator.ConnectionValidator$ConnectionValidatorRunner.run" name="JBoss connection validator"/>
 				<executor pattern="org.jboss.jca.core.connectionmanager.pool.idle.IdleRemover$IdleRemoverRunner.run" name="JBoss connection remover"/>
+				<executor pattern="org.wildfly.common.ref.References$ReaperThread.run" name="JBoss reference reaper"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -92,6 +94,10 @@
 				<exclude pattern="java.util.concurrent.CountDownLatch.await;org.jboss.as.controller.ParallelBootOperationStepHandler$ParallelBootTransaction;org.jboss.as.controller.ParallelBootOperationStepHandler$ParallelBootTask.run;org.jboss.threads.ContextClassLoaderSavingRunnable.run" name="JBoss context class loader" size="14"/>
 				<exclude pattern="java.util.concurrent.CountDownLatch.await;org.jboss.as.controller.ParallelBootOperationStepHandler$ParallelBootTransactionControl.operationPrepared;org.jboss.as.controller.ModelController$OperationTransactionControl.operationPrepared;org.jboss.as.controller.AbstractOperationContext.executeDoneStage" name="JBoss task startup thread" size="18"/>
 				<exclude pattern="java.util.concurrent.CountDownLatch.await;org.jboss.as.server.deployment.scanner.DeploymentScannerAdd$BootTimeScannerDeployment$1.call;org.jboss.as.server.deployment.scanner.DeploymentScannerAdd$BootTimeScannerDeployment$1.call;java.util.concurrent.FutureTask.run" name="JBoss scan startup thread" size="18"/>
+				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run;org.xnio.XnioWorker$WorkerThreadFactory$1$1.run" name="JBoss XNIO thread waiting" size="5"/>
+				<exclude pattern="java.util.concurrent.locks.LockSupport.park;org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run" name="JBoss Service thread waiting" size="5"/>
+				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;org.jboss.jca.core.connectionmanager.pool.validator.ConnectionValidator$ConnectionValidatorRunner.run;java.util.concurrent.ThreadPoolExecutor.runWorker" name="JBoss connection validator waiting" size="7"/>
+				<exclude pattern="java.lang.Object.wait;java.lang.ref.ReferenceQueue.remove;java.lang.ref.ReferenceQueue.remove;org.wildfly.common.ref.References$ReaperThread.run" name="JBoss ref reaper waiting" size="4"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
