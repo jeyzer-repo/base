@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Oracle" version="3.0">
+<profile name="Oracle" version="3.1-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -41,6 +41,7 @@
 				<operation pattern="oracle.net.ns.Packet.receive" name="Oracle result wait" 			priority="900"						type="Oracle"/>
 				<operation pattern="oracle.net.ns.NetInputStream.read" name="Oracle read"   			priority="900"						type="Oracle"/>
 				<operation pattern="oracle.net.nt.SSLSocketChannel.read" name="Oracle read"   			priority="900"						type="Oracle"/>
+				<operation pattern="oracle.net.nt.TimeoutSocketChannel.read" name="Oracle read"   		priority="900"						type="Oracle"/>
 				<operation pattern="oracle.jdbc.driver.T4CTTIdcb.receive" name="Oracle data received"  	priority="900"						type="Oracle"/>
 				<operation pattern="oracle.net.ns.DataPacket.send" name="Oracle data sending"  			priority="900"						type="Oracle"/>
 				<operation pattern="oracle.net.ns.NetOutputStream.write" name="Oracle data sending"  	priority="900"						type="Oracle"/>
