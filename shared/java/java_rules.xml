@@ -319,6 +319,16 @@
 			</thresholds>
 		</rule>
 
+		<!--  If function is detected across current session, generate event. -->
+		<rule name="Function presence" param_display="Virtual thread detection" param="Start virtual thread" stickers="environment" ref="JZR-SHA-JAVA-024">
+			<narrative>This rule detects the usage of Java virtual threads (Loom).</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           message="Java virtual threads are used.&#10; Jeyzer cannot monitor at this stage the virtual threads.&#10;In case of massive usage, you may monitor closely the VM memory."/>
+			</thresholds>
+		</rule>
+
 	</rules>
 
 </monitor>
