@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Azure" version="3.0">
+<profile name="Azure" version="3.1-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -35,6 +35,9 @@
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<executor pattern="com.azure.core.amqp.implementation.ReactorExecutor.run" name="Azure reactor executor"/>
 				<executor pattern="com.microsoft.azure.functions.worker.handler.MessageHandler.handle" name="Azure worker"/>
+				<executor pattern="com.microsoft.applicationinsights.agent.internal.telemetry.BatchItemProcessor$Worker.run" name="Microsoft telemetry agent"/>
+				<executor pattern="com.azure.monitor.opentelemetry.exporter.implementation.quickpulse.QuickPulseCoordinator.run" name="Microsoft OpenTelemetry coordinator"/>
+				<executor pattern="com.azure.monitor.opentelemetry.exporter.implementation.quickpulse.QuickPulseDataSender.run" name="Microsoft OpenTelemetry data sender"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -42,7 +45,9 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!--exclude pattern="java.lang.Thread.sleep;com.amazonaws.http.IdleConnectionReaper.run" name="AWS HTTP connection reaper"/-->		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.ArrayBlockingQueue.poll;com.microsoft.applicationinsights.agent.internal.telemetry.BatchItemProcessor$Worker.run" name="Microsoft telemetry agent" size="6"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Thread.sleep;com.azure.monitor.opentelemetry.exporter.implementation.quickpulse.QuickPulseCoordinator.run" name="Azure OpenTelemetry coordinator waiting" size="6"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;com.azure.monitor.opentelemetry.exporter.implementation.quickpulse.QuickPulseDataSender.run" name="Azure OpenTelemetry data sender waiting for data to be sent" size="6"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
