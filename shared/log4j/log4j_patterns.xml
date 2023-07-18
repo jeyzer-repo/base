@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Log4j" version="3.0">
+<profile name="Log4j" version="3.1-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -24,6 +24,7 @@
 				<function pattern="org.apache.logging.log4j.core.util.DefaultShutdownCallbackRegistry.run" name="Log4j shutdown"/>
 				<function pattern="org.apache.log4j.RollingFileAppender.subAppend" name="Log4j rolling file appending"/>
 				<function pattern="org.apache.logging.log4j.core.LoggerContext.stop" name="Log4j context stop"/>
+				<function pattern="org.apache.logging.log4j.core.appender.AsyncAppenderEventDispatcher.dispatchAll" name="Log4j dispatch events"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -42,6 +43,7 @@
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<executor pattern="org.apache.logging.log4j.core.util.DefaultShutdownCallbackRegistry.run" name="Log4j shutdown thread"/>
+				<executor pattern="org.apache.logging.log4j.core.appender.AsyncAppenderEventDispatcher.run" name="Log4j event dispatcher"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -49,7 +51,8 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<exclude pattern="java.lang.Thread.sleep;org.apache.log4j.helpers.FileWatchdog.run" name="Log file watch dog"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Thread.sleep;org.apache.log4j.helpers.FileWatchdog.run" name="Log4j file watch dog"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;org.apache.logging.log4j.core.appender.AsyncAppenderEventDispatcher.dispatchAll;org.apache.logging.log4j.core.appender.AsyncAppenderEventDispatcher.run" name="Log4j async event dispatcher waiting" size="6"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
