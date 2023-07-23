@@ -21,7 +21,6 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<function pattern="java.lang.Thread.sleep;org.apache.http.impl.client.IdleConnectionEvictor$1.run" name="Server connection watch suspended"/>
-				<function pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;org.apache.http.impl.nio.reactor.AbstractIOReactor.execute" name="HTTP result wait"/>
 				<function pattern="org.apache.http.impl.nio.reactor.AbstractMultiworkerIOReactor.doShutdown" name="HTTP connection closure"/>
 			</functions>
 			<operations>
@@ -47,6 +46,8 @@
 				<exclude pattern="sun.nio.ch.SelectorImpl.select;org.apache.http.impl.nio.reactor.AbstractMultiworkerIOReactor.execute;org.apache.synapse.transport.passthru.PassThrough" name="PassThrough" size="7"/>
 				<exclude pattern="sun.nio.ch.SelectorImpl.select;org.apache.http.impl.nio.reactor.AbstractIOReactor.execute;org.apache.http.impl.nio.reactor.BaseIOReactor.execute;org.apache.http.impl.nio.reactor.AbstractMultiworkerIOReactor$Worker.run" name="Reactor worker" size="8"/>
 				<exclude pattern="sun.nio.ch.SelectorImpl.select;org.apache.http.impl.nio.reactor.AbstractMultiworkerIOReactor.execute;org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager.execute;org.apache.http.impl.nio.client.CloseableHttpAsyncClientBase$1.run" name="Pooling client connection manager" size="8"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;org.apache.http.impl.nio.reactor.AbstractMultiworkerIOReactor.execute;org.apache.http.impl.nio.conn.PoolingNHttpClientConnectionManager.execute;org.apache.http.impl.nio.client.CloseableHttpAsyncClientBase$1.run" name="Pooling client connection manager 2" size="9"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;org.apache.http.impl.nio.reactor.AbstractIOReactor.execute;org.apache.http.impl.nio.reactor.BaseIOReactor.execute" name="HTTP client request wait" size="9"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
