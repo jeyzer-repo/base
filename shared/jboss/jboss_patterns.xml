@@ -37,6 +37,7 @@
 				<function pattern="org.jboss.as.server.ServerService.boot" name="JBoss start"/>
 				<function pattern="org.wildfly.clustering.service.FunctionalService.start" name="JBoss service start"/>
 				<function pattern="org.jboss.msc.service.ServiceControllerImpl$StartTask.startService" name="JBoss service start"/>
+				<function pattern="io.undertow.servlet.core.DeploymentManagerImpl.deploy" name="JBoss servlet deploy"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
