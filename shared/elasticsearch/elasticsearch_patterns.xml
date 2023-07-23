@@ -22,6 +22,7 @@
 			<functions>
 				<function pattern="org.elasticsearch.client.transport.TransportClientNodesService$SimpleNodeSampler.doSample" name="ES do sample"/>
 				<function pattern="org.elasticsearch.action.ActionRequestBuilder.execute" name="ES request execution"/>
+				<function pattern="org.elasticsearch.client.RestClient$1.completed" name="ES response processing"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
