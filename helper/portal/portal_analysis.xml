@@ -113,6 +113,9 @@
 			<!-- JMC can generate periodic thread dumps OR JFR file contained in zip -->
 			<file_regex_pattern     pattern="\.jfr$"/>
 
+			<!-- JCMD can generate json files -->
+			<file_regex_pattern     pattern="\.json$"/>
+
 		</file_patterns>
 		
 	</recording>

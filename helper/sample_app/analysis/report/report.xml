@@ -241,6 +241,7 @@
 				<action_start_time/>
 				<thread_name/>
 				<action_size color="RGB-231-213-137" threshold="10"/> <!-- Light brown -->
+				<action_stack_size color="ORANGE" threshold="1000"/>
 				<action_duration color="RGB-231-213-137" threshold="600"/> <!-- Light brown -->
 				<executor>
 					<highlight name="Thread sample" color="RGB-172-186-230"/>  <!-- Light grey blue-->
