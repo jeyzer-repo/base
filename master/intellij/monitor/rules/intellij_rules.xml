@@ -13,7 +13,7 @@
 			<thresholds>
 				<threshold type="system signal" 
 				           level="INFO"
-				           message="Current analysis focuses on the Intellij editor and not any launched process that you would like to investigate.&#10; If the latter case is true, please target the right process id with JFR or jstack."/>
+				           message="Current analysis focuses on the Intellij or WebStorm editor and not any launched process that you would like to investigate.&#10; If the latter case is true, please target the right process id with JFR or jstack."/>
 			</thresholds>
 		</rule>
 		
