@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="IntelliJ" version="3.0">
+<profile name="IntelliJ" version="3.1-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -23,12 +23,14 @@
 				<function pattern="com.intellij.execution.process.ProcessWaitFor" name="Intellij wait for executed process end"/>
 				<function pattern="com.intellij.openapi.vfs.impl.local.LocalFileSystemImpl.storeRefreshStatusToFiles" name="Intellij store file status refresh"/>
 				<function pattern="com.intellij.openapi.vfs.newvfs.VfsImplUtil.findCachedFileByPath" name="Intellij file cache access"/>
+				<function pattern="com.intellij.lang.javascript.psi.impl.JSReferenceExpressionImpl.multiResolve" name="Intellij JS execution"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<operation pattern="com.jetbrains.rd.platform.codeWithMe.ui.WireStatsStatusBarWidget.update" name="Update UI widget"/>
 				<operation pattern="com.intellij.openapi.vfs.VirtualFileManager.constructUrl" name="Build URL"/>
+				<operation pattern="com.intellij.lang.javascript.psi." name="Javascript operation"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -36,7 +38,7 @@
 			</lockers>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
-				<!-- executor pattern="org.apache.pulsar.shade.io.netty.util.concurrent.FastThreadLocalRunnable.run" name="Pulsar thread"/-->
+				<executor pattern="com.intellij.concurrency.JobLauncherImpl$1MyProcessQueueTask.call" name="IntelliJ task"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -49,6 +51,10 @@
 				<exclude pattern="java.io.Reader.read;com.intellij.util.io.BaseOutputReader.readAvailableBlocking;com.intellij.util.io.BaseDataReader.readAvailable;com.intellij.util.io.BaseDataReader.doRun" name="IntelliJ Console reader thread" size="26"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.net.ServerSocket.accept;org.jetbrains.plugins.scala.findUsages.compilerReferences.compilation.SbtCompilationSupervisor.$anonfun$init" name="IntelliJ Scala compiler server" size="19"/>		<!-- Multiple line pattern -->
 				<exclude pattern="com.intellij.ide.IdeEventQueue.getNextEvent;java.awt.EventDispatchThread.pumpOneEventForFilters" name="IntelliJ AWT event wait" size="17"/>		<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.DatagramChannelImpl.trustedBlockingReceive;sun.nio.ch.DatagramChannelImpl.blockingReceive;sun.nio.ch.DatagramSocketAdaptor.receive;java.net.DatagramSocket.receive;com.intellij.T.G.T.G.T;com.intellij.T.G.T.c.run" name="IntelliJ server wait" size="16"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;kotlinx.coroutines.BlockingCoroutine.joinBlocking;kotlinx.coroutines.BuildersKt__BuildersKt.runBlocking;kotlinx.coroutines.BuildersKt.runBlocking;com.intellij.idea.Main.main" name="IntelliJ main" size="6"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.DelayQueue.take;com.intellij.util.concurrency.AppDelayQueue$TransferThread.run" name="Periodic task launcher waiting" size="5"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.ref.ReferenceQueue.remove;org.apache.batik.util.CleanerThread.run" name="Batik cleaner" size="4"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
