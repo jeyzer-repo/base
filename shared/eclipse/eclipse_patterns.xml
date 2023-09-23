@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Eclipse" version="3.0">
+<profile name="Eclipse" version="3.1-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -42,7 +42,7 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<exclude pattern="java.lang.Object.wait;org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.getNextEvent;org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run" name="Eclispe OSGI event manager wait" size="4"/>
+				<exclude pattern="java.lang.Object.wait;org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.getNextEvent;org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run" name="Eclispe OSGI event manager wait" size="5"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
