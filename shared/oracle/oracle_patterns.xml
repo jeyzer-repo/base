@@ -85,6 +85,8 @@
 				<exclude pattern="java.lang.Thread.sleep;oracle.odi.core.persistence.OdiChangeNotificationManager$MonitorClass.run;java.lang.Thread.run" name="Oracle ODI Notification Manager" size="3"/>
 				<exclude pattern="java.lang.Thread.sleep;oracle.odi.runtime.agent.execution.cache.SessionBlueprintCache$SessionBlueprintCacheMonitor.run;java.lang.Thread.run" name="Oracle Cache Monitor" size="3"/>
 				<exclude pattern="java.lang.Object.wait;com.sunopsis.tools.core.SnpsSemaphore.get;com.sunopsis.timer.SnpsAbstractScheduler.run;oracle.odi.runtime.agent.scheduler.OdiAgentScheduler.run" name="Oracle ODI Agent scheduler" size="6"/>
+				<exclude pattern="java.lang.Thread.sleep;oracle.jdbc.driver.OracleTimeoutPollingThread.run" name="Oracle timeout polling" size="2"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;oracle.jdbc.internal.Monitor$WaitableMonitor.monitorWait;oracle.jdbc.internal.Monitor$WaitableMonitor.monitorWait;oracle.jdbc.driver.BlockSource$ThreadedCachingBlockSource$BlockReleaser.run" name="Oracle Waitable Monitor" size="6"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
