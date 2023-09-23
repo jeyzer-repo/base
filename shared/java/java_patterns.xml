@@ -36,15 +36,23 @@
 				<function pattern="org.xml.sax.helpers.XMLReaderFactory.createXMLReader" name="XML read"/>
 				<function pattern="com.sun.enterprise.resource.pool.PoolManagerImpl.getResource;com.sun.enterprise.connectors.ConnectionManagerImpl.getResource" name="Sun JDBC connection pool access"/>  <!-- Multiple line pattern -->
 				<function pattern="sun.management.GarbageCollectorImpl.createGCNotification" name="JMX GC notification creation"/>
+				<function pattern="java.util.concurrent.ThreadPerTaskExecutor.start" name="Task execution"/>
 				<!-- SSL -->
 				<function pattern="ssl.ServerHandshaker.clientHello" name="SSL server handshake"/>
 				<function pattern="sun.security.ssl.ClientHello$ClientHelloConsumer.consume" name="SSL server handshake"/>
 				<function pattern="ssl.ClientHandshaker.serverCertificate" name="SSL client handshake"/>
 				<function pattern="javax.net.ssl.impl.SSLSocketImpl.startHandshake" name="SSL handshake"/>
+				<!-- JFR -->
 				<function pattern="jdk.management.jfr.FlightRecorderMXBeanImpl.startRecording" name="JFR start recording"/>
+				<function pattern="jdk.jfr.Recording.start" name="JFR start recording"/>
 				<function pattern="jdk.management.jfr.FlightRecorderMXBeanImpl.stopRecording" name="JFR stop recording"/>
 				<function pattern="jdk.jfr.internal.PlatformRecording.stop" name="JFR platform stop recording"/>
 				<function pattern="jdk.jfr.internal.JVM.emitEvent" name="JFR publish events"/>
+				<!-- VM -->
+				<function pattern="jdk.internal.vm.ThreadDumper.dumpThreadsToFile" name="VM file thread dump"/>
+				<!-- Virtual Threads -->
+				<function pattern="java.lang.VirtualThread.runContinuation" name="Resume virtual thread"/>
+				<function pattern="java.lang.VirtualThread.start" name="Start virtual thread"/>
 				<!-- Others -->
 				<function pattern="java.lang.Thread.dispatchUncaughtException" name="JVM uncaught exception dispatch"/>
 				<function pattern="java.lang.Shutdown.shutdown" name="JVM shutdown in progress"/>
@@ -75,7 +83,10 @@
 				<operation pattern="java.net.HttpURLConnection.getResponseCode" name="HTTP response wait"					type="Network"/>
 				<operation pattern="java.net.NetworkInterface.getNetworkInterfaces" name="Get machine network interfaces"	type="Network"/>
 				<operation pattern="java.net.InetAddress.getByName" name="IP lookup"										type="Network"/>
-				<operation pattern="SocketOutputStream.socketWrite" name="Socket writing"									type="Network"/>
+				<operation pattern="java.net.SocketOutputStream.socketWrite" name="Socket writing"							type="Network"/>
+				<operation pattern="java.net.Socket$SocketInputStream.read" name="Socket reading"							type="Network"/>
+				<operation pattern="java.net.SocksSocketImpl.connect" name="Socket connect"									type="Network"/>
+				<operation pattern="java.net.Socket.close" name="Socket close"												type="Network"/>
 				<operation pattern="sun.nio.ch.WindowsSelectorImpl$SubSelector.poll0" name="Socket read wait"				type="Listen"/>
 				<operation pattern="sun.nio.ch.EPollArrayWrapper.epollWait" name="Socket read wait"							type="Listen"/>
 				<operation pattern="URLClassPath$FileLoader.getResource" name="System ressource access (file loader)"		type="File"/>
@@ -85,10 +96,12 @@
 				<operation pattern="java.lang.ClassLoader.loadClass" name="Class loading"									type="Class loader"/>
 				<operation pattern="java.lang.ClassLoader.defineClass" name="Class byte loading"							type="Class loader"/>
 				<operation pattern="java.util.jar.JarFile.getManifest" name="Jar manifest loading"							type="Class loader"/>
+				<operation pattern="java.util.jar.JarFile.getInputStream" name="Jar entry loading"							type="Class loader"/>
 				<operation pattern="java.lang.Class.forName" name="Class access"/>
 				<operation pattern="sun.nio.fs.WindowsNativeDispatcher.DeleteFile" name="File delete"						type="File"/>
 				<operation pattern="java.io.WinNTFileSystem.checkAccess" name="File access check"							type="File"/>
 				<operation pattern="java.nio.file.Files.move" name="File move"												type="File"/>
+				<operation pattern="java.nio.file.Files.newDirectoryStream" name="Directory scan"							type="File"/>
 				<operation pattern="java.io.File.exists" name="File exist check"											type="File"/>
 				<operation pattern="java.nio.file.Files.exists" name="File exist check"										type="File"/>
 				<operation pattern="java.io.File.lastModified" name="File last modified check"								type="File"/>
@@ -126,11 +139,14 @@
 				<operation pattern="java.util.Collections.sort" name="Collection sort"										type="Collection"/>
 				<operation pattern="java.util.WeakHashMap.get" name="Weak hashMap access"									type="Collection"/>
 				<operation pattern="java.util.TimSort.sort" name="Timsort"/>
+				<operation pattern="java.lang.VirtualThread.park" name="Virtual thread suspended"							type="VT unmounted"/>
 				<operation pattern="java.lang.Thread.start" name="Java thread spawning-creation"/>
 				<operation pattern="java.lang.Thread.&lt;init&gt;" name="Java thread creation"/>
-				<operation pattern="java.lang.Thread.sleep" name="Thread on hold (sleep)"/>
-				<operation pattern="java.lang.Thread.join" name="Waiting for other thread to terminate"									type="Synchro"/>
-				<operation pattern="java.lang.Thread.isInterrupted" name="Thread waiting for interruption"								type="Synchro"/>
+				<operation pattern="java.lang.Thread.sleep" name="Thread on hold (sleep)"									type="Timed waiting"/>
+				<operation pattern="java.lang.Thread.join" name="Waiting for other thread to terminate"						type="Synchro"  priority="910"/>
+				<operation pattern="java.lang.VirtualThread.joinNanos" name="Waiting for virtual thread(s) to terminate"	type="Synchro"  priority="920"/>
+				<operation pattern="java.lang.Thread.isInterrupted" name="Thread waiting for interruption"					type="Synchro"/>
+				<operation pattern="java.lang.Thread.getStackTrace" name="Stack trace access"/>
 				<operation pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.addResource" name="Write lock obtained to add a resource to the pool" priority="910"			type="Resource pool"/>
 				<operation pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.removeResource" name="Write lock obtained to remove a resource from the pool" priority="910"	type="Resource pool"/>
 				<operation pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.returnResource" name="Blocked on RW lock to get a resource from the pool" priority="910"		type="Resource pool"/>
@@ -142,6 +158,7 @@
 				<operation pattern="java.util.concurrent.locks.ReentrantReadWriteLock$ReadLock.lock" name="Blocked on RW lock (Reader)" priority="910"	type="Synchro"/>
 				<operation pattern="java.util.concurrent.locks.ReentrantLock.unlock" name="Reentrant unlock" priority="910"/>
 				<operation pattern="java.util.concurrent.locks.ReentrantLock.lock" name="Reentrant lock" priority="910"									type="Synchro"/>
+				<operation pattern="java.util.concurrent.locks.ReentrantLock.tryLock" name="Reentrant try lock" priority="910"							type="Synchro"/>
 				<operation pattern="java.util.concurrent.locks.LockSupport.park" name="Thread on hold (wait for unlock)"								type="Synchro"/>
 				<operation pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer.releaseShared" name="Notify all queue consumers"/>
 				<operation pattern="java.util.TimeZone" name="Java time zone operation"/>
@@ -155,6 +172,7 @@
 				<operation pattern="sun.nio.ch.EPoll.wait" name="Poll wait"																				type="Synchro"/>
 				<operation pattern="java.lang.Object.notifyAll" name="Wakes all threads"/>
 				<operation pattern="java.lang.Object.notify" name="Wakes one thread"/>
+				<operation pattern="jdk.internal.vm.Continuation.run" name="Exec virtualization"/>
 				<operation pattern="javax.security.auth.login.LoginContext.login" name="Auth login"/>
 				<operation pattern="sun.net.www.protocol.https.HttpsClient.New" name="HTTPS connection creation"        type="Network"/>
 				<operation pattern="sun.security.rsa.RSACore" name="RSA Cryptographic operation" 						type="Crypto"/>
@@ -177,6 +195,7 @@
 				<operation pattern="StringBuilder.append" name="String builder append"									type="String"/>
 				<operation pattern="java.lang.ThreadLocal" name="Thread local access"/>
 				<operation pattern="java.util.Random.&lt;init&gt;" name="Random constructor"		                    type="Random generation"/>
+				<operation pattern="java.util.Random.next"                name="Number generation"		                type="Random generation"/>
 				<operation pattern="java.security.SecureRandom.nextBytes" name="Random number generation"				type="Random generation"/>
 				<operation pattern="sun.security.jca." name="Security certificate operation"							type="Crypto"/>
 				<operation pattern="java.security.Signature.verify" name="Signature verification"						type="Crypto"/>
@@ -185,6 +204,7 @@
 				<operation pattern="javax.crypto.Mac.doFinal" name="Encryption MAC appliance"							type="Crypto"/>
 				<operation pattern="sun.security.provider.SHA" name="SHA operation"										type="Crypto"/>
 				<operation pattern="sun.net.ssl.internal.ssl.SSLSocketImpl.handleException" name="Buffer error while reading on SSL connection" type="Exception"/>
+				<operation pattern="sun.security.ssl.SSLSocketImpl.handleException" 		name="Communication error" 							type="Exception"/>
 				<operation pattern="javax.faces." name="JSF operation"/>
 				<operation pattern="javax.crypto." name="Java cryptographic operation"									type="Crypto"/>
 				<operation pattern="com.sun.crypto." name="Java cryptographic operation"								type="Crypto"/>
@@ -210,6 +230,7 @@
 				<operation pattern="java.util.concurrent.ConcurrentHashMap." name="Java concurrent hashmap operation" 	type="Collection"/>
 				<operation pattern="java.util.concurrent.ConcurrentHashMap$" name="Java concurrent hashmap operation" 	type="Collection"/>
 				<operation pattern="java.util.Collections$SynchronizedMap" name="Java synchronized map operation" 		type="Collection"/>
+				<operation pattern="java.util.Collections$UnmodifiableList" name="Java list operation" 					type="Collection"/>
 				<operation pattern="java.beans.PropertyDescriptor.getReadMethod" name="Java property read method access" />
 				<operation pattern="java.util.concurrent.SynchronousQueue.offer" name="Synchronous queue item insertion (can wait for consumption)"			type="Queue"/>
 				<operation pattern="java.util.concurrent.LinkedBlockingQueue.offer" name="Linked blocking queue item insertion (can wait for consumption)"  type="Queue"/>
@@ -247,6 +268,7 @@
 			    <!-- Will also match lockInterruptibly -->
   				<locker pattern="java.util.concurrent.locks.LockSupport.park" name="LockSupport"/>			    
   				<locker pattern="java.util.concurrent.locks.ReentrantLock.lock" name="ReentrantLock"/>
+  				<locker pattern="java.util.concurrent.locks.ReentrantLock.tryLock" name="ReentrantLock"/>
   				<locker pattern="java.util.concurrent.locks.Condition.await" name="Condition"/>
   				<locker pattern="java.util.concurrent.locks.ReentrantReadWriteLock$ReadLock.lock" name="ReadLock"/>
   				<locker pattern="java.util.concurrent.locks.ReentrantReadWriteLock$WriteLock.lock" name="WriteLock"/>
@@ -271,10 +293,15 @@
 				<executor pattern="java.util.TimerThread.mainLoop" name="Timer main loop"/>
 				<executor pattern="java.lang.Thread.dispatchUncaughtException" name="JVM uncaugth exception thread"/>
 				<executor pattern="jdk.jfr.internal.dcmd.DCmdStart.execute" name="JFR thread"/>
+				<executor pattern="jdk.jfr.internal.dcmd.DCmdStop.execute" name="JFR thread"/>
+				<executor pattern="jdk.jfr.internal.dcmd.DCmdDump.execute" name="JFR thread"/>
 				<executor pattern="java.lang.Shutdown.shutdown" name="Java shutdown thread"/>
 				<executor pattern="jdk.jfr.internal.ShutdownHook.run" name="JFR shutdown thread"/>
 				<executor pattern="sun.net.dns.ResolverConfigurationImpl$AddressChangeListener.run" name="DNS change listener"/>
 				<executor pattern="java.awt.EventDispatchThread.run" name="AWT event dispatcher"/>
+				<!-- Virtual threads -->
+				<executor pattern="java.lang.VirtualThread.runContinuation" name="VT carrier"/>
+				<executor pattern="java.lang.VirtualThread$VThreadContinuation.lambda" name="VT"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -318,11 +345,13 @@
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;sun.net.httpserver.ServerImpl$Dispatcher.run" name="HTTP server select loop" size="7"/>
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;jdk.internal.net.http.HttpClientImpl$SelectorManager.run" name="HTTP client select loop" size="5"/>
 				<!-- Sun 2D -->
-				<exclude pattern="sun.java2d.Disposer.run" name="Java 2D disposer" size="5"/>
+				<exclude pattern="sun.java2d.Disposer.run" name="Java 2D disposer" size="7"/>
 				<exclude pattern="javax.swing.TimerQueue.run" name="Swing timer" size="6"/>
 				<exclude pattern="java.lang.Object.wait;sun.java2d.metal.MTLRenderQueue$QueueFlusher.run;java.lang.Thread.run" name="Java 2D render queue waiting" size="3"/>
 				<!-- AWT -->
 				<exclude pattern="java.lang.Object.wait;sun.awt.AWTAutoShutdown.run" name="AWT shutdown hook" size="4"/>
+				<!-- JNA -->
+				<exclude pattern="com.sun.jna.internal.Cleaner$1.run" name="JNA cleaner" size="4"/>
 				<!-- LDAP -->
 				<exclude pattern="com.sun.jndi.ldap.AbstractLdapNamingEnumeration.getNextBatch;com.sun.jndi.ldap.AbstractLdapNamingEnumeration.hasMoreImpl;com.sun.jndi.ldap.AbstractLdapNamingEnumeration.hasMore;com.sun.jndi.ldap.NamingEventNotifier.run" name="LDAP notifier" size="14"/>
 				<exclude pattern="java.lang.Object.wait;com.sun.jndi.ldap.EventQueue.dequeue;com.sun.jndi.ldap.EventQueue.run" name="LDAP event dequeue" size="5"/>
@@ -334,6 +363,7 @@
 				<exclude pattern="sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run" name="RMI"/>
 				<exclude pattern="sun.rmi.transport.tcp.TCPTransport.handleMessages" name="RMI"/>
 				<exclude pattern="sun.rmi.transport.ObjectTable$Reaper.run" name="RMI reaper"/>
+				<exclude pattern="java.lang.Object.wait;java.lang.ref.ReferenceQueue.remove;java.lang.ref.ReferenceQueue.remove;java.io.ClassCache$Reaper.run" name="Class cache reaper"/>
 				<exclude pattern="sun.rmi.transport.DGCClient$EndpointEntry$RenewCleanThread.run" name="RMI"/>
 				<!-- GC related -->
 				<exclude pattern="java.lang.ref.Finalizer$FinalizerThread.run" name="Finalizer"/>
@@ -343,6 +373,11 @@
 				<exclude pattern="jdk.internal.misc.InnocuousThread.run" name="JVM cleaner" size="5"/>
 				<!-- Java 9+ JFR -->
 				<exclude pattern="jdk.jfr.internal.PlatformRecorder.lambda$startDiskMonitor" name="JFR disk monitor" size="8"/>
+				<!-- Java 20+ Ref cleaner -->
+				<exclude pattern="java.lang.ref.ReferenceQueue.await;java.lang.ref.ReferenceQueue.remove0;java.lang.ref.ReferenceQueue.remove;jdk.internal.ref.CleanerImpl.run" name="JDK ref cleaner" size="10"/>
+				<!-- Virtual threads -->
+				<exclude pattern="sun.nio.ch.WEPollPoller.poll;sun.nio.ch.Poller.poll;sun.nio.ch.Poller.pollLoop;java.lang.Thread.run;jdk.internal.misc.InnocuousThread.run" name="VT write poller" size="6"/>
+				<exclude pattern="java.util.concurrent.LinkedTransferQueue.awaitMatch;java.util.concurrent.LinkedTransferQueue.xfer;java.util.concurrent.LinkedTransferQueue.take;sun.nio.ch.Poller.updateLoop;java.lang.Thread.run;jdk.internal.misc.InnocuousThread.run" name="VT read poller" size="11"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
