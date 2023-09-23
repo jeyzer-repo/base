@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Jackson" version="3.0">
+<profile name="Jackson" version="3.1-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -23,6 +23,7 @@
 				<function pattern="com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString" name="JSON conversion to String" />
 				<function pattern="com.fasterxml.jackson.databind.ObjectWriter.writeValue" name="JSON write value" />
 				<function pattern="com.fasterxml.jackson.databind.ObjectMapper.convertValue" name="JSON convert value" />
+				<function pattern="org.codehaus.jackson.map.ObjectMapper.readValue" name="String to JSON conversion" />
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
