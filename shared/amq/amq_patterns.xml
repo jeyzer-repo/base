@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="AMQ" version="3.0">
+<profile name="AMQ" version="3.1-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -56,6 +56,9 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.LinkedBlockingQueue.poll;org.apache.activemq.transport.tcp.TcpTransportServer$1.run" name="AMQ listener" size="6"/>
+				<exclude pattern="java.net.AbstractPlainSocketImpl.accept;java.net.ServerSocket.implAccept;java.net.ServerSocket.accept;org.apache.activemq.transport.tcp.TcpTransportServer.doRunWithServerSocket;org.apache.activemq.transport.tcp.TcpTransportServer.run" name="AMQ server listener" size="6"/>
+				<exclude pattern="java.net.ServerSocket.accept;org.apache.activemq.transport.tcp.TcpTransportServer.doRunWithServerSocket;org.apache.activemq.transport.tcp.TcpTransportServer.run" name="AMQ server listener" size="7"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
