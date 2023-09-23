@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Websphere" version="3.0">
+<profile name="Websphere" version="3.1-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -22,11 +22,16 @@
 			<functions>
 				<!-- Websphere -->
 				<function pattern="com.ibm.ws.runtime.WsServerImpl.main" name="Websphere main"/>
+				<function pattern="com.ibm.ws.classloader.ReloadableClassLoader.checkForUpdate" name="Websphere class loader check for updates"/>
+				<function pattern="com.ibm.ws.session.store.memory.MemoryStore.runInvalidation" name="Websphere memory store invalidate"/>
+				<function pattern="com.ibm.ws.ssl.channel.impl.SSLUtils.handleHandshake" name="SSL handshake"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
-				<!--operation pattern="java.lang.String.split" name="String split"		   type="String"/-->
+				<operation pattern="com.ibm.ws.ssl.channel.impl.SSLReadServiceContext$SSLReadCompletedCallback.complete;com.ibm.ws.tcp.channel.impl.AioReadCompletionListener.futureCompleted" name="Wait for completion"	type="Synchro"/>
+				<operation pattern="com.ibm.son.mesh.CfwTCPImpl.complete;com.ibm.ws.tcp.channel.impl.AioReadCompletionListener.futureCompleted" name="Wait for completion"	type="Synchro"/>
+				<operation pattern="com.ibm.io.async.AsyncLibrary.getCompletionData3" name="Wait for completion"	type="Synchro"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -37,6 +42,7 @@
 				<!-- Websphere -->
 				<executor pattern="com.ibm.wsspi.bootstrap.WSPreLauncher.main" name="Websphere bootstrap thread"/>
 				<executor pattern="com.ibm.ws.util.ThreadPool$Worker.run" name="Websphere thread"/>
+				<executor pattern="com.ibm.ws.session.WsSessionInvalidatorWithThreadPool$InvalidationTask.run" name="Websphere session invalidator"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -44,7 +50,17 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
+				<exclude pattern="com.ibm.ws.util.BoundedBuffer$GetQueueLock.await;com.ibm.ws.util.BoundedBuffer.waitGet;com.ibm.ws.util.BoundedBuffer.take;com.ibm.ws.util.ThreadPool.getTask;com.ibm.ws.util.ThreadPool$Worker.run" name="Websphere thread pool wait" size="8"/>
+				<exclude pattern="com.ibm.ws.util.ThreadPool.getTask;com.ibm.ws.util.ThreadPool$Worker.run" name="Websphere task wait" size="2"/>
+				<exclude pattern="com.ibm.jsse2.bh.accept;com.ibm.rmi.transport.ListenerThread.run" name="Websphere listener" size="5"/>
+				<exclude pattern="java.net.ServerSocket.accept;com.ibm.rmi.transport.ListenerThread.run" name="Websphere listener" size="5"/>
+				<exclude pattern="java.lang.Object.wait;com.ibm.ws.dcs.vri.common.JobsProcessorThread.run" name="Websphere job wait" size="4"/>
+				<exclude pattern="java.lang.Object.wait;com.ibm.ws.wlm.threadmanager.SleeperThreadPool.run" name="Websphere sleeper thread" size="5"/>
+				<exclude pattern="java.lang.Object.wait;com.ibm.ejs.j2c.work.WorkScheduler.run" name="Websphere scheduler wait" size="5"/>
+				<exclude pattern="java.lang.Thread.sleep;com.ibm.ejs.util.am.AlarmThreadMonitor$AlarmThreadCheckDetector.run" name="Websphere alarm check detector" size="5"/>
+				<exclude pattern="java.lang.Object.wait;com.ibm.ws.xd.pmi.async.client.AsyncPmiSubscriptionHandler.run" name="Websphere PMI subscription handler" size="5"/>
+				<exclude pattern="java.lang.Object.wait;com.ibm.ws.bbson.Callbacker.run;com.ibm.ws.util.ThreadPool$Worker.run" name="Websphere callback runner wait" size="5"/>
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;com.ibm.ws.cluster.propagation.bulletinboard.BBDescriptionManager$UpdateThread.run" name="Websphere bulletin board updater" size="6"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
