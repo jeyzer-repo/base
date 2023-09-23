@@ -27,6 +27,7 @@
 				<function pattern="org.springframework.jms.listener.AbstractPollingMessageListenerContainer.receiveMessage" name="Spring - listening for message"/>
 				<function pattern="org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization" name="Spring - bean factory init"/>
 				<function pattern="org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance" name="Spring - create bean"/>
+				<function pattern="org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection" name="Spring - get db connection"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
