@@ -28,6 +28,7 @@
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<operation pattern="com.intellij.lang.javascript.psi.types.JSTypeCastUtil.areListsEquivalent" name="Javascript list comparison"/>
 				<operation pattern="com.jetbrains.rd.platform.codeWithMe.ui.WireStatsStatusBarWidget.update" name="Update UI widget"/>
 				<operation pattern="com.intellij.openapi.vfs.VirtualFileManager.constructUrl" name="Build URL"/>
 				<operation pattern="com.intellij.lang.javascript.psi." name="Javascript operation"/>

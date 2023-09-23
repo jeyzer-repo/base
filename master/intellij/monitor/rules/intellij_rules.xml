@@ -17,6 +17,26 @@
 			</thresholds>
 		</rule>
 		
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Spinning on list comparison" ref="JZR-SHA-INTJ-002" ticket="WEB-55519">
+			<thresholds>
+				<threshold type="session custom"
+						   count="3"
+						   value="5"
+				           pattern="Javascript list comparison" 
+				           level="CRITICAL"
+				           sub_level="9" 
+				           message="Important contention on an unmodified list&#10;This can translate into infinite code completion with high CPU usage.&#10;See the JetBrains WEB-55519 issue for more details and fix."/>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Javascript list comparison" 
+				           level="WARNING"
+				           sub_level="8"
+				           message="Possible contention on an unmodified list.&#10;This can translate into infinite code completion with high CPU usage.&#10;See the JetBrains WEB-55519 issue for more details and possible fix."/>
+			</thresholds>
+		</rule>
+		
 	</rules>
 
 </monitor>
