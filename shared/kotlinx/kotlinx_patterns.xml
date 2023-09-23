@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Kotlinx" version="3.0">
+<profile name="Kotlinx" version="3.1-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -45,6 +45,7 @@
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.park;kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.tryPark;kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker" name="Kotlinx scheduler waiting" size="6"/>
 				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;kotlinx.coroutines.DefaultExecutor.run" name="Kotlinx default executor waiting" size="4"/>
+				<exclude pattern="java.lang.ref.ReferenceQueue.remove;kotlinx.coroutines.debug.internal.ConcurrentWeakMap.runWeakRefQueueCleaningLoopUntilInterrupted;kotlinx.coroutines.debug.internal.DebugProbesImpl$startWeakRefCleanerThread$1.invoke;kotlinx.coroutines.debug.internal.DebugProbesImpl$startWeakRefCleanerThread$1.invoke;kotlin.concurrent.ThreadsKt$thread$thread$1.run" name="Kotlin weak ref cleaner" size="7"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
