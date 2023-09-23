@@ -43,6 +43,7 @@
 				<operation pattern="org.apache.catalina.tribes.group.GroupChannel.send" name="Tomcat cluster message sending"/>
 				<operation pattern="org.apache.catalina.tribes.group.GroupChannel.messageReceived" name="Tomcat cluster message reception"/>
 				<operation pattern="org.apache.catalina.tribes.transport.PooledSender.getSender" name="Tomcat cluster message sender access"/>
+				<operation pattern="org.apache.coyote.Response.doWrite" name="Tomcat write response" 													type="Network"/>
 				<operation pattern="org.apache.catalina.tribes.transport.nio.ParallelNioSender.doLoop" name="Tomcat cluster sent message result wait" 	type="Network"/>
 				<operation pattern="org.apache.catalina.tribes.group.interceptors.TcpFailureDetector.memberDisappeared" name="Tomcat cluster member disappearance handling"/>
 				<operation pattern="org.apache.coyote.ajp." name="AJP operation"/>
@@ -61,6 +62,7 @@
 				<executor pattern="org.apache.tomcat.util.net.AprEndpoint$Poller.run" name="Tomcat APR Poller thread"/>
 				<executor pattern="org.apache.tomcat.util.net.AprEndpoint$Acceptor.run" name="Tomcat APR Acceptor thread"/>
 				<executor pattern="org.apache.catalina.tribes.group.interceptors.MessageDispatchInterceptor" name="Tomcat cluster message dispatched thread"/>
+				<executor pattern="org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun" name="Tomcat socket processor"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -90,6 +92,9 @@
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireSharedInterruptibly;java.util.concurrent.CountDownLatch.await;sun.nio.ch.PendingFuture.get;org.apache.tomcat.util.net.Nio2Endpoint$Acceptor.run" name="Tomcat NIO2 acceptor thread waiting for a client to connect"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.LinkedBlockingDeque.pollFirst;java.util.concurrent.LinkedBlockingDeque.poll;org.apache.juli.AsyncFileHandler$LoggerThread.run" name="Tomcat JULI file writer waiting"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.ServerSocketChannelImpl.accept;org.apache.tomcat.util.net.NioEndpoint$Acceptor.run;java.lang.Thread.run" name="Tomcat server waiting"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.net.AbstractPlainDatagramSocketImpl.receive;java.net.DatagramSocket.receive;org.apache.catalina.tribes.membership.McastServiceImpl.receive;org.apache.catalina.tribes.membership.McastServiceImpl$ReceiverThread.run" name="Tomcat Tribes multicast waiting" size="5"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.net.ServerSocket.implAccept;java.net.ServerSocket.accept;org.apache.activemq.transport.tcp.TcpTransportServer.run;java.lang.Thread.run" name="Tomcat server waiting" size="6"/>		<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.EPollArrayWrapper.poll;sun.nio.ch.EPollSelectorImpl.doSelect;sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;org.apache.catalina.tribes.transport.nio.NioReceiver.listen;org.apache.catalina.tribes.transport.nio.NioReceiver.run" name="Tomcat Tribes NIO receiver waiting" size="8"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
