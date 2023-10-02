@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Guice" version="3.0">
+<profile name="Guice" version="3.1">
 
 		<!-- 
 			Pattern rule appliance by priority :
