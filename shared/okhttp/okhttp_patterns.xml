@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="OkHttp" version="3.1">
+<profile name="OkHttp" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -33,7 +33,7 @@
 			</lockers>
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
-				<!--executor pattern="line" name="explain"/-->
+				<executor pattern="okhttp3.internal.concurrent.TaskRunner.runTask" name="OkHttp runner"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
