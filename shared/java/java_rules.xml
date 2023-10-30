@@ -319,6 +319,19 @@
 			</thresholds>
 		</rule>
 
+		<!--  If operation regex pattern in the current task is seen more than value, generate event. Pattern is regex -->
+		<rule name="Operation pattern" extra_info="Java library incompatibility" ref="JZR-SHA-JAVA-024">
+			<narrative>This rule detects the incompatibility of Java libraries.</narrative>
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="1"
+				           pattern="Java library incompatibility" 
+				           level="WARNING"
+						   sub_level="7"
+				           message="Incompatibility between 2 libraries is detected.&#10; An action is probably failing due to this error : inspect the logs. &#10; This may due to classpath issues where an unexpected library gets loaded first.&#10; You may run the JVM with the -verbose to look at the loaded classes when the issue happens."/>
+			</thresholds>
+		</rule>
+
 	</rules>
 
 </monitor>
