@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Datadog">
+
+		<!-- ************************************************************************ -->
+		<!--                       DATADOG RULES                                      -->
+		<!-- ************************************************************************ -->
+
+		<!--  If operation is detected across current session, generate event. -->
+		<rule name="Operation presence" param_display="Datadog agent" param="Datadog agent collect" stickers="performance, environment" ref="JZR-SHA-DTDG-001">
+			<narrative>This rule detects the usage of the Datadog monitoring agent.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           sub_level="8"
+				           message="Datadog monitoring agent is used.&#10; Make sure it is configured properly to not impact the application performance."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
