@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Netty" version="3.1">
+<profile name="Netty" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -61,6 +61,8 @@
 				<exclude pattern="java.util.concurrent.SynchronousQueue$TransferStack.awaitFulfill;java.util.concurrent.SynchronousQueue$TransferStack.transfer;java.util.concurrent.SynchronousQueue.poll;org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.reservedWait;org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run;org.eclipse.jetty.util.thread.QueuedThreadPool.runJob" name="Netty Reserved executor" size="10"/>		<!-- Multiple line pattern -->
 				<exclude pattern="org.jboss.netty.util.HashedWheelTimer$Worker.waitForNextTick;org.jboss.netty.util.HashedWheelTimer$Worker.run;org.jboss.netty.util.ThreadRenamingRunnable.run" name="Netty Thread renaming" size="5"/>
 				<exclude pattern="org.jboss.netty.channel.socket.nio.AbstractNioSelector.select;org.jboss.netty.channel.socket.nio.AbstractNioSelector.run;org.jboss.netty.channel.socket.nio.AbstractNioWorker.run;org.jboss.netty.channel.socket.nio.NioWorker.run;org.jboss.netty.util.ThreadRenamingRunnable.run" name="Netty Thread renaming poller" size="15"/>
+				<exclude pattern="org.jboss.netty.channel.socket.nio.AbstractNioSelector.select;org.jboss.netty.channel.socket.nio.AbstractNioSelector.run;org.jboss.netty.channel.socket.nio.NioClientBoss.run;org.jboss.netty.util.ThreadRenamingRunnable.run" name="Netty Thread renaming poller 2" size="14"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.select;org.jboss.netty.channel.socket.nio.NioServerBoss.select;org.jboss.netty.channel.socket.nio.AbstractNioSelector.run;org.jboss.netty.channel.socket.nio.NioServerBoss.run;org.jboss.netty.util.ThreadRenamingRunnable.run" name="Netty Thread renaming poller 3" size="14"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
