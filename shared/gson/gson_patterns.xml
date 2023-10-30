@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Gson" version="3.1">
+<profile name="Gson" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -26,6 +26,7 @@
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<operation pattern="com.google.gson.Gson.toJson" name="Convert Java object to Json"/>
+				<operation pattern="com.google.gson.Gson.fromJson" name="Convert Json to Java object"/>
 				<operation pattern="com.google.gson.stream.JsonWriter.value" name="Write Json object"/>
 				<operation pattern="com.google.gson.JsonParser.parse" name="Parse Json"/>
 				<operation pattern="com.google.gson." name="Json operation"/>
