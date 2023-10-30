@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Jeyzer" version="3.1">
+<profile name="Jeyzer" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -41,7 +41,7 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
+				<exclude pattern="org.jeyzer.recorder.accessor.jcmd.LocalJcmdAccessor.threadDump" name="Jcmd dump"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
