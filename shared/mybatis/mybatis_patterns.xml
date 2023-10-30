@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="iBATIS" version="3.1">
+<profile name="iBATIS" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -28,6 +28,7 @@
 				<operation pattern="org.apache.ibatis.session.defaults.DefaultSqlSession.selectList" name="iBATIS select query"	/>
 				<operation pattern="org.apache.ibatis.session.defaults.DefaultSqlSession.selectOne" name="iBATIS select one query"	/>
 				<operation pattern="org.apache.ibatis.session.defaults.DefaultSqlSession.update" name="iBATIS update or insert query"	/>
+				<operation pattern="org.apache.ibatis.session.defaults.DefaultSqlSession.close" name="iBATIS session close"	/>
 				<operation pattern="org.apache.ibatis." name="iBATIS operation"	/>
 			</operations>
 			<lockers>
