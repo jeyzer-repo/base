@@ -193,7 +193,8 @@
 				<operation pattern="java.io.RandomAccessFile.writeBytes" name="Java file writing"						type="File"/>
 				<operation pattern="sun.nio.ch.FileDispatcherImpl.write" name="File writing"							type="File"/>
 				<operation pattern="java.io.ObjectInputStream.readObject" name="Object deserialization"/>
-				<operation pattern="StringBuilder.append" name="String builder append"									type="String"/>
+				<operation pattern="java.lang.StringBuilder.append" name="String builder append"						type="String"/>
+				<operation pattern="java.lang.StringBuffer.append" name="String buffer append"							type="String"/>
 				<operation pattern="java.lang.ThreadLocal" name="Thread local access"/>
 				<operation pattern="java.util.Random.&lt;init&gt;" name="Random constructor"		                    type="Random generation"/>
 				<operation pattern="java.util.Random.next"                name="Number generation"		                type="Random generation"/>
