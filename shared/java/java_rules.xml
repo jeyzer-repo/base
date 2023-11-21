@@ -332,6 +332,16 @@
 			</thresholds>
 		</rule>
 
+		<!--  If operation is detected across current session, generate event. -->
+		<rule name="Operation presence" param_display="StringBuffer usage" param="String buffer append" stickers="code_quality" ref="JZR-SHA-JAVA-025">
+			<narrative>This rule detects the usage of the StringBuffer class.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           message="StringBuffer has synchronized access.&#10; Prefer the StringBuilder usage for better performance."/>
+			</thresholds>
+		</rule>
+
 	</rules>
 
 </monitor>
