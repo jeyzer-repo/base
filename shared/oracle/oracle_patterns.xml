@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Oracle" version="3.1">
+<profile name="Oracle" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -22,6 +22,7 @@
 			<functions>
 				<function pattern="oracle.jdbc.OracleDatabaseMetaData.getClientInfoProperties" name="Oracle client info access"/>
 				<function pattern="oracle.jdbc.driver.PhysicalConnection.pingDatabase" name="Oracle database ping"/>
+				<function pattern="oracle.jdbc.driver.T4CConnection.doPingDatabase" name="Oracle database ping"/>
 				<function pattern="oracle.odi.runtime.agent.processor.impl.ColumnMetadataFetchUtils$JDBCColumnsMetadataFetch.fetchColumns" name="Oracle ODI fetch columns"/>
 				<function pattern="oracle.odi.runtime.agent.execution.SessionTask.executeOdiCommand" name="Oracle ODI command exec"/>
 				<function pattern="oracle.odi.adp.rest.jersey.web.controller.v1.BulkLoadController.cleanObjectsBulkLoadById" name="Oracle ODI clean objects bulk load by id"/>
@@ -59,6 +60,7 @@
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<executor pattern="oracle.jdbc.driver.BlockSource$ThreadedCachingBlockSource$BlockReleaser.run" name="Oracle Cache releaser"/>
 				<executor pattern="oracle.odi.runtime.agent.execution.job.OdiJob.call" name="Oracle ODI job"/>
+				<executor pattern="oracle.jdbc.driver.PhysicalConnection$2.run" name="Oracle connection checker"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -91,7 +93,6 @@
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!-- exclude_thread_name pattern_regex="RMI TCP.*" name="RMI"/-->
 				<exclude_thread_name pattern="UCP Clock" name="Oracle UCP Clock" size="4"/>
 			</exclude_thread_names>
 		</patterns>
