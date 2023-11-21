@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="AppDynamics">
+
+		<!-- ************************************************************************ -->
+		<!--                       APPDYNAMICS RULES                                    -->
+		<!-- ************************************************************************ -->
+
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="AppDynamics agent" param="AppDynamics" stickers="performance, environment" ref="JZR-SHA-APPDYN-001">
+			<narrative>This rule detects the AppDynamics agent usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           sub_level="8"
+				           message="AppDynamics monitoring agent is used.&#10; Make sure it is configured properly to not impact the application performance."/>
+			</thresholds>
+		</rule>		
+
+		<!--  If operation is detected across current session, generate event. -->
+		<rule name="Operation presence" param_display="AppDynamics method interception" param="AppDynamics method interception" stickers="performance" ref="JZR-SHA-APPDYN-002">
+			<narrative>This rule detects the usage of the interception of methods with the AppDynamics agent.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           message="Interception of methods with the AppDynamics agent is performed.&#10; Make sure it is configured properly to not impact the application performance.&#10;Check also the monitored method(s) in the stack."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
