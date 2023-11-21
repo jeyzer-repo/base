@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="New Relic">
+
+		<!-- ************************************************************************ -->
+		<!--                       NEW RELIC RULES                                    -->
+		<!-- ************************************************************************ -->
+
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="New Relic agent" param="New Relic" stickers="performance, environment" ref="JZR-SHA-NEWREL-001">
+			<narrative>This rule detects the New Relic agent usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           sub_level="8"
+				           message="New Relic monitoring agent is used.&#10; Make sure it is configured properly to not impact the application performance."/>
+			</thresholds>
+		</rule>		
+
+	</rules>
+
+</monitor>
