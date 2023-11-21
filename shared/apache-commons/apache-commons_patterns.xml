@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Apache-commons" version="3.1">
+<profile name="Apache-commons" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -28,6 +28,7 @@
 				<!-- Apache commons -->
 				<operation pattern="org.apache.commons.net.ftp.FTPClient._openDataConnection" name="FTP connection creation" type="Network"/>
 				<operation pattern="org.apache.commons.csv.CSVPrinter.printRecord" name="Populate CSV"/>
+				<operation pattern="org.apache.commons.collections.map.AbstractHashedMap.putAll" name="Hashmap put all" type="Collection"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
