@@ -12,7 +12,7 @@
 
 	<!-- Dependency sets. Referenced in the analysis patterns and monitoring rules -->
 	<dependencies>
-		<set id="base-shared-deps" profiles="tomcat,spring,apache-commons,instana,tanuki,java"/>
+		<set id="base-shared-deps" profiles="tomcat,spring,apache-commons,apache-http-client,lmax,instana,mysql,tanuki,appdynamics,ehcache,java"/>
 	</dependencies>
 
 	<!-- Analysis patterns. Load order : top to bottom. Pattern rules of the top pattern set apply first. Dynamic patterns are loaded at last -->
@@ -129,7 +129,7 @@
 				<!-- Size strategy : auto or known or master_profile_state_dependent  -->
 				<strategy type="known" >
 					<!-- Interest size is known up front -->
-					<known_size_strategy min="3"/>
+					<known_size_strategy min="5"/>
 				</strategy>
 				<!-- In the discard all, do keep particular stacks as follow : -->
 				<keep_stacks running="false" locked="false"/>

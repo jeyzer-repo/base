@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="hybris" version="3.1">
+<profile name="Hybris" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -21,6 +21,20 @@
 				<function pattern="de.hybris.platform.util.Utilities.getExtensionForWebroot" name="Web root extension access"/>
 				<function pattern="javax.servlet.http.HttpServletRequestWrapper.getSession;de.hybris.platform.servicelayer.web.SessionFilter.doFilter" name="Hybris session access"/>
 				<function pattern="java.lang.Object.wait;de.hybris.platform.util.threadpool.PoolableThread.resetAndReturnToPool" name="Hybris thread reset"/>	<!-- Multiple line pattern -->
+				<function pattern="de.hybris.platform.acceleratorcms.component.renderer.impl.CachingCMSComponentRenderer.renderView" name="Hybris render view"/>	<!-- Multiple line pattern -->
+				<function pattern="de.hybris.platform.acceleratorstorefrontcommons.checkout.steps.validation.CheckoutStepValidationAspect.validateCheckoutStep" name="Hybris checkout step validation"/>	<!-- Multiple line pattern -->
+				<function pattern="de.hybris.platform.commercefacades.search.solrfacetsearch.impl.DefaultSolrProductSearchFacade.categorySearch" name="Hybris category search"/>	<!-- Multiple line pattern -->
+				<function pattern="de.hybris.platform.commercefacades.order.impl.DefaultCheckoutFacade.getCheckoutCart" name="Hybris cart checkout"/>	<!-- Multiple line pattern -->
+				<function pattern="de.hybris.platform.commercefacades.order.converters.populator.CartPopulator.populate" name="Hybris cart populate"/>	<!-- Multiple line pattern -->
+				<function pattern="de.hybris.platform.commercefacades.order.impl.DefaultCartFacade.restoreSavedCart" name="Hybris cart restore"/>	<!-- Multiple line pattern -->
+				<function pattern="de.hybris.platform.commerceservices.order.impl.DefaultCommerceCheckoutService.setDeliveryMode" name="Hybris cart set delivery mode"/>	<!-- Multiple line pattern -->
+				<function pattern="de.hybris.platform.commerceservices.search.solrfacetsearch.impl.DefaultSolrProductSearchService.searchAgain" name="Hybris product search"/>	<!-- Multiple line pattern -->
+				<function pattern="de.hybris.platform.commerceservices.customer.impl.DefaultCustomerAccountService.registerGuestForAnonymousCheckout" name="Hybris guest register"/>	<!-- Multiple line pattern -->
+				<function pattern="de.hybris.platform.commercefacades.product.impl.DefaultProductVariantFacade.getProductForOptions" name="Hybris get product options"/>	<!-- Multiple line patter	n -->
+				<function pattern="de.hybris.platform.core.model.product.ProductModel.getSupercategories" name="Hybris get super categories"/>	<!-- Multiple line pattern -->
+				<function pattern="de.hybris.platform.multicountry.services.impl.DefaultMulticountryProductService.getProductForCode" name="Hybris product search with code"/>	<!-- Multiple line pattern -->
+				<function pattern="de.hybris.platform.servicelayer.user.impl.DefaultUserService.getCurrentUser" name="Hybris user access"/>	<!-- Multiple line pattern -->
+				<function pattern="de.hybris.platform.commercefacades.order.impl.DefaultCartFacade.addToCart" name="Hybris add to cart"/>	<!-- Multiple line pattern -->
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -30,6 +44,7 @@
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<executor pattern="de.hybris.platform.util.threadpool.PoolableThread.run" name="Hybris pool thread"/>
+				<executor pattern="de.hybris.platform.cluster.udp.UDPBroadcastMethod$UDPServerThread.internalRun" name="Hybris UDP server thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -38,6 +53,10 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="java.lang.Thread.sleep;de.hybris.platform.cluster.ClusterNodePingUpdater.run" name="Main loop"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Object.wait;de.hybris.platform.util.threadpool.PoolableThread.resetAndReturnToPool;de.hybris.platform.util.threadpool.PoolableThread.internalRun" name="Hybris pool thread" size="5"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Object.wait;de.hybris.platform.directpersistence.selfhealing.impl.DefaultSelfHealingService$BatchSelfHealingItemsScheduledRunnable.waitIfNecesary;de.hybris.platform.directpersistence.selfhealing.impl.DefaultSelfHealingService$BatchSelfHealingItemsScheduledRunnable.run" name="Hybris batch self healing service" size="5"/>	<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.DatagramChannelImpl.blockingReceive;sun.nio.ch.DatagramSocketAdaptor.receive;java.net.DatagramSocket.receive;de.hybris.platform.cluster.udp.UDPBroadcastMethod$UDPServerThread.internalRun" name="Hybris UDP server" size="9"/>	<!-- Multiple line pattern -->
+				<exclude pattern="de.hybris.platform.tx.DefaultAfterSaveListenerRegistry$AfterSaveEventPublisherThread.sleepThread;de.hybris.platform.tx.DefaultAfterSaveListenerRegistry$AfterSaveEventPublisherThread.notifyListeners;de.hybris.platform.tx.DefaultAfterSaveListenerRegistry$AfterSaveEventPublisherThread.updateThreadIntoNotSuspendableOperationAndNotifyListeners;de.hybris.platform.tx.DefaultAfterSaveListenerRegistry$AfterSaveEventPublisherThread.internalRun" name="Hybris After Save Listener registry" size="6"/>	<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
