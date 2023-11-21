@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="JBoss" version="3.1">
+<profile name="JBoss" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -45,12 +45,13 @@
 				<!-- JBoss -->
 				<operation pattern="org.jboss.security.authentication.JBossCachedAuthenticationManager.authenticate" name="JBoss authenticate"/>
 				<operation pattern="org.jboss.resource.adapter.jdbc.CheckValidConnectionSQL.isValidConnection" name="JBoss JDBC connection testing"/>
-				<operation pattern="org.jboss.classloader.spi.base.BaseClassLoader.getResource" name="JBoss ressource loading"				type="Class loader"/>
+				<operation pattern="org.jboss.classloader.spi.base.BaseClassLoader.getResource" name="JBoss ressource loading"		type="Class loader"/>
 				<operation pattern="org.jboss.jca.adapters.jdbc.WrapperDataSource.getConnection" name="JBoss db connection pool access"/>				
-				<operation pattern="org.jboss.logging.Logger.getLogger" name="JBoss get logger"/>				
+				<operation pattern="org.jboss.logging.Logger.getLogger" name="JBoss get logger"						type="Log"/>
 				<operation pattern="org.jboss.as.controller.ModelControllerImpl.awaitContainerStateChangeReport" name="Wait for start sequence end"/>				
 				<operation pattern="org.jboss.modules.JarFileResourceLoader.getClassSpec" name="Jar file get class spec"/>
-				<operation pattern="org.jboss.modules.ModuleClassLoader.findClass" name="JBoss module class load"/>
+				<operation pattern="org.jboss.modules.ModuleClassLoader.findClass" name="JBoss module class load"	type="Class loader"/>
+				<operation pattern="org.jboss.vfs.VirtualFile.exists" name="JBoss file check" 						type="file"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
