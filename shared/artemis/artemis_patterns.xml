@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Artemis" version="3.1">
+<profile name="Artemis" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -58,6 +58,7 @@
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->				
 				<exclude pattern="java.lang.Thread.sleep;net.sf.ehcache.distribution.jms.JMSCacheReplicator.replicationThreadMain" name="JMS cache replicator sleep"/>	
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.LinkedBlockingQueue.poll;org.apache.activemq.artemis.utils.ActiveMQThreadPoolExecutor$ThreadPoolQueue.poll" name="Artemis thread pool waiting for task" size="10"/>	
+				<exclude pattern="java.util.concurrent.LinkedBlockingDeque.take;org.wildfly.extension.messaging.activemq.broadcast.QueueBroadcastManager.getBroadcast;org.wildfly.extension.messaging.activemq.broadcast.CommandDispatcherBroadcastEndpoint.receiveBroadcast;org.apache.activemq.artemis.core.cluster.DiscoveryGroup$DiscoveryRunnable.run" name="Artemis discovery waiting for message" size="9"/>	
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
