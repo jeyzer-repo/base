@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Reactor" version="3.1">
+<profile name="Reactor" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -34,6 +34,7 @@
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<executor pattern="reactor.core.scheduler.SchedulerTask.call" name="Reactor scheduler"/>
+				<executor pattern="reactor.core.publisher.FluxPublishOn$PublishOnSubscriber.run" name="Reactor publisher"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
