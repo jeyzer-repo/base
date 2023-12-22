@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Spring" version="3.1">
+<profile name="Spring" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -28,6 +28,7 @@
 				<function pattern="org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization" name="Spring - bean factory init"/>
 				<function pattern="org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance" name="Spring - create bean"/>
 				<function pattern="org.springframework.jdbc.datasource.DataSourceUtils.doGetConnection" name="Spring - get db connection"/>
+				<function pattern="org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run" name="Spring error handling"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -45,6 +46,8 @@
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<executor pattern="org.springframework.scheduling.concurrent.ReschedulingRunnable.run" name="Spring scheduler"/>
 				<executor pattern="org.springframework.boot.loader.MainMethodRunner.run" name="Spring boot main"/>
+				<executor pattern="org.springframework.cloud.consul.binder.ConsulInboundMessageProducer$1.run" name="Spring inbound message producer"/>
+				<executor pattern="org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run" name="Spring error handler"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->

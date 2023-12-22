@@ -34,6 +34,18 @@
 				           message="Java exception handling by Spring detected. Please check the applicative logs."/>
 			</thresholds>
 		</rule>
+		
+		<!--  If function regex pattern in the current task is seen more than value, generate event. Pattern is regex -->
+		<rule name="Function pattern" extra_info="Java exception generation" ref="JZR-SHA-SPRING-003">
+			<narrative>This rule detects any Spring error handling.</narrative>
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="1"
+				           pattern="Spring error handling" 
+				           level="INFO"
+				           message="Java exception handling by Spring detected. Please check the applicative logs.."/>
+			</thresholds>
+		</rule>
 
 	</rules>
 
