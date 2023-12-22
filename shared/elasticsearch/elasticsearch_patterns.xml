@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Elastic Search" version="3.1">
+<profile name="Elastic Search" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -28,6 +28,7 @@
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<operation pattern="org.elasticsearch.client.RestHighLevelClient.close" name="ES connection closure" />
+				<operation pattern="org.elasticsearch.client.RestHighLevelClient.search" name="ES search" />
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
