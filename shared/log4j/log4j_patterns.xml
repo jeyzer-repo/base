@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Log4j" version="3.1">
+<profile name="Log4j" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -25,6 +25,7 @@
 				<function pattern="org.apache.log4j.RollingFileAppender.subAppend" name="Log4j rolling file appending"/>
 				<function pattern="org.apache.logging.log4j.core.LoggerContext.stop" name="Log4j context stop"/>
 				<function pattern="org.apache.logging.log4j.core.appender.AsyncAppenderEventDispatcher.dispatchAll" name="Log4j dispatch events"/>
+				<function pattern="java.util.concurrent.locks.ReentrantLock.lock;org.apache.logging.log4j.core.LoggerContext.setConfiguration;org.apache.logging.log4j.core.LoggerContext.reconfigure" name="Log4j reconfigure"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -33,6 +34,7 @@
 				<operation pattern="org.apache.log4j.helpers.QuietWriter.flush" name="Log4j flush"											type="Log"/>
 				<operation pattern="org.apache.log4j.MDC.put" name="Log4j MDC"																type="Log"/>
 				<operation pattern="log4j.Category.log" name="Log4j logging"																type="Log"/>
+				<operation pattern="org.apache.logging.log4j.spi.AbstractLogger.trace" name="Log4j trace"									type="Log"/>
 				<operation pattern="org.apache.logging.log4j." name="Log4j2 access"															type="Log"/>
 				<operation pattern="org.apache.log4j." name="Log4j access"																	type="Log"/>
 			</operations>

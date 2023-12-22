@@ -18,6 +18,20 @@
 				           message="Obsolete log4J version is used.&#10;  Make sure to put in place a bridge to Log4J2 or SLF4J while waiting to migrate your code to Log4j2.&#10; You MUST link with a Log4J2 2.17.1+ version (Java 8) to protect your application from the CVE-2021-44228 vulnerability."/>
 			</thresholds>
 		</rule>
+		
+		<!--  If function regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Function parallel contention" extra_info="Log4j reconfiguration" ref="JZR-SHA-LOG4J-002" stickers="performance">
+			<narrative>This rule detects an intensive usage of the Log4J reconfigure which is a blocking operation.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Log4j reconfigure"  
+				           level="WARNING"
+						   sub_level="9"
+				           message="Log4j reconfigure performed frequently.&#10;The log4j reconfigure holds a lock that creates a contention point.&#10;It's also an heavy operation as it reload and parse a log configuration file.&#10;Please review the design of the logging layer of your application."/>
+			</thresholds>
+		</rule>
 
 	</rules>
 
