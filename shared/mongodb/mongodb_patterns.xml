@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="MongoDB" version="3.1">
+<profile name="MongoDB" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -42,6 +42,7 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.waitForSignalOrTimeout;com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.waitForNext;com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run" name="Mongodb signal handler" size="7"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.mongodb.internal.connection.AsynchronousClusterEventListener.publishEvents" name="Mongodb async cluster event listener" size="10"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
