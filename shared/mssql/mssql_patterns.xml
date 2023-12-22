@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="MSSQL" version="3.1">
+<profile name="MSSQL" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -25,6 +25,7 @@
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<operation pattern="com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.doExecutePreparedStatement" name="MSSQL prepared statement"  type="MSSQL"/>
 				<operation pattern="com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.executeQuery" name="MSSQL query"  	   type="MSSQL"/>
 				<operation pattern="com.microsoft.sqlserver.jdbc.SQLServerPreparedStatement.executeBatch" name="MSSQL batch"       type="MSSQL"/>
 				<operation pattern="com.microsoft.sqlserver.jdbc." name="MSSQL operation"		   	   							   type="MSSQL"/>
