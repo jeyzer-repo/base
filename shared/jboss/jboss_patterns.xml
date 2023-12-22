@@ -38,6 +38,8 @@
 				<function pattern="org.wildfly.clustering.service.FunctionalService.start" name="JBoss service start"/>
 				<function pattern="org.jboss.msc.service.ServiceControllerImpl$StartTask.startService" name="JBoss service start"/>
 				<function pattern="io.undertow.servlet.core.DeploymentManagerImpl.deploy" name="JBoss servlet deploy"/>
+				<function pattern="io.undertow.servlet.spec.HttpServletResponseImpl.responseDone" name="JBoss servlet response end"/>
+				<function pattern="com.arjuna.ats.internal.arjuna.recovery.PeriodicRecovery.doBackoffWait" name="JBoss recovery scan waiting"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -51,7 +53,8 @@
 				<operation pattern="org.jboss.as.controller.ModelControllerImpl.awaitContainerStateChangeReport" name="Wait for start sequence end"/>				
 				<operation pattern="org.jboss.modules.JarFileResourceLoader.getClassSpec" name="Jar file get class spec"/>
 				<operation pattern="org.jboss.modules.ModuleClassLoader.findClass" name="JBoss module class load"	type="Class loader"/>
-				<operation pattern="org.jboss.vfs.VirtualFile.exists" name="JBoss file check" 						type="file"/>
+				<operation pattern="org.jboss.vfs.VirtualFile.exists" name="JBoss file check" 						type="File"/>
+				<operation pattern="io.undertow.protocols.ssl.SslConduit.doHandshake" name="Undertow SSL handshake" type="Network"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -70,6 +73,7 @@
 				<executor pattern="org.jboss.jca.core.connectionmanager.pool.validator.ConnectionValidator$ConnectionValidatorRunner.run" name="JBoss connection validator"/>
 				<executor pattern="org.jboss.jca.core.connectionmanager.pool.idle.IdleRemover$IdleRemoverRunner.run" name="JBoss connection remover"/>
 				<executor pattern="org.wildfly.common.ref.References$ReaperThread.run" name="JBoss reference reaper"/>
+				<executor pattern="com.arjuna.ats.internal.arjuna.recovery.PeriodicRecovery.run" name="JBoss Arjuna recovery thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -100,6 +104,13 @@
 				<exclude pattern="java.util.concurrent.locks.LockSupport.park;org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run" name="JBoss Service thread waiting" size="5"/>
 				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;org.jboss.jca.core.connectionmanager.pool.validator.ConnectionValidator$ConnectionValidatorRunner.run;java.util.concurrent.ThreadPoolExecutor.runWorker" name="JBoss connection validator waiting" size="7"/>
 				<exclude pattern="java.lang.Object.wait;java.lang.ref.ReferenceQueue.remove;java.lang.ref.ReferenceQueue.remove;org.wildfly.common.ref.References$ReaperThread.run" name="JBoss ref reaper waiting" size="4"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer.tryAcquireSharedNanos;org.infinispan.util.concurrent.ReclosableLatch.await;org.wildfly.clustering.infinispan.spi.affinity.DefaultKeyAffinityService$KeyGeneratorWorker.run" name="JBoss keygen waiting" size="10"/>
+				<exclude pattern="java.net.DatagramSocket.receive;org.jboss.modcluster.advertise.impl.AdvertiseListenerImpl$AdvertiseListenerWorker.run" name="JBoss advertise waiting" size="5"/>
+				<!-- JBoss Arjuna txn -->
+				<exclude pattern="java.lang.Object.wait;com.arjuna.ats.arjuna.coordinator.TransactionReaper.waitForCancellations;com.arjuna.ats.internal.arjuna.coordinator.ReaperWorkerThread.run" name="JBoss Arjuna txn reaper" size="4"/>
+				<exclude pattern="java.lang.Object.wait;com.arjuna.ats.internal.arjuna.coordinator.ReaperThread.run" name="JBoss Arjuna coordinator reaper" size="2"/>
+				<exclude pattern="java.lang.Object.wait;com.arjuna.ats.internal.arjuna.recovery.ExpiredEntryMonitor.run" name="JBoss Arjuna expired monitor entry" size="2"/>
+				<exclude pattern="java.lang.Object.wait;com.arjuna.ats.internal.arjuna.recovery.PeriodicRecovery.doPeriodicWait;com.arjuna.ats.internal.arjuna.recovery.PeriodicRecovery.run" name="JBoss Arjuna recovery" size="3"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->

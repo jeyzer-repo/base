@@ -59,6 +59,20 @@
 			</thresholds>
 		</rule>
 
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads for [count] successive times, generate event. -->
+		<rule name="Operation parallel contention" extra_info="JBoss TCP stress" ref="JZR-SHA-JBOS-004">
+			<narrative>This rule detects high activity at the JBoss TCP Undertow level.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="4"
+				           pattern="Undertow SSL handshake"  
+				           level="WARNING"
+				           sub_level="6"
+				           message="High TCP activity.&#10;System may be under stress.&#10;Check other figures and server high level activity to make sure it handles the load correctly in a valid context."/>
+			</thresholds>
+		</rule>
+
 	</rules>
 
 </monitor>
