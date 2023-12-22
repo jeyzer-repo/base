@@ -30,6 +30,7 @@
 				<operation pattern="io.netty.util.internal.SocketUtils.connect" name="Netty connection opening"				type="Network"/>
 				<operation pattern="io.netty.channel.socket.nio.NioSocketChannel.doWrite" name="Netty socket writing"		type="Network"/>
 				<operation pattern="io.netty.channel.socket.nio.NioSocketChannel.doReadBytes" name="Netty socket reading"	type="Network"/>
+				<operation pattern="org.asynchttpclient.netty.NettyResponseFuture.get" name="Netty HTTP async get"	/>
 				<operation pattern="io.netty." name="Netty operation"/>
 			</operations>
 			<lockers>
@@ -47,7 +48,6 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.SelectedSelectionKeySetSelector.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select loop"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.SelectedSelectionKeySetSelector.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select2 loop"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select3 loop" size="10"/>
@@ -63,6 +63,9 @@
 				<exclude pattern="org.jboss.netty.channel.socket.nio.AbstractNioSelector.select;org.jboss.netty.channel.socket.nio.AbstractNioSelector.run;org.jboss.netty.channel.socket.nio.AbstractNioWorker.run;org.jboss.netty.channel.socket.nio.NioWorker.run;org.jboss.netty.util.ThreadRenamingRunnable.run" name="Netty Thread renaming poller" size="15"/>
 				<exclude pattern="org.jboss.netty.channel.socket.nio.AbstractNioSelector.select;org.jboss.netty.channel.socket.nio.AbstractNioSelector.run;org.jboss.netty.channel.socket.nio.NioClientBoss.run;org.jboss.netty.util.ThreadRenamingRunnable.run" name="Netty Thread renaming poller 2" size="14"/>
 				<exclude pattern="sun.nio.ch.SelectorImpl.select;org.jboss.netty.channel.socket.nio.NioServerBoss.select;org.jboss.netty.channel.socket.nio.AbstractNioSelector.run;org.jboss.netty.channel.socket.nio.NioServerBoss.run;org.jboss.netty.util.ThreadRenamingRunnable.run" name="Netty Thread renaming poller 3" size="14"/>
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;io.netty.util.concurrent.SingleThreadEventExecutor.takeTask;io.netty.channel.DefaultEventLoop.run" name="Netty event loop" size="10"/>
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;io.netty.util.concurrent.SingleThreadEventExecutor.takeTask;io.netty.channel.DefaultEventLoop.run" name="Netty event loop 2" size="10"/>
+				<exclude pattern="java.util.concurrent.CountDownLatch.await;reactor.core.publisher.BlockingSingleSubscriber.blockingGet;reactor.core.publisher.Mono.block;org.springframework.boot.web.embedded.netty.NettyWebServer$1.run" name="Netty spring server" size="9"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
