@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Apache-HTTP-core" version="3.1">
+<profile name="Apache-HTTP-core" version="3.2-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -27,6 +27,7 @@
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<operation pattern="org.apache.http.impl.nio.reactor.AbstractMultiworkerIOReactor.shutdown" name="HTTP closure" type="Synchro"/>
+				<operation pattern="org.apache.http.impl.DefaultBHttpClientConnection.receiveResponseHeader" name="HTTP header response received" />
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
