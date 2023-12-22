@@ -28,6 +28,26 @@
 				           message="Interception of methods with the AppDynamics agent is performed.&#10; Make sure it is configured properly to not impact the application performance.&#10;Check also the monitored method(s) in the stack."/>
 			</thresholds>
 		</rule>
+		
+		<!--  If function regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Function parallel contention" extra_info="AppDynamics request context search contention" ref="JZR-SHA-APPDYN-003">
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="AppDynamics find context with payload"  
+				           level="INFO"
+						   sub_level="8"
+				           message="AppDynamics creates some contention within the application while trying to correlate data.&#10;There is a risk of performance decrease.&#10;Check the stacks in the report."/>
+				<threshold type="session custom"
+						   count="3"
+						   value="5"
+				           pattern="AppDynamics find context with payload"  
+				           level="WARNING"
+						   sub_level="10"
+				           message="AppDynamics creates high contention within the application while trying to correlate data.&#10;Performance is impacted.&#10;You may consider deactivating Appdynamics or investigate its configuration and relative stacks in the report."/>
+			</thresholds>
+		</rule>
 
 	</rules>
 

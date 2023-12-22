@@ -21,11 +21,20 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<function pattern="com.singularity.ee.agent.appagent.services.snapshot.rsd.RequestSegmentDataQueue.sendSnapshotDataToController" name="AppDynamics snapshot sending"/>
+				<function pattern="com.singularity.ee.agent.appagent.services.transactionmonitor.common.activity.ActivityInProcessConsumerInterceptor.findCorrelationInfoUsingPayload" name="AppDynamics find context with payload"/>
+				<function pattern="com.singularity.ee.agent.appagent.services.transactionmonitor.async2.AAsyncHttpEntryInterceptor.stashTransactionContextWithPayload" name="AppDynamics context caching"/>
+				<function pattern="com.singularity.ee.agent.appagent.services.transactionmonitor.common.TransactionMonitor.removeInstanceForCorrelationInfo" name="AppDynamics context removal"/>
+				<function pattern="com.singularity.ee.agent.appagent.services.transactionmonitor.common.activity.ActivityInProcessProducerInterceptor.setUpInProcessCorrelationInfo" name="AppDynamics in process context set"/>
+				<function pattern="com.singularity.ee.service.analytics.writer.SinkWriterTask.writeToOutput" name="AppDynamics output write"/>
+				<function pattern="com.singularity.ee.agent.appagent.services.logmonitoring.FullAsyncThreadDumpTaskHandler.takeThreadDump" name="AppDynamics thread dump"/>
+				<function pattern="com.singularity.ee.agent.appagent.services.transactionmonitor.async.correlation.AsyncHandOffIdentificationInterceptor.logRequestStackIfEnabled" name="AppDynamics request stack log"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<operation pattern="com.singularity.ee.agent.appagent.entrypoint.bciengine.FastMethodInterceptorDelegatorBoot.safeOnMethodBegin" name="AppDynamics method interception"/>
+				<operation pattern="com.singularity.ee.util.collections.AdaptableConcurrentHashMap.remove" name="AppDynamics map item removal"/>
+				<operation pattern="com.singularity.ee.util.collections.AdaptableConcurrentHashMap$Segment.put" name="AppDynamics map item insert"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -42,6 +51,7 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="java.util.concurrent.DelayQueue.take;com.singularity.ee.util.javaspecific.scheduler.ADScheduledThreadPoolExecutor$DelayedWorkQueue.take;com.singularity.ee.util.javaspecific.scheduler.ADScheduledThreadPoolExecutor$DelayedWorkQueue.take;com.singularity.ee.util.javaspecific.scheduler.ADThreadPoolExecutor.getTask;com.singularity.ee.util.javaspecific.scheduler.ADThreadPoolExecutor$Worker.run" name="AD thread pool" size="12"/>
+				<exclude pattern="java.util.concurrent.ArrayBlockingQueue.take;com.singularity.ee.service.analytics.autodata.AnalyticsAutoDataTransform.transformCollectionData;com.singularity.ee.service.analytics.autodata.AnalyticsAutoDataTransform.run" name="AnalyticsAutoDataTransform waiting to write" size="15"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
