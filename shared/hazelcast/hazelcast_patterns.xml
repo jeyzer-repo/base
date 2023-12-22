@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="Hazelcast" version="3.2-SNAPSHOT">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			0 - locker (1004)
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - locker  (7)
+			5 - function  (6)
+			6 - function_discovery  (5)
+			7 - executor  (4)
+			8 - executor_thread_name (3)
+			9 - operation (2)
+			10 - operation_discovery (1)			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolumn separator to declare multiple line patterns -->
+			<functions>
+				<function pattern="com.hazelcast.internal.jmx.HazelcastMBean.getAttribute" name="Hazelcast attribute monitoring"/>
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<operation pattern="com.hazelcast.map.impl.proxy.MapProxyImpl.getAll" name="Hazelcast map all access"/>
+				<operation pattern="com.hazelcast.map.impl.proxy.MapProxyImpl.get" name="Hazelcast map access"/>
+				<operation pattern="com.hazelcast.map.impl.proxy.MapProxyImpl.size" name="Hazelcast map size access"/>
+			</operations>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<executor pattern="com.hazelcast.util.executor.CachedExecutorServiceDelegate$Worker.run" name="Hazelcast executor"/>
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<!-- executor_thread_name pattern_regex="^hybrisHTTP.*" name="Hybris HTTP thread"/-->
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude pattern="com.hazelcast.internal.util.concurrent.MPSCQueue.takeAll;com.hazelcast.internal.util.concurrent.MPSCQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.run" name="Hazelcast operation handler" size="6"/>	<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;com.hazelcast.internal.networking.nio.NioThread.selectLoop;com.hazelcast.internal.networking.nio.NioThread.run" name="Hazelcast NIO thread waiting" size="7"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.util.executor.StripedExecutor$Worker.run" name="Hazelcast striped Executor waiting" size="5"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.run" name="Hazelcast Operation thread waiting" size="6"/>	<!-- Multiple line pattern -->
+				<exclude pattern="sun.misc.Unsafe.park;java.util.concurrent.locks.LockSupport.park;com.hazelcast.internal.util.concurrent.MPSCQueue.takeAll;com.hazelcast.internal.util.concurrent.MPSCQueue.take;com.hazelcast.spi.impl.operationservice.impl.InboundResponseHandlerSupplier$ResponseThread.doRun" name="Hazelcast Inbound response thread waiting" size="6"/>	<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.SelectorImpl.select;com.hazelcast.nio.tcp.TcpIpAcceptor$AcceptorIOThread.acceptLoop;com.hazelcast.nio.tcp.TcpIpAcceptor$AcceptorIOThread.run" name="Hazelcast TcpIpAcceptor waiting" size="8"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.run" name="Hazelcast Operation executor waiting" size="6"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;com.hazelcast.internal.partition.impl.MigrationQueue.poll;com.hazelcast.internal.partition.impl.MigrationThread.doRun;com.hazelcast.internal.partition.impl.MigrationThread.run" name="Hazelcast Partition migration thread waiting" size="7"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.LinkedBlockingQueue.poll;com.hazelcast.internal.networking.nio.iobalancer.IOBalancerThread.run" name="Hazelcast IO balancer waiting" size="5"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.DelayQueue.poll;com.hazelcast.spi.impl.operationparker.impl.OperationParkerImpl$ExpirationTask.doRun;com.hazelcast.spi.impl.operationparker.impl.OperationParkerImpl$ExpirationTask.run" name="Hazelcast expiration task waiting" size="13"/>	<!-- Multiple line pattern -->
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!--exclude_thread_name pattern_regex="RMI TCP Accept.*" name="RMI thread"/-->
+				<!--  exclude_thread_name pattern="ambari-action-scheduler" name="Ambari action scheduler" size="3"/-->
+			</exclude_thread_names>
+		</patterns>
+
+</profile>
