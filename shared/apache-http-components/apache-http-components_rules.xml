@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Apache-HTTP-components">
+
+		<!-- ************************************************************************ -->
+		<!--                       Apache HTTP Components RULES                           -->
+		<!-- ************************************************************************ -->
+
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads for [count] successive times, generate event. -->
+		<rule name="Operation parallel contention" extra_info="HTTP connection pool access contention" ref="JZR-SHA-APACHE-HTTP-COM-001">
+			<narrative>This rule detects the HTTP connection pool miseries.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="2"
+				           pattern="HTTP connection pool access"
+				           level="INFO"
+				           sub_level="8"
+				           message="Light contention on the HTTP connection connection pool.&#10;Review and possibly increase the connection pool size"/>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="HTTP connection pool access"  
+				           level="WARNING"
+				           sub_level="7"
+				           message="Contention on the HTTP connection pool.&#10;System is about to run out of HTTP connections.&#10;Increase the connection pool size and investigate any stress situation."/>
+				<threshold type="session custom"
+						   count="3"
+						   value="5"
+				           pattern="HTTP connection pool access"  
+				           level="CRITICAL"
+				           sub_level="7"
+				           message="Severe contention on the HTTP connection pool.&#10;System is running out of HTTP connections.&#10;Plan possibly a restart, increase the HTTP connection pool size and investigate any stress situation."/>
+			</thresholds>
+		</rule>	
+
+	</rules>
+
+</monitor>
