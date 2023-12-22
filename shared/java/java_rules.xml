@@ -342,6 +342,17 @@
 			</thresholds>
 		</rule>
 
+		<!--  If executor is detected across current session, generate event. -->
+		<rule name="Executor presence" param_display="CORBA usage" param="CORBA main" stickers="code_quality" ref="JZR-SHA-JAVA-026">
+			<narrative>This rule detects the usage of CORBA.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+				           sub_level="6"
+				           message="CORBA is used.&#10; This is now obsolete communication protocol.&#10;R&#38;D should consider replacing it."/>
+			</thresholds>
+		</rule>
+
 	</rules>
 
 </monitor>

@@ -199,6 +199,7 @@
 				<operation pattern="java.util.Random.&lt;init&gt;" name="Random constructor"		                    type="Random generation"/>
 				<operation pattern="java.util.Random.next"                name="Number generation"		                type="Random generation"/>
 				<operation pattern="java.security.SecureRandom.nextBytes" name="Random number generation"				type="Random generation"/>
+				<operation pattern="com.sun.jndi.ldap.LdapClient.authenticate" name="LDAP authenticate"/>
 				<operation pattern="sun.security.jca." name="Security certificate operation"							type="Crypto"/>
 				<operation pattern="java.security.Signature.verify" name="Signature verification"						type="Crypto"/>
 				<operation pattern="javax.crypto.JarVerifier.verifySingleJar" name="Jar file signature verification"	type="Crypto"/>
@@ -303,6 +304,10 @@
 				<executor pattern="jdk.jfr.internal.ShutdownHook.run" name="JFR shutdown thread"/>
 				<executor pattern="sun.net.dns.ResolverConfigurationImpl$AddressChangeListener.run" name="DNS change listener"/>
 				<executor pattern="java.awt.EventDispatchThread.run" name="AWT event dispatcher"/>
+				<executor pattern="sun.net.httpserver.ServerImpl$Exchange.run" name="HTTP server thread"/>
+				<executor pattern="jdk.internal.misc.Signal$1.run" name="JVM signal handler"/>
+				<executor pattern="com.sun.corba.se.impl.transport.SelectorImpl.run" name="CORBA selector"/>
+				<executor pattern="com.sun.corba.se.impl.orb.ORBImpl.run" name="CORBA main"/>
 				<!-- Virtual threads -->
 				<executor pattern="java.lang.VirtualThread.runContinuation" name="VT carrier"/>
 				<executor pattern="java.lang.VirtualThread$VThreadContinuation.lambda" name="VT"/>
@@ -349,6 +354,9 @@
 				<exclude pattern="sun.net.www.http.KeepAliveCache.run" name="HTTP keep alive timer" size="3"/>
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;sun.net.httpserver.ServerImpl$Dispatcher.run" name="HTTP server select loop" size="7"/>
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;jdk.internal.net.http.HttpClientImpl$SelectorManager.run" name="HTTP client select loop" size="5"/>
+				<!-- CORBA -->
+				<exclude pattern="com.sun.corba.se.impl.transport.SelectorImpl.run" name="CORBA selector" size="5"/>
+				<exclude pattern="com.sun.corba.se.impl.orb.ORBImpl.run" name="CORBA main" size="5"/>
 				<!-- Sun 2D -->
 				<exclude pattern="sun.java2d.Disposer.run" name="Java 2D disposer" size="7"/>
 				<exclude pattern="javax.swing.TimerQueue.run" name="Swing timer" size="6"/>
