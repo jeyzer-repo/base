@@ -84,7 +84,7 @@
 			<description>Displays groups of similar stacks on a time line.&#10;Permits to get a good overview of the different process activities in a large multi-threaded environment.</description>
 		
 			<!-- Optional -->
-			<headers formats="Advanced JMX,Advanced Agent" title_column_index="1">
+			<headers formats="Advanced JMX,Advanced Agent,Advanced VT Agent" title_column_index="1">
 				
 				<!-- Functions : average, min, max, cumulative, variance, standard_deviation -->
 				<math_functions>
@@ -168,7 +168,7 @@
 		<sheet type="sequence" name="Task sequence" link_type="Tsk">
 		
 			<!-- Optional -->
-			<headers formats="Advanced JMX,Advanced Agent">
+			<headers formats="Advanced JMX,Advanced Agent,Advanced VT Agent">
 				<process_up_time/>
 				<capture_time color="RED">
 					<!-- Factor defined in percentage gain or loss -->
@@ -295,7 +295,7 @@
 			<description>Displays MX attributes.</description>
 		
 			<!-- Optional -->
-			<headers formats="Advanced JMX,Advanced Agent">
+			<headers formats="Advanced JMX,Advanced Agent,Advanced VT Agent">
 				
 				<!-- Display MX bean attribute as string -->
 				<!-- name is regex pattern. Matched attribute should be unique (first match considered) -->
@@ -324,7 +324,7 @@
 		<sheet type="sequence" name="Charts" link_type="Cht">
 		
 			<!-- Optional -->
-			<headers formats="Advanced JMX,Advanced Agent">
+			<headers formats="Advanced JMX,Advanced Agent,Advanced VT Agent">
 				<thread_counter color="RED">
 					<!-- Factor defined in percentage gain or loss -->
 					<delta increase_factor="10" increase_color="ORANGE" decrease_factor="10" decrease_color="GREEN"/>
@@ -525,7 +525,7 @@
 			</display>
 		</sheet>
 		
-		<sheet type="sequence" name="Memory GC Global" link_type="GCg" formats="Advanced JMX,Advanced Agent">
+		<sheet type="sequence" name="Memory GC Global" link_type="GCg" formats="Advanced JMX,Advanced Agent,Advanced VT Agent">
 		
 			<headers formats="Advanced JMX,Advanced Agent">
 
@@ -618,9 +618,9 @@
 		</sheet>
 
 
-		<sheet type="sequence" name="Memory GC Old" link_type="GCo" formats="Advanced JMX,Advanced Agent">
+		<sheet type="sequence" name="Memory GC Old" link_type="GCo" formats="Advanced JMX,Advanced Agent,Advanced VT Agent,Advanced VT Agent">
 		
-			<headers formats="Advanced JMX,Advanced Agent">
+			<headers formats="Advanced JMX,Advanced Agent,Advanced VT Agent">
 
 				<!-- Use type all to display the garbage collectors executed since last JZR recording snapshot -->
 				<!-- Use type last to display the last garbage collector executed since last JZR recording snapshot -->
@@ -708,10 +708,10 @@
 		</sheet>
 		
 		
-		<sheet type="sequence" name="Memory" link_type="Mem" formats="Advanced JMX,Advanced Agent">
+		<sheet type="sequence" name="Memory" link_type="Mem" formats="Advanced JMX,Advanced Agent,Advanced VT Agent">
 		
 			<!-- Optional -->
-			<headers formats="Advanced JMX,Advanced Agent">
+			<headers formats="Advanced JMX,Advanced Agent,Advanced VT Agent">
 				<system_physical_used_memory color="RED"/>
 				<system_physical_used_memory_percent threshold="70" color="RED"/>
 				<computed_process_memory threshold="100" color="RED"/>
@@ -783,10 +783,10 @@
 			
 		</sheet>
 		
-		<sheet type="sequence" name="CPU" link_type="Cpu" formats="Advanced JMX,Advanced Agent">
+		<sheet type="sequence" name="CPU" link_type="Cpu" formats="Advanced JMX,Advanced Agent,Advanced VT Agent">
 
 			<!-- Optional -->
-			<headers formats="Advanced JMX,Advanced Agent">
+			<headers formats="Advanced JMX,Advanced Agent,Advanced VT Agent">
 				<system_cpu threshold="70" color="RED"/>
 				<process_cpu threshold="70" color="RED"/>
 				<computed_process_cpu threshold="70" color="RED"/>
