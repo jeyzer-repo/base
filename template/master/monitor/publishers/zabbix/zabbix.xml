@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+		
+<zabbix zabbix_enabled="${JEYZER_MONITOR_ZABBIX_ENABLED}">
+
+	<!-- Implementation and connectivity -->
+	<zabbix_setup setup_config_file="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/publishers/zabbix/zabbix_setup.xml"/>
+	
+	<zabbix_input_template directory="${JEYZER_ANALYZER_CONFIG_DIR}/monitor/publishers/zabbix" name="zabbix_data.vm"/>
+	
+</zabbix>
