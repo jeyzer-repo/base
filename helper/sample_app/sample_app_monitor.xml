@@ -51,6 +51,9 @@
 		<!-- Create or update a JIRA item --> 
 		<jira jira_config_file="${JEYZER_BASE_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/monitor/publishers/jira/jira.xml"/>
 		
+		<!-- Send updates to Zabbix --> 
+		<zabbix zabbix_config_file="${JEYZER_BASE_MASTER_PROFILES_DIR}/${JEYZER_TARGET_PROFILE}/monitor/publishers/zabbix/zabbix.xml"/>
+		
 		<!-- Push the result of the HTML logger under a web doc directory --> 
 		<web web_enabled="${JEYZER_MONITOR_WEB_ENABLED}" url="https://${JEYZER_MONITOR_WEB_HOST}:${JEYZER_MONITOR_WEB_PORT}/Jeyzer-monitor" deploy="${JEYZER_MONITOR_WEB_DEPLOY_DIR}"/>
 
