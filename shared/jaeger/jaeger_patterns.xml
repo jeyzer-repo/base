@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Jaeger" version="3.1">
+<profile name="Jaeger" version="3.2">
 
 		<!-- Jaeger is now deprecated - Use the OpenTelemetry instead -->
 
