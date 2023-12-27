@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Ehcache" version="3.2-SNAPSHOT">
+<profile name="Ehcache" version="3.2">
 
 		<!-- 
 			Pattern rule appliance by priority :

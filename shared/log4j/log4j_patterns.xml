@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Log4j" version="3.2-SNAPSHOT">
+<profile name="Log4j" version="3.2">
 
 		<!-- 
 			Pattern rule appliance by priority :
