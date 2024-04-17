@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Reactor" version="3.2">
+<profile name="Reactor" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -25,7 +25,7 @@
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
-				<!--operation pattern="org.apache.pulsar.client.impl.TypedMessageBuilderImpl.send" name="Pulsar send message" /-->
+				<operation pattern="reactor.core." name="Reactor operation" />
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
