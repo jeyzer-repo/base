@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Elastic" version="3.2">
+<profile name="Elastic" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -43,6 +43,8 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;co.elastic.apm.agent.report.disruptor.ExponentionallyIncreasingSleepingWaitStrategy.applyWaitMethod;co.elastic.apm.agent.report.disruptor.ExponentionallyIncreasingSleepingWaitStrategy.waitFor" name="Elastic agent waiting"/>
+				<exclude pattern="java.util.concurrent.TimeUnit.sleep;co.elastic.apm.agent.impl.circuitbreaker.CircuitBreaker.pollStressMonitors;co.elastic.apm.agent.impl.circuitbreaker.CircuitBreaker.access" name="Elastic APM circuit breaker waiting" size="10"/>
+				<exclude pattern="java.util.concurrent.TimeUnit.sleep;co.elastic.apm.agent.configuration.ApmServerConfigurationSource.pollConfig;co.elastic.apm.agent.configuration.ApmServerConfigurationSource.access" name="Elastic APM config source waiting" size="10"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
