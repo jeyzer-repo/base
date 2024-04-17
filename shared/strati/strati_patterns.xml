@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="Strati" version="3.3-SNAPSHOT">
+
+		<!-- Strati is Walmart library under Apache 2 license -->
+
+		<!-- 
+			Pattern rule appliance by priority :
+			0 - locker (1004)
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - locker  (7)
+			5 - function  (6)
+			6 - function_discovery  (5)
+			7 - executor  (4)
+			8 - executor_thread_name (3)
+			9 - operation (2)
+			10 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
+			<functions>
+				<function pattern="io.strati.libs.logging.log4j2.spi.AbstractLogger.logMessage" name="Strati logging" />
+				<function pattern="io.strati.configuration.ConfigurationService.getConfiguration" name="Strati config access" />
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<operation pattern="io.strati.libs.google.common.cache.LocalCache.getIfPresent" name="Strati cache access" />
+			</operations>
+			<lockers>
+				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
+  				<!-- locker pattern="java.util.concurrent.locks.LockSupport.park" name="LockSupport"/-->
+			</lockers>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<executor pattern="io.strati.libs.logging.log4j2.core.appender.AsyncAppender$AsyncThread.run" name="Strati log appender"/>
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<!--executor_thread_name pattern="thread pattern" name="Thread type name"/-->
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;io.strati.libs.logging.log4j2.core.appender.AsyncAppender$AsyncThread.run" name="Starti async logger waiting"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.select;io.strati.libs.logging.kafka.common.network.Selector.select;io.strati.libs.logging.kafka.common.network.Selector.poll;io.strati.libs.logging.kafka.clients.NetworkClient.poll;io.strati.libs.logging.kafka.clients.producer.internals.Sender.run" name="Starti kafka logging waiting" size="10"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;io.strati.libs.logging.disruptor.TimeoutBlockingWaitStrategy.waitFor;io.strati.libs.logging.disruptor.ProcessingSequenceBarrier.waitFor;io.strati.libs.logging.disruptor.BatchEventProcessor.processEvents" name="Starti logging event processor waiting" size="8"/>
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude_thread_name pattern="strati-policy-registry-retriever-scheduler_Worker-1" name="Strati scheduler" size="2"/>
+			</exclude_thread_names>
+		</patterns>
+
+</profile>
