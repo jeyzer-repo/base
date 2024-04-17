@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Java" version="3.2">
+<profile name="Java" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -220,8 +220,9 @@
 				<operation pattern="sun.nio.ch.ServerSocketChannelImpl.accept0" name="Server socket listening"			type="Listen"/>
 				<operation pattern="java.io.PrintStream.print" name="Print"												type="I/O"/>
 				<operation pattern="java.io.PipedInputStream.read" name="Read pipe input"								type="I/O"/>
-				<operation pattern="HashMap.get" name="Hash map access"													type="Collection"/>
-				<operation pattern="Hashtable.get" name="Hash table access"												type="Collection"/>
+				<operation pattern="java.util.HashMap.get" name="Hash map access"										type="Collection"/>
+				<operation pattern="java.util.Hashtable.get" name="Hash table access"									type="Collection"/>
+				<operation pattern="java.util.TreeMap.put" name="Tree map insertion"									type="Collection"/>
 				<operation pattern="Hashtable.containsKey" name="Hash table access"										type="Collection"/>
 				<operation pattern="java.util.AbstractCollection." name="Java collection operation"						type="Collection"/>
 				<operation pattern="java.util.ArrayList." name="Java list operation"									type="Collection"/>
@@ -230,6 +231,8 @@
 				<operation pattern="java.util.TreeMap." name="Java tree map operation"									type="Collection"/>
 				<operation pattern="java.util.Hashtable." name="Java hash table operation"								type="Collection"/>
 				<operation pattern="java.util.HashMap." name="Java hash map operation"								    type="Collection"/>
+				<operation pattern="java.util.HashSet." name="Java hash set operation"								    type="Collection"/>
+				<operation pattern="java.util.LinkedHashMap$" name="Java linked hash map operation"						type="Collection"/>
 				<operation pattern="java.util.concurrent.ConcurrentHashMap." name="Java concurrent hashmap operation" 	type="Collection"/>
 				<operation pattern="java.util.concurrent.ConcurrentHashMap$" name="Java concurrent hashmap operation" 	type="Collection"/>
 				<operation pattern="java.util.Collections$SynchronizedMap" name="Java synchronized map operation" 		type="Collection"/>
@@ -260,7 +263,7 @@
 				<operation pattern="java.lang.IncompatibleClassChangeError.&lt;init&gt;" name="Java library incompatibility"						type="Exception"/>
 				<operation pattern="java.lang.Throwable" name="Java exception generation" 								type="Exception"/>
 				<operation pattern="java.lang.System.identityHashCode" name="Java identity hash code"/>
-				<operation pattern="java.util.regex." name="Java regex operation"										type="String"/>
+				<operation pattern="java.util.regex." name="Java regex operation"										type="Regular expression"/>
 				<operation pattern="javax.swing." name="Java Swing operation"/>
 				<operation pattern="java.lang.Class." name="Java Class operation"/>
 				<operation pattern="sun.reflect." name="Java reflection operation"/>
@@ -284,7 +287,7 @@
   				<locker pattern="java.util.concurrent.Phaser.awaitAdvanceInterruptibly" name="Phaser"/>
   				<locker pattern="java.util.concurrent.Phaser.awaitAdvance" name="Phaser"/>
 				<!-- try lock with timeout -->
-				<locker pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer.tryAcquireSharedNanos;java.util.concurrent.Semaphore.tryAcquire" name="Semaphore"/>
+				<locker pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer.tryAcquireSharedNanos;java.util.concurrent.Semaphore.tryAcquire" name="Semaphore Timeout"/>
   				<locker pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.returnResource" name="RWLockDataStructure"/>
   				<locker pattern="jrockit.vm.Locks.lockFat" name="JRockit fat lock"/>
 			</lockers>
@@ -322,7 +325,8 @@
 				<executor_thread_name pattern="JFR Periodic Tasks" name="JFR"/>
 			</executor_thread_names>
 			<excludes>
-				<exclude pattern="sun.nio.fs.LinuxWatchService.poll;sun.nio.fs.LinuxWatchService.access;sun.nio.fs.LinuxWatchService$Poller.run" name="Linux inotify watcher polling"/>		<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.fs.LinuxWatchService.poll;sun.nio.fs.LinuxWatchService.access;sun.nio.fs.LinuxWatchService$Poller.run" name="Linux notify watcher polling"/>		<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.fs.LinuxWatchService.poll;sun.nio.fs.LinuxWatchService$Poller.run;java.lang.Thread.run" name="Linux watch service polling" size="3"/>		<!-- Multiple line pattern -->
 				<!-- Timers, waiting -->
 				<exclude pattern="java.lang.Object.wait;java.util.TimerThread.mainLoop" name="Timer thread waiting"/>		<!-- Multiple line pattern -->
 				<!-- Thread pools, waiting -->
