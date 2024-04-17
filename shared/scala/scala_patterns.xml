@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Scala" version="3.2">
+<profile name="Scala" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -29,6 +29,8 @@
 				<operation pattern="scala.collection.AbstractIterable.toMap" name="Scala map creation"		  				type="Collection"/>
 				<operation pattern="scala.collection.immutable.TreeMap$.from" name="Scala tree map copy"					type="Collection"/>
 				<operation pattern="scala.collection.immutable.RedBlackTree$Tree" name="Scala red black tree operation"		type="Collection"/>
+				<operation pattern="scala.collection.immutable.List.collect" name="Scala list collect"						type="Collection"/>
+				<operation pattern="scala.reflect.runtime.SynchronizedSymbols$SynchronizedSymbol.typeParams" name="Scala symbol table type access" type="Collection"/>
 				<operation pattern="scala.collection.Iterator.zip" name="Scala zip operation"/>
 				<operation pattern="anorm.RowParser" name="Scala SQL row parsing"/>
 				<operation pattern="scala." name="Scala operation"/>
