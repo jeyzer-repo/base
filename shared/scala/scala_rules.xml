@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Scala">
+
+		<!-- ************************************************************************ -->
+		<!--                       Scala RULES                                   -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Scala symbol table type access" stickers="performance" ref="JZR-SHA-SCA-001" ticket="Scala 1307 issue">
+			<thresholds>
+				<threshold type="session custom"
+						   count="3"
+						   value="10"
+				           pattern="Scala symbol table type access" 
+				           level="WARNING" 
+				           message="Important contention on the Scala symbol table type access. See https://github.com/spring-projects/spring-batch/issues/3769"/>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Scala symbol table type access" 
+				           level="INFO" 
+				           message="Possible contention on the Scala symbol table type access. See https://github.com/spring-projects/spring-batch/issues/3769"/>
+			</thresholds>
+		</rule>	
+
+	</rules>
+
+</monitor>
