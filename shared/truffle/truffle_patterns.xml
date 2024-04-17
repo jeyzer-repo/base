@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="Truffle" version="3.3-SNAPSHOT">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			0 - locker (1004)
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - locker  (7)
+			5 - function  (6)
+			6 - function_discovery  (5)
+			7 - executor  (4)
+			8 - executor_thread_name (3)
+			9 - operation (2)
+			10 - operation_discovery (1)			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolumn separator to declare multiple line patterns -->
+			<functions>
+				<function pattern="com.oracle.truffle.polyglot.PolyglotValueDispatch$InteropValue.putMember" name="Truffle polyglot add member"/>
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<operation pattern="com.oracle.truffle.js.nodes.access.FrequencyBasedPolymorphicAccessNode.interpreterSample" name="Truffle interpreter sample"/>
+				<operation pattern="com.oracle.truffle.object.TriePropertyMap.getEntry" name="Truffle property map access"/>
+				<operation pattern="com.oracle.truffle.api.TruffleSafepoint.poll" name="Truffle safe point poll"/>
+				<operation pattern="com.oracle.truffle." name="Truffle operation"/>
+			</operations>
+			<executors>	
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<!-- executor pattern="com.hazelcast.util.executor.CachedExecutorServiceDelegate$Worker.run" name="Hazelcast executor"/-->
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<!-- executor_thread_name pattern_regex="^hybrisHTTP.*" name="Hybris HTTP thread"/-->
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!--exclude pattern="com.hazelcast.internal.util.concurrent.MPSCQueue.takeAll;com.hazelcast.internal.util.concurrent.MPSCQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.run" name="Hazelcast operation handler" size="6"/-->	<!-- Multiple line pattern -->
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!--exclude_thread_name pattern_regex="RMI TCP Accept.*" name="RMI thread"/-->
+				<!--  exclude_thread_name pattern="ambari-action-scheduler" name="Ambari action scheduler" size="3"/-->
+			</exclude_thread_names>
+		</patterns>
+
+</profile>
