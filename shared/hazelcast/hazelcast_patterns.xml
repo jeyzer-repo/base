@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Hazelcast" version="3.2">
+<profile name="Hazelcast" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -20,6 +20,7 @@
 			<!-- In pattern attribute, use semicolumn separator to declare multiple line patterns -->
 			<functions>
 				<function pattern="com.hazelcast.internal.jmx.HazelcastMBean.getAttribute" name="Hazelcast attribute monitoring"/>
+				<function pattern="com.hazelcast.internal.metrics.impl.MetricsCollectionCycle.collectDynamicMetrics" name="Hazelcast metrics collection"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -48,6 +49,13 @@
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;com.hazelcast.internal.partition.impl.MigrationQueue.poll;com.hazelcast.internal.partition.impl.MigrationThread.doRun;com.hazelcast.internal.partition.impl.MigrationThread.run" name="Hazelcast Partition migration thread waiting" size="7"/>	<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.LinkedBlockingQueue.poll;com.hazelcast.internal.networking.nio.iobalancer.IOBalancerThread.run" name="Hazelcast IO balancer waiting" size="5"/>	<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.DelayQueue.poll;com.hazelcast.spi.impl.operationparker.impl.OperationParkerImpl$ExpirationTask.doRun;com.hazelcast.spi.impl.operationparker.impl.OperationParkerImpl$ExpirationTask.run" name="Hazelcast expiration task waiting" size="13"/>	<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;com.hazelcast.internal.networking.nio.NioThread.selectLoop;com.hazelcast.internal.networking.nio.NioThread.executeRun" name="Hazelcast NIO thread waiting" size="7"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.LockSupport.park;com.hazelcast.internal.util.concurrent.MPSCQueue.takeAll;com.hazelcast.internal.util.concurrent.MPSCQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.executeRun" name="Hazelcast MPSC Operation thread waiting" size="7"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.internal.util.executor.StripedExecutor$Worker.run" name="Hazelcast Striped executor waiting" size="8"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.executeRun" name="Hazelcast operation executor waiting" size="10"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.LockSupport.park;com.hazelcast.internal.util.concurrent.MPSCQueue.takeAll;com.hazelcast.internal.util.concurrent.MPSCQueue.take;com.hazelcast.spi.impl.operationservice.impl.InboundResponseHandlerSupplier$ResponseThread.doRun" name="Hazelcast inbound response waiting" size="7"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.executeRun" name="Hazelcast spi operation thread waiting" size="10"/>	<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;com.hazelcast.internal.server.tcp.TcpServerAcceptor$AcceptorIOThread.acceptLoop;com.hazelcast.internal.server.tcp.TcpServerAcceptor$AcceptorIOThread.run" name="Hazelcast TCP server" size="6"/>	<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
