@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="Spark" version="3.3-SNAPSHOT">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			0 - locker (1004)
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - locker  (7)
+			5 - function  (6)
+			6 - function_discovery  (5)
+			7 - executor  (4)
+			8 - executor_thread_name (3)
+			9 - operation (2)
+			10 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<!-- https://github.com/classgraph/classgraph -->
+		<patterns>
+			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
+			<functions>
+				<function pattern="org.apache.spark.api.java.JavaRDDLike.collect" name="Spark distributed dataset collect"/>
+				<function pattern="org.apache.spark.rdd.RDD.computeOrReadCheckpoint" name="Spark distributed dataset compute or read check point"/>
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<!--operation pattern="nonapi.io.github.classgraph.concurrency.SingletonMap$SingletonHolder.get" name="ClassGraph map access"/-->
+			</operations>
+			<lockers>
+				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
+  				<!-- locker pattern="java.util.concurrent.locks.LockSupport.park" name="LockSupport"/-->
+			</lockers>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<executor pattern="org.apache.spark.scheduler.Task.run" name="Spark scheduler task"/>
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<!-- executor_thread_name pattern="Batik CleanerThread" name="Batik cleaner"/-->
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.spark.rpc.netty.MessageLoop.org$apache$spark$rpc$netty$MessageLoop$$receiveLoop" name="Spark rpc message loop" size="9"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.spark.MapOutputTrackerMaster$MessageLoop.run" name="Spark map output message loop" size="8"/>
+				<exclude pattern="org.sparkproject.jetty.io.ManagedSelector.select;org.sparkproject.jetty.io.ManagedSelector$SelectorProducer.select;org.sparkproject.jetty.io.ManagedSelector$SelectorProducer.produce;org.sparkproject.jetty.util.thread.strategy.EatWhatYouKill.produceTask" name="Spark UI thread waiting" size="18"/>
+				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;org.sparkproject.jetty.util.BlockingArrayQueue.poll;org.sparkproject.jetty.util.thread.QueuedThreadPool$Runner.idleJobPoll;org.sparkproject.jetty.util.thread.QueuedThreadPool$Runner.run" name="Spark Queue waiting" size="7"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.spark.scheduler.AsyncEventQueue.$anonfun$dispatch$" name="Spark scheduler waiting" size="13"/>
+				<exclude pattern="sun.nio.ch.ServerSocketChannelImpl.accept;org.sparkproject.jetty.server.ServerConnector.accept;org.sparkproject.jetty.server.AbstractConnector$Acceptor.run" name="Spark Jetty waiting" size="8"/>
+				<exclude pattern="java.lang.Object.wait;java.lang.ref.ReferenceQueue.remove;org.apache.spark.ContextCleaner.$anonfun$keepCleaning$" name="Spark cleaner waiting" size="7"/>
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!-- exclude_thread_name pattern_regex="RMI TCP.*" name="RMI"/-->
+				<!-- exclude_thread_name pattern="JMX server connection timeout" name="RMI"/-->
+			</exclude_thread_names>
+		</patterns>
+
+</profile>
