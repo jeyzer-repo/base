@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Okio" version="3.2">
+<profile name="Okio" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -41,7 +41,7 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<exclude pattern="java.lang.Object.wait;okio.AsyncTimeout$Companion.awaitTimeout$okio;okio.AsyncTimeout$Watchdog.run" name="Okio companion" size="3"/>
+				<exclude pattern="java.lang.Object.wait;okio.AsyncTimeout$Companion.awaitTimeout$okio;okio.AsyncTimeout$Watchdog.run" name="Okio companion" size="4"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
