@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Apache-HTTP-client" version="3.2">
+<profile name="Apache-HTTP-client" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -42,6 +42,7 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager$ReferenceQueueThread.run" name="HTTP commons client" size="4"/>
+				<exclude pattern="java.lang.Thread.sleep;org.apache.http.impl.client.IdleConnectionEvictor$1.run" name="HTTP commons client evictor" size="3"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
