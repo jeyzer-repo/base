@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="OkHttp" version="3.2">
+<profile name="OkHttp" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -34,6 +34,7 @@
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<executor pattern="okhttp3.internal.concurrent.TaskRunner.runTask" name="OkHttp runner"/>
+				<executor pattern="okhttp3.internal.http2.Http2Connection$ReaderRunnable.execute" name="OkHttp HTTP reader"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -41,13 +42,15 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<exclude pattern="java.lang.Object.wait,okio.AsyncTimeout.awaitTimeout,okio.AsyncTimeout$Watchdog.run" name="OkHttp okio thread"/>	<!-- Multiple line pattern -->
-				<exclude pattern="okhttp3.internal.concurrent.TaskRunner$RealBackend.coordinatorWait;okhttp3.internal.concurrent.TaskRunner.awaitTaskToRun" name="OkHttp task runner" size="8"/>	<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Object.wait,okio.AsyncTimeout.awaitTimeout,okio.AsyncTimeout$Watchdog.run" name="OkHttp okio thread"/>
+				<exclude pattern="okhttp3.internal.concurrent.TaskRunner$RealBackend.coordinatorWait;okhttp3.internal.concurrent.TaskRunner.awaitTaskToRun" name="OkHttp task runner" size="8"/>
+				<exclude pattern="java.lang.Object.wait;okhttp3.internal.connection.RealConnectionPool.lambda$new;java.util.concurrent.ThreadPoolExecutor.runWorker" name="OkHttp connection pool" size="7"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude_thread_name pattern="OkHttp ConnectionPool" name="OkHttp thread" size="6"/>
+				<exclude_thread_name pattern="OkHttp TaskRunner" name="OkHttp TaskRunner thread" size="9"/>
 			</exclude_thread_names>
 		</patterns>
 
