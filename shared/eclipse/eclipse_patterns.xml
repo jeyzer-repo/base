@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Eclipse" version="3.2">
+<profile name="Eclipse" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -22,11 +22,13 @@
 			<functions>
 				<function pattern="org.eclipse.persistence.internal.jpa.EJBQueryImpl.getResultList" name="JPA list query"/>
 				<function pattern="org.eclipse.persistence.internal.jpa.EJBQueryImpl.getSingleResult" name="JPA value query"/>
+				<function pattern="org.eclipse.swt.widgets.EventTable.sendEvent" name="Eclipse event propagation"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<operation pattern="org.eclipse.osgi.internal.loader.ModuleClassLoader.getResources" name="Module loading"/>
+				<operation pattern="org.eclipse.jface.window.Window.close" name="Window closure"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -43,6 +45,9 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="java.lang.Object.wait;org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.getNextEvent;org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run" name="Eclispe OSGI event manager wait" size="5"/>
+				<exclude pattern="java.lang.Object.wait;org.eclipse.core.internal.jobs.WorkerPool.sleep;org.eclipse.core.internal.jobs.WorkerPool.startJob;org.eclipse.core.internal.jobs.Worker.run" name="Eclispe worker wait" size="4"/>
+				<exclude pattern="java.lang.Object.wait;java.lang.ref.ReferenceQueue.remove;java.lang.ref.ReferenceQueue.remove;org.eclipse.emf.common.util.CommonUtil$1ReferenceClearingQueuePollingThread.run" name="Eclispe ref cleaner" size="4"/>
+				<exclude pattern="java.lang.Object.wait;org.eclipse.core.internal.jobs.InternalWorker.run" name="Eclipse core worker waiting" size="2"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
