@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="XNIO" version="3.2">
+<profile name="XNIO" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -47,8 +47,7 @@
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!-- exclude_thread_name pattern_regex="RMI TCP.*" name="RMI"/-->
-				<!-- exclude_thread_name pattern="JMX server connection timeout" name="RMI"/-->
+				<exclude_thread_name pattern_regex="^xnio-file-watcher" name="XNIO file watcher" size="8"/>
 			</exclude_thread_names>
 		</patterns>
 
