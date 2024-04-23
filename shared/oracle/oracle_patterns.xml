@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Oracle" version="3.2">
+<profile name="Oracle" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -49,6 +49,7 @@
 				<operation pattern="oracle.net.nt.SSLSocketChannel.write" name="Oracle data sending"  	priority="900"						type="Oracle"/>
 				<operation pattern="oracle.jdbc.driver." name="Oracle JDBC driver operation"  			priority="900"/>
 				<operation pattern="oracle.odi." name="Oracle ODI driver operation"  					priority="900"/>
+				<operation pattern="oracle.jdbc.xa.client.OracleXAResource.end" name="Oracle txn closure" priority="900"                     type="Oracle"/>
 				<operation pattern="oracle.jdbc.driver.ScrollableResultSet" name="Oracle result set java access"/>
 				<operation pattern="oracle.sql.CharacterSet.stringToAL32UTF8" name="Oracle UTF8 conversion"/>
 			</operations>
