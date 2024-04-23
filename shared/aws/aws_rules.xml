@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="AWS">
+
+		<!-- ************************************************************************ -->
+		<!--                       AWS RULES                                          -->
+		<!-- ************************************************************************ -->
+
+		<!--  If function regex [pattern] and operation regex [operation_pattern] are seen in more than [value] parallel threads, generate event. -->
+		<rule name="Function and operation parallel contention" extra_info="AWS HTTP request - End point slowness" stickers="performance" ref="JZR-SHA-AWS-001">
+			<thresholds>
+				<threshold type="session custom"
+						   count="2"
+						   value="10"
+				           pattern="AWS HTTP request"
+						   operation_pattern="HTTP header response received"
+				           level="WARNING"
+						   sub_level="8"
+				           message="Contention on the HTTP end point accessed by the AWS HTTP requests.&#10;Check if this is expected otherwise inspect the endpoint performance."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
