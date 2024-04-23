@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Infinispan" version="3.2">
+<profile name="Infinispan" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -21,6 +21,7 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<function pattern="org.infinispan.expiration.impl.ClusterExpirationManager.removeLifespan" name="Infinispan remove lifespan"/>
+				<function pattern="org.infinispan.expiration.impl.ExpirationManagerImpl.processExpiration" name="Infinispan process expiration"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
