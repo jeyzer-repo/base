@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="OpenTelemetry" version="3.2">
+<profile name="OpenTelemetry" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -35,6 +35,7 @@
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<executor pattern="io.opentelemetry.sdk.logs.export.BatchLogRecordProcessor$Worker.run" name="OpenTelemetry batch log record worker"/>
 				<executor pattern="io.opentelemetry.sdk.trace.export.BatchSpanProcessor$Worker.run" name="OpenTelemetry batch span worker"/>
+				<executor pattern="io.opentelemetry.javaagent.shaded.instrumentation.api.internal.cache.weaklockfree.AbstractWeakConcurrentMap.runCleanup" name="OpenTelemetry instrumentation map cleaner"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
