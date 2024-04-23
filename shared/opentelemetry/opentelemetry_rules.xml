@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="OpenTelemetry">
+
+		<!-- ************************************************************************ -->
+		<!--                       OPENTELEMETRY RULES                                -->
+		<!-- ************************************************************************ -->
+
+		<!--  If executor is detected across current session, generate event. -->
+		<rule name="Executor presence" param_display="OpenTelemetry agent" param="OpenTelemetry instrumentation map cleaner" stickers="performance, environment" ref="JZR-SHA-OPTE-001">
+			<narrative>This rule detects the usage of the OpenTelemetry monitoring agent.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO"
+						   sub_level="8"
+				           message="OpenTelemetry monitoring agent is used.&#10; Make sure it is configured properly to not impact the application performance."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
