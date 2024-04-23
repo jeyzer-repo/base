@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="ZooKeeper" version="3.2">
+<profile name="ZooKeeper" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -44,10 +44,11 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
-				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;org.apache.zookeeper.server.NIOServerCnxnFactory.run" name="ZooKeeper server wait"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.zookeeper.server.PrepRequestProcessor.run" name="ZooKeeper prep request processor wait"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.zookeeper.server.SyncRequestProcessor.run" name="ZooKeeper sync request processor wait"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.CountDownLatch.await;org.apache.zookeeper.server.ZooKeeperServerMain.runFromConfig" name="ZooKeeper main waiting for shutown"/>		<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;org.apache.zookeeper.server.NIOServerCnxnFactory.run" name="ZooKeeper server wait"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.zookeeper.server.PrepRequestProcessor.run" name="ZooKeeper prep request processor wait"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.zookeeper.server.SyncRequestProcessor.run" name="ZooKeeper sync request processor wait"/>
+				<exclude pattern="java.util.concurrent.CountDownLatch.await;org.apache.zookeeper.server.ZooKeeperServerMain.runFromConfig" name="ZooKeeper main waiting for shutdown"/>
+				<exclude pattern="java.util.concurrent.LinkedBlockingDeque.poll;org.apache.zookeeper.ClientCnxnSocketNetty.doTransport;org.apache.zookeeper.ClientCnxn$SendThread.run" name="ZooKeeper client send poll"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
