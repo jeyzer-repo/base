@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Jgroups" version="3.2">
+<profile name="Jgroups" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -50,12 +50,14 @@
 				<exclude pattern="org.jgroups.blocks.cs.TcpConnection$Receiver.run" name="Jgroups UDP receiver thread" size="9"/>
 				<exclude pattern="org.jgroups.protocols.UDP$PacketReceiver.run" name="Jgroups UDP receiver thread" size="7"/>
 				<exclude pattern="org.jgroups.protocols.FD_SOCK$ServerSocketHandler.run" name="Jgroups FD receiver thread" size="8"/>
-				<exclude pattern="java.net.SocketInputStream.read;org.jgroups.protocols.FD_SOCK.run" name="Jgroups FD protocol receiver thread" size="7"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.net.SocketInputStream.read;org.jgroups.protocols.FD_SOCK.run" name="Jgroups FD protocol receiver thread" size="7"/>
 				<exclude pattern="org.jgroups.protocols.tom.DeliveryThread.run" name="Jgroups delivery thread" size="4"/>
 				<exclude pattern="java.net.ServerSocket.accept;org.jgroups.blocks.cs.TcpServer$Acceptor.run" name="Jgroups TCP server thread" size="6"/>
-				<exclude pattern="java.util.concurrent.DelayQueue.take;org.jgroups.util.TimeScheduler3.run" name="Jgroups thread waiting for a task to execute from a delay queue (take)"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;org.jgroups.protocols.TransferQueueBundler.run" name="Jgroups transfer queue waiting" size="8"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.net.DatagramSocket.receive;org.jgroups.stack.DiagnosticsHandler.runUDP" name="Jgroups UDP diagnostic" size="7"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.DelayQueue.take;org.jgroups.util.TimeScheduler3.run" name="Jgroups thread waiting for a task to execute from a delay queue (take)"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;org.jgroups.protocols.TransferQueueBundler.run" name="Jgroups transfer queue waiting" size="8"/>
+				<exclude pattern="java.net.DatagramSocket.receive;org.jgroups.stack.DiagnosticsHandler.runUDP" name="Jgroups UDP diagnostic" size="7"/>
+				<exclude pattern="java.net.SocketInputStream.read;java.io.BufferedInputStream.fill;java.io.BufferedInputStream.read;java.io.DataInputStream.readInt;org.jgroups.blocks.cs.TcpConnection$Receiver.run" name="Jgroups TCP receiver listening" size="9"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.select;org.jgroups.blocks.cs.NioBaseServer$Acceptor.doSelect;org.jgroups.blocks.cs.NioBaseServer$Acceptor.run" name="Jgroups NIO base server select" size="7"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
