@@ -98,6 +98,7 @@
 				<operation pattern="java.lang.ClassLoader.defineClass" name="Class byte loading"							type="Class loader"/>
 				<operation pattern="java.util.jar.JarFile.getManifest" name="Jar manifest loading"							type="Class loader"/>
 				<operation pattern="java.util.jar.JarFile.getInputStream" name="Jar entry loading"							type="Class loader"/>
+				<operation pattern="sun.instrument.InstrumentationImpl.getAllLoadedClasses" name="Class listing"/>
 				<operation pattern="java.lang.Class.forName" name="Class access"/>
 				<operation pattern="sun.nio.fs.WindowsNativeDispatcher.DeleteFile" name="File delete"						type="File"/>
 				<operation pattern="java.io.WinNTFileSystem.checkAccess" name="File access check"							type="File"/>
@@ -162,6 +163,7 @@
 				<operation pattern="java.util.concurrent.locks.ReentrantLock.tryLock" name="Reentrant try lock" priority="910"							type="Synchro"/>
 				<operation pattern="java.util.concurrent.locks.LockSupport.park" name="Thread on hold (wait for unlock)"								type="Synchro"/>
 				<operation pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer.releaseShared" name="Notify all queue consumers"/>
+				<operation pattern="java.time.LocalDateTime.atZone" name="Time zone date creation"/>
 				<operation pattern="java.util.TimeZone" name="Java time zone operation"/>
 				<operation pattern="UNIXProcess.waitFor" name="Waiting for Unix process execution end"													type="External process execution"/>
 				<operation pattern="UNIXProcess.forkAndExec" name="Execute Unix process"																type="External process execution"/>
@@ -229,6 +231,7 @@
 				<operation pattern="java.util.Vector." name="Java vector operation"										type="Collection"/>
 				<operation pattern="java.util.WeakHashMap." name="Java weak hash map operation"							type="Collection"/>
 				<operation pattern="java.util.TreeMap." name="Java tree map operation"									type="Collection"/>
+				<operation pattern="java.util.TreeSet." name="Java tree set operation"									type="Collection"/>
 				<operation pattern="java.util.Hashtable." name="Java hash table operation"								type="Collection"/>
 				<operation pattern="java.util.HashMap." name="Java hash map operation"								    type="Collection"/>
 				<operation pattern="java.util.HashSet." name="Java hash set operation"								    type="Collection"/>
@@ -367,6 +370,7 @@
 				<exclude pattern="java.lang.Object.wait;sun.java2d.metal.MTLRenderQueue$QueueFlusher.run;java.lang.Thread.run" name="Java 2D render queue waiting" size="3"/>
 				<!-- AWT -->
 				<exclude pattern="java.lang.Object.wait;sun.awt.AWTAutoShutdown.run" name="AWT shutdown hook" size="4"/>
+				<exclude pattern="sun.awt.X11.XToolkit.waitForEvents;sun.awt.X11.XToolkit.run;sun.awt.X11.XToolkit.run" name="AWT X11 event " size="4"/>
 				<!-- JNA -->
 				<exclude pattern="com.sun.jna.internal.Cleaner$1.run" name="JNA cleaner" size="4"/>
 				<!-- LDAP -->
@@ -393,8 +397,10 @@
 				<!-- Java 20+ Ref cleaner -->
 				<exclude pattern="java.lang.ref.ReferenceQueue.await;java.lang.ref.ReferenceQueue.remove0;java.lang.ref.ReferenceQueue.remove;jdk.internal.ref.CleanerImpl.run" name="JDK ref cleaner" size="10"/>
 				<!-- Virtual threads -->
-				<exclude pattern="sun.nio.ch.WEPollPoller.poll;sun.nio.ch.Poller.poll;sun.nio.ch.Poller.pollLoop;java.lang.Thread.run;jdk.internal.misc.InnocuousThread.run" name="VT write poller" size="6"/>
+				<exclude pattern="sun.nio.ch.WEPollPoller.poll;sun.nio.ch.Poller.poll;sun.nio.ch.Poller.pollLoop" name="VT write poller" size="6"/>
+				<exclude pattern="sun.nio.ch.EPollPoller.poll;sun.nio.ch.Poller.poll;sun.nio.ch.Poller.pollLoop" name="VT write poller 2" size="6"/>
 				<exclude pattern="java.util.concurrent.LinkedTransferQueue.awaitMatch;java.util.concurrent.LinkedTransferQueue.xfer;java.util.concurrent.LinkedTransferQueue.take;sun.nio.ch.Poller.updateLoop;java.lang.Thread.run;jdk.internal.misc.InnocuousThread.run" name="VT read poller" size="11"/>
+				<exclude pattern="java.util.concurrent.LinkedTransferQueue$DualNode.await;java.util.concurrent.LinkedTransferQueue.xfer;java.util.concurrent.LinkedTransferQueue.take;sun.nio.ch.Poller.updateLoop" name="VT read poller 2" size="8"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
