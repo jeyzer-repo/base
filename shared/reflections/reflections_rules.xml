@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Reflections">
+
+		<!-- ************************************************************************ -->
+		<!--                       REFLECTIONS RULES                                  -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="Reflections" param="Reflections" stickers="code_quality" ref="JZR-SHA-REFL-001">
+			<narrative>This rule detects the Reflections client library usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           message="The Reflections library is now deprecated.&#10;Last release is from 2021 and may therefore contain security vulnerabilities&#10;Please inform the R&#38;D."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
