@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Instana" version="3.2">
+<profile name="Instana" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -21,6 +21,7 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<function pattern="AgentLoaderThread.handleCommand" name="Instana command execution"/>
+				<function pattern="com.instana.agent.harvest.HarvestingInstrumentation.close" name="Instana instrumentation closure"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -34,10 +35,11 @@
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<executor pattern="com.instana.agent.AgentThread.runNetworkCommunication" name="Instana listener"/>
+				<executor pattern="com.instana.agent.loader.AgentLoaderAttach.main" name="Instana agent main"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
-				<!--executor_thread_name pattern="thread pattern" name="Thread type name"/-->
+				<executor_thread_name pattern="instana-shutdown-hook" name="Instana shutdown hook"/>
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->

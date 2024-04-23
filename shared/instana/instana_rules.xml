@@ -5,15 +5,15 @@
 	<rules group_name="Instana">
 
 		<!-- ************************************************************************ -->
-		<!--                       INSTANA RULES                                         -->
+		<!--                       INSTANA RULES                                      -->
 		<!-- ************************************************************************ -->
-
-		<!--  If operation is detected across current session, generate event. -->
-		<rule name="Operation presence" param_display="Instana agent" param="Instana thread dump generation" stickers="performance, environment" ref="JZR-SHA-INSTA-001">
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="Instana agent" param="Instana" stickers="performance, environment" ref="JZR-SHA-INSTA-001">
 			<narrative>This rule detects the usage of the Instana monitoring agent.</narrative>
 			<thresholds>
 				<threshold type="system signal" 
-				           level="INFO"
+				           level="INFO" 
 				           sub_level="8"
 				           message="Instana monitoring agent is used.&#10; Make sure it is configured properly to not impact the application performance."/>
 			</thresholds>
