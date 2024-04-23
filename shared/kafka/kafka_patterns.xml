@@ -21,11 +21,13 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<function pattern="org.apache.kafka.clients.NetworkClient.handleTimedOutConnections" name="Kafka handle timed out connections"/>
+				<function pattern="org.apache.kafka.clients.consumer.internals.AbstractCoordinator.checkAndGetCoordinator" name="Kafka get coordinator"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<operation pattern="org.apache.kafka.clients.NetworkClient.poll" name="Kafka message poll" type="Network"/>
+				<operation pattern="java.util.concurrent.locks.ReentrantLock.lock;org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.isUnavailable" name="Kafka wait for coordinator"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
