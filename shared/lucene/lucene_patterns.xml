@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Lucene" version="3.2">
+<profile name="Lucene" version="3.3-SNASPHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -26,7 +26,8 @@
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
-				<!--operation pattern="java.lang.String.split" name="String split"		   type="String"/-->
+				<operation pattern="org.apache.lucene.search.IndexSearcher.search" name="Lucene search"  type="Collection"/>
+				<operation pattern="org.apache.lucene.store.FSDirectory.listAll" name="Lucene FS directory list"  type="File"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
