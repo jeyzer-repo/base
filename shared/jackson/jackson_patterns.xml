@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Jackson" version="3.2">
+<profile name="Jackson" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -23,6 +23,7 @@
 				<function pattern="com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString" name="JSON conversion to String" />
 				<function pattern="com.fasterxml.jackson.databind.ObjectWriter.writeValue" name="JSON write value" />
 				<function pattern="com.fasterxml.jackson.databind.ObjectMapper.convertValue" name="JSON convert value" />
+				<function pattern="com.fasterxml.jackson.databind.ObjectMapper.readValue" name="JSON read value" />
 				<function pattern="org.codehaus.jackson.map.ObjectMapper.readValue" name="String to JSON conversion" />
 			</functions>
 			<operations>
@@ -44,7 +45,7 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->		<!-- Multiple line pattern -->
+				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
