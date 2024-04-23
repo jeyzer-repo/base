@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Guava" version="3.2">
+<profile name="Guava" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -28,6 +28,7 @@
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<!-- Google Guava -->
 				<operation pattern="com.google.common.cache.LocalCache$LocalLoadingCache.get" name="Guava local cache access"							type="Collection"/>
+				<operation pattern="com.google.common.collect.RegularImmutableMap" name="Guava map operation"											type="Collection"/>
 				<operation pattern="com.google.common.util.concurrent.AbstractFuture.addListener" name="Guava add listener for future async result"		type="Task delegation"/>
 				<operation pattern="com.google.common.util.concurrent.FluentFuture$TrustedFuture.get" name="Guava wait for Future async result" 		type="Task delegation"/>
 				<operation pattern="com.google.common.util.concurrent.AbstractFuture.get" name="Guava wait for Future async result"						type="Task delegation"/>
