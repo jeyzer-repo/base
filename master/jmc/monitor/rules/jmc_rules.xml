@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="JMC">
+
+		<!-- ************************************************************************ -->
+		<!--                        JMC RULES                                         -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="JMC" param="JMC" stickers="environment" ref="JZR-SHA-JMC-001">
+			<narrative>This rule detects the usage of the Java Monitoring Console.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           sub_level="8"
+				           message="Current analysis focuses on the Java Mission Control and not any launched process that you would like to investigate.&#10; If the latter case is true, please target the right process id."/>
+			</thresholds>
+		</rule>
+		
+	</rules>
+
+</monitor>
