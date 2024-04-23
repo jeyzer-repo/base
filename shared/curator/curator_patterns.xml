@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Curator" version="3.2">
+<profile name="Curator" version="3.3-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -43,12 +43,12 @@
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="java.util.concurrent.DelayQueue.take;org.apache.curator.framework.imps.CuratorFrameworkImpl.backgroundOperationsLoop;org.apache.curator.framework.imps.CuratorFrameworkImpl.access;org.apache.curator.framework.imps.CuratorFrameworkImpl$4.call;java.util.concurrent.FutureTask.run" name="Curator background operation loop"/>
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.ArrayBlockingQueue.poll;org.apache.curator.framework.state.ConnectionStateManager.processEvents;org.apache.curator.framework.state.ConnectionStateManager.access;org.apache.curator.framework.state.ConnectionStateManager$1.call" name="Curator connection state manager"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;org.apache.curator.framework.state.ConnectionStateManager.processEvents;org.apache.curator.framework.state.ConnectionStateManager.access;org.apache.curator.framework.state.ConnectionStateManager$1.call" name="Curator connection state manager 2" size="11"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!-- exclude_thread_name pattern_regex="RMI TCP.*" name="RMI"/-->
-				<!-- exclude_thread_name pattern="JMX server connection timeout" name="RMI"/-->
+				<!-- <exclude_thread_name pattern="Curator-ConnectionStateManager" name="Curator connection state manager 2"/> -->
 			</exclude_thread_names>
 		</patterns>
 
