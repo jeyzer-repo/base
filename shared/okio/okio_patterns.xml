@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Okio" version="3.3-SNAPSHOT">
+<profile name="Okio" version="3.3">
 
 		<!-- 
 			Pattern rule appliance by priority :

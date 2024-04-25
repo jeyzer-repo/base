@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="RocksDB" version="3.3-SNAPSHOT">
+<profile name="RocksDB" version="3.3">
 
 		<!-- Strati is a high performance embedded database for key-value data -->
 
