@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="JBoss" version="3.2">
+<profile name="JBoss" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -111,6 +111,8 @@
 				<exclude pattern="java.lang.Object.wait;com.arjuna.ats.internal.arjuna.coordinator.ReaperThread.run" name="JBoss Arjuna coordinator reaper" size="2"/>
 				<exclude pattern="java.lang.Object.wait;com.arjuna.ats.internal.arjuna.recovery.ExpiredEntryMonitor.run" name="JBoss Arjuna expired monitor entry" size="2"/>
 				<exclude pattern="java.lang.Object.wait;com.arjuna.ats.internal.arjuna.recovery.PeriodicRecovery.doPeriodicWait;com.arjuna.ats.internal.arjuna.recovery.PeriodicRecovery.run" name="JBoss Arjuna recovery" size="3"/>
+				<exclude pattern="java.net.ServerSocket.implAccept;org.jboss.as.network.ManagedServerSocketBinding.accept;org.jgroups.blocks.cs.TcpServer$Acceptor.run" name="JBoss Jgroups TCP" size="10"/>
+				<exclude pattern="java.net.ServerSocket.implAccept;org.jboss.as.network.ManagedServerSocketBinding.accept;org.jgroups.protocols.FD_SOCK$ServerSocketHandler.run" name="JBoss Jgroups FD sock" size="10"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
