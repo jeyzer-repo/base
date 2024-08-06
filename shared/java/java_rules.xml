@@ -353,6 +353,28 @@
 			</thresholds>
 		</rule>
 
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Java log util file access" stickers="performance" ref="JZR-SHA-JAVA-027">
+			<narrative>This rule detects any file logging contention with the logging util framework.</narrative>
+			<thresholds>
+				<!-- Other conditions : high thread CPU and endless thread -->
+				<threshold type="session custom"
+						   count="1"
+						   value="10"
+				           pattern="Log util file access" 
+				           level="INFO"
+				           sub_level="7"
+				           message="Light contention on the Log util writing.&#10;Check if the FINE log level is activated by mistake."/>
+				<threshold type="session custom"
+						   count="2"
+						   value="10"
+				           pattern="Log util file access" 
+				           level="WARNING"
+				           sub_level="8"
+				           message="Important contention on the Log util writing.&#10;Check if the FINE log level is activated by mistake."/>
+			</thresholds>
+		</rule>
+
 	</rules>
 
 </monitor>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Java" version="3.3">
+<profile name="Java" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -252,6 +252,8 @@
 				<operation pattern="java.time.format.DateTimeFormatter.parse" name="Parse date time"/>
 				<operation pattern="sun.util.calendar." name="Calendar operation"/>
 				<operation pattern="com.sun.common.util.logging.LoggingOutputStream$LoggingPrintStream.write" name="Sun logging operation"	type="Log"/>
+				<operation pattern="java.util.logging.Logger.log" name="Log util trace"														type="Log"/>
+				<operation pattern="java.util.logging.FileHandler.publish" name="Log util file access"										type="Log"/>
 				<operation pattern="sun.nio.ch.FileChannelImpl.force" name="Physical file writing" 						type="File"/>
 				<operation pattern="com.sun.jna.Library$Handler.invoke" name="Native function call" 					type="Native"/>
 				<operation pattern="java.util.GregorianCalendar." name="Calendar operation"/>
