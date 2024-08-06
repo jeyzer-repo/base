@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="JUnit">
+
+		<!-- ************************************************************************ -->
+		<!--                       JUnit RULES                                      -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="JUnit test execution" param="JUnit" stickers="environment" ref="JZR-SHA-JUNIT-001">
+			<narrative>This rule detects the JUnit test executions.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+						   sub_level="7"
+				           message="JUNIT tests get executed.&#10; Please make sure it is intended."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
