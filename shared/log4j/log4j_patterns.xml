@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Log4j" version="3.2">
+<profile name="Log4j" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -53,8 +53,9 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<exclude pattern="java.lang.Thread.sleep;org.apache.log4j.helpers.FileWatchdog.run" name="Log4j file watch dog"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;org.apache.logging.log4j.core.appender.AsyncAppenderEventDispatcher.dispatchAll;org.apache.logging.log4j.core.appender.AsyncAppenderEventDispatcher.run" name="Log4j async event dispatcher waiting" size="6"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Thread.sleep;org.apache.log4j.helpers.FileWatchdog.run" name="Log4j file watch dog"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;org.apache.logging.log4j.core.appender.AsyncAppenderEventDispatcher.dispatchAll;org.apache.logging.log4j.core.appender.AsyncAppenderEventDispatcher.run" name="Log4j async event dispatcher waiting" size="6"/>
+				<exclude pattern="java.lang.Object.wait;org.apache.logging.log4j.core.async.TimeoutBlockingWaitStrategy.awaitNanos;org.apache.logging.log4j.core.async.TimeoutBlockingWaitStrategy.waitFor;com.lmax.disruptor.ProcessingSequenceBarrier.waitFor;com.lmax.disruptor.BatchEventProcessor.processEvents" name="Log4j async config event waiting" size="8"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
