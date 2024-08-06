@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="AppDynamics" version="3.2">
+<profile name="AppDynamics" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -28,12 +28,14 @@
 				<function pattern="com.singularity.ee.service.analytics.writer.SinkWriterTask.writeToOutput" name="AppDynamics output write"/>
 				<function pattern="com.singularity.ee.agent.appagent.services.logmonitoring.FullAsyncThreadDumpTaskHandler.takeThreadDump" name="AppDynamics thread dump"/>
 				<function pattern="com.singularity.ee.agent.appagent.services.transactionmonitor.async.correlation.AsyncHandOffIdentificationInterceptor.logRequestStackIfEnabled" name="AppDynamics request stack log"/>
+				<function pattern="com.singularity.ee.agent.appagent.services.transactionmonitor.jdbc.JDBCHostResolver.getOldFashionedCacheKey" name="AppDynamics get db connection key"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<operation pattern="com.singularity.ee.agent.appagent.entrypoint.bciengine.FastMethodInterceptorDelegatorBoot.safeOnMethodBegin" name="AppDynamics method interception"/>
 				<operation pattern="com.singularity.ee.util.collections.AdaptableConcurrentHashMap.remove" name="AppDynamics map item removal"/>
+				<operation pattern="java.util.concurrent.locks.ReentrantLock.lock;com.singularity.ee.util.collections.AdaptableConcurrentHashMap$Segment.put" name="AppDynamics map item insertion wait"/>
 				<operation pattern="com.singularity.ee.util.collections.AdaptableConcurrentHashMap$Segment.put" name="AppDynamics map item insert"/>
 			</operations>
 			<lockers>

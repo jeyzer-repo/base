@@ -48,6 +48,29 @@
 				           message="AppDynamics creates high contention within the application while trying to correlate data.&#10;Performance is impacted.&#10;You may consider deactivating Appdynamics or investigate its configuration and relative stacks in the report."/>
 			</thresholds>
 		</rule>
+		
+		<!--  If function regex [pattern] and operation regex [operation_pattern] are seen in more than [value] parallel threads, generate event. -->
+		<rule name="Function and operation parallel contention" extra_info="AppDynamics map access" stickers="performance" ref="JZR-SHA-APPDYN-004">
+			<narrative>This rule detects any contention on a AppDynamics map while looking for database connection keys.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="10"
+				           pattern="AppDynamics get db connection key"
+						   operation_pattern="AppDynamics map item insertion wait"
+				           level="WARNING"
+						   sub_level="8"
+				           message="Contention on an internal AppDynamics db connection key map.&#10;Please verify the performance impact.&#10;If confirmed, disable the AppDynamics monitoring feature or get help from an expert"/>
+				<threshold type="session custom"
+						   count="2"
+						   value="20"
+				           pattern="AppDynamics get db connection key"
+						   operation_pattern="AppDynamics map item insertion wait"
+				           level="CRITICAL"
+						   sub_level="9"
+				           message="Severe contention on an internal AppDynamics db connection key map.&#10;Please verify the performance impact.&#10;If confirmed, disable the AppDynamics monitoring feature or get help from an expert."/>
+			</thresholds>
+		</rule>
 
 	</rules>
 
