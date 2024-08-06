@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Websphere" version="3.2">
+<profile name="Websphere" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -61,6 +61,9 @@
 				<exclude pattern="java.lang.Object.wait;com.ibm.ws.xd.pmi.async.client.AsyncPmiSubscriptionHandler.run" name="Websphere PMI subscription handler" size="5"/>
 				<exclude pattern="java.lang.Object.wait;com.ibm.ws.bbson.Callbacker.run;com.ibm.ws.util.ThreadPool$Worker.run" name="Websphere callback runner wait" size="5"/>
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;com.ibm.ws.cluster.propagation.bulletinboard.BBDescriptionManager$UpdateThread.run" name="Websphere bulletin board updater" size="6"/>
+				<exclude pattern="com.ibm.ws.util.BoundedBuffer.waitGet_;com.ibm.ws.util.BoundedBuffer.poll;com.ibm.ws.util.ThreadPool.getTask;com.ibm.ws.util.ThreadPool$Worker.run" name="Websphere task pool worker" size="8"/>
+				<exclude pattern="com.ibm.ws.tcp.channel.impl.AioReadCompletionListener.futureCompleted;com.ibm.io.async.AbstractAsyncFuture.invokeCallback;com.ibm.io.async.AsyncChannelFuture.fireCompletionActions;com.ibm.io.async.AsyncFuture.completed;com.ibm.io.async.ResultHandler.complete;com.ibm.io.async.ResultHandler.runEventProcessingLoop" name="Websphere TCP async worker" size="12"/>
+				<exclude pattern="com.ibm.io.async.AsyncLibrary.aio_getioev2;com.ibm.io.async.AsyncLibrary.getCompletionData2;com.ibm.io.async.ResultHandler.runEventProcessingLoop;com.ibm.io.async.ResultHandler$2.run" name="Websphere TCP async result handler" size="5"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
