@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Hikari" version="3.2">
+<profile name="Hikari" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -21,6 +21,7 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<function pattern="hikari.pool.HikariPool.addBagItem" name="Hikari pool db connection creation"/>
+				<function pattern="hikari.HikariDataSource.getConnection" name="Hikari db connection access"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->

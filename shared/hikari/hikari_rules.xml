@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Hikari">
+
+		<!-- ************************************************************************ -->
+		<!--                       HIKARI RULES                                       -->
+		<!-- ************************************************************************ -->
+				
+		<!--  If function regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Function parallel contention" extra_info="Hikari db connection" ref="JZR-SHA-HIKARI-001" stickers="performance">
+			<narrative>This rule detects an intensive access on the Hikari database connections.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="10"
+				           pattern="Hikari db connection access"  
+				           level="WARNING"
+						   sub_level="7"
+				           message="Important access on the Hikari connections.&#10;Please review the design of the database layer of your application or any underlying interaction."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
