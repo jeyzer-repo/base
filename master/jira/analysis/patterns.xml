@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="JIRA" version="3.4-SNAPSHOT">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - function  (6)
+			5 - function_discovery  (5)
+			6 - executor  (4)
+			7 - executor_thread_name (3)
+			8 - operation (2)
+			9 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolumn separator to declare multiple line patterns -->
+			<functions>
+				<function pattern="com.atlassian.jira.ipd.mail.IncomingMailServerConnectionIpdJob.measureIncomingMailServerConnectivity" name="Mail server health check"/>
+				<function pattern="com.atlassian.jira.ipd.mail.DefaultSmtpConnectionVerifier.verifyConnection" name="SMTP health check"/>
+				<function pattern="com.atlassian.jira.ipd.userdirectory.ExtUserDirectoryLatencyIpdJob.generateMetrics" name="LDAP health check"/>
+				<function pattern="com.atlassian.jira.internal.mail.processor.feature.puller.MailPullerWorker.pullMailFromAllValidChannels" name="Mail pull"/>
+				<function pattern="com.atlassian.jira.scheduler.OfBizClusteredJobDao.updateNextRunTime" name="Update next run time"/>
+				<function pattern="com.atlassian.jira.internal.mail.processor.feature.channel.MailChannelStore.getEnabledMailChannels" name="Get mail channels"/>
+				<function pattern="com.atlassian.crowd.directory.RemoteCrowdDirectory.searchUsers" name="Search LDAP users"/>
+				<function pattern="com.atlassian.crowd.directory.SpringLDAPConnector.testConnection" name="LDAP connection test"/>
+				<function pattern="com.atlassian.crowd.integration.rest.service.RestCrowdClient.testConnection" name="REST connection test"/>
+				<function pattern="com.atlassian.fx3.Fx3Client.fetchFlags" name="Fetch FX3 flags"/>
+				<function pattern="com.atlassian.scheduler.core.DelegatingSchedulerService.getJobsByJobRunnerKey" name="Get job list"/>
+				<function pattern="com.atlassian.jira.index.ha.DefaultNodeReindexService.getAllUnprocessedReplicatedIndexOperations" name="Get all unprocessed replicated index operations"/>
+				<function pattern="com.atlassian.diagnostics.internal.platform.monitor.db.DatabasePoolDiagnosticProvider.getDiagnostic" name="Get db diagnostic"/>
+				<function pattern="com.atlassian.diagnostics.internal.platform.monitor.scheduler.DefaultSchedulerDiagnosticProvider.getDiagnostic" name="Get scheduler diagnostic"/>
+				<function pattern="com.atlassian.jira.cluster.OfBizClusterNodeStore.getAllNodes" name="Get all cluster nodes"/>
+				<function pattern="com.atlassian.jira.scheduler.OfBizRunDetailsDao.addRunDetails" name="Set job details"/>
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<operation pattern="com.atlassian.diagnostics.internal.jmx.DefaultJmxService.getJmxAttributes" name="Get JMX attributes"/>
+				<operation pattern="com.atlassian.jira." name="JIRA operation"/>
+			</operations>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<executor pattern="com.atlassian.jira.ipd.mail.IncomingMailServerConnectionIpdJob" name="Mail server health checker"/>
+				<executor pattern="com.atlassian.jira.ipd.userdirectory.ExtUserDirectoryLatencyIpdJob.runJob" name="LDAP health checker"/>
+				<executor pattern="com.atlassian.jira.ipd.mail.OutgoingMailServerConnectionIpdJob.runJob" name="SMTP health checker"/>
+				<executor pattern="com.atlassian.jira.ipd.userdirectory.ExtUserDirectoryConnectionStateIpdJob.runJob" name="LDAP connection checker"/>
+				<executor pattern="com.atlassian.plugins.navlink.consumer.menu.client.capabilities.RestCapabilitiesClient.submitRequest" name="REST request"/>
+				<executor pattern="com.atlassian.fx3.Fx3Client$Companion$$Lambda" name="FX3 client"/>
+				<executor pattern="com.atlassian.diagnostics.internal.platform.poller.ScheduledPollerService" name="Scheduler service"/>
+				<executor pattern="com.atlassian.jira.index.ha.DefaultNodeReindexService$$Lambda" name="Reindex service"/>
+				<executor pattern="com.atlassian.jira.cluster.OfBizMessageHandlerService.handleReceivedMessages" name="Of Biz message handler"/>
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<executor_thread_name pattern_regex="^localq-reader-*" name="Local Q reader"/>
+				<executor_thread_name pattern_regex="^CHANGE_HISTORY-indexQueue*" name="Change history index queue"/>
+				<executor_thread_name pattern_regex="^assets-replicator*" name="Assets replicator"/>
+				<executor_thread_name pattern_regex="^insight-object-updater*" name="Insight object updater"/>
+				<executor_thread_name pattern_regex="^insight-replicator-sender*" name="Insight cache message sender"/>
+				<executor_thread_name pattern_regex="^insight-replicator-receiver*" name="Insight cache message receiver"/>
+				<executor_thread_name pattern_regex="^assets-replication-receiver*" name="Assets replication receiver"/>
+				<executor_thread_name pattern_regex="^assets-replication-lucene-index-delete-poller*" name="Assets Lucene index cleaner"/>
+				<executor_thread_name pattern_regex="^assets-replication-lucene-index-add-poller*" name="Assets Lucene index creator"/>
+				<executor_thread_name pattern_regex="^assets-replication-lucene-index-update-poller*" name="Assets Lucene index updater"/>
+				<executor_thread_name pattern_regex="^assets-replication-failure-handler*" name="Assets replication failure handler"/>
+				<executor_thread_name pattern_regex="^audit-broker-consumer*" name="Audit broker consumer"/>
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;com.atlassian.jira.cluster.distribution.localq.tape.TapeLocalQCacheOpQueue.peekOrBlock;com.atlassian.jira.cluster.distribution.localq.LocalQCacheOpQueueWithStats.peekOrBlock;com.atlassian.jira.cluster.distribution.localq.LocalQCacheOpReader.peekOrBlock;com.atlassian.jira.cluster.distribution.localq.LocalQCacheOpReader.run;java.util.concurrent.Executors$RunnableAdapter.call" name="JIRA Localq reader waiting" size="15"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;com.atlassian.jira.index.QueueingIndex.waitUntilAnyQueueNotEmptyAndPoll;com.atlassian.jira.index.QueueingIndex.access$600;com.atlassian.jira.index.QueueingIndex$Task.index;com.atlassian.jira.index.QueueingIndex$Task.run" name="JIRA QueueingIndex task waiting" size="11"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;com.atlassian.audit.broker.ScatterAuditBroker$ConsumerQueue.take;com.atlassian.audit.broker.ScatterAuditBroker$ConsumerThread.run" name="JIRA audit broker consumer" size="9"/>
+				<!-- Riada -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;io.riada.insight.index.replication.poller.CacheMessageWorkQueuePoller.process;io.riada.insight.index.replication.poller.AssetsReplicationPoller$DefaultImpls.run;io.riada.insight.index.replication.poller.CacheMessageWorkQueuePoller.run" name="JIRA Riada cache message poller waiting" size="15"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.LinkedBlockingQueue.poll;io.riada.insight.index.model.ObjectIndexImpl$ReindexAsyncJob.run;com.atlassian.sal.core.executor.ThreadLocalDelegateRunnable.run" name="JIRA Riada index job waiting" size="11"/>	
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;io.riada.insight.index.replication.queue.InMemoryBlockingReplicationMessageQueue.take;io.riada.insight.index.replication.queue.InMemoryBlockingReplicationMessageQueue.take;io.riada.insight.index.replication.poller.AssetsBatchReplicationMessageWorkQueuePoller.process;io.riada.insight.index.replication.poller.AssetsReplicationPoller$DefaultImpls.run" name="JIRA assets replication receiver waiting" size="17"/>	
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;io.riada.insight.index.replication.freetext.FreeTextObjectReplicationPoller.processDelete;io.riada.insight.index.replication.freetext.FreeTextObjectReplicationPoller.process;io.riada.insight.index.replication.poller.AssetsReplicationPoller$DefaultImpls.run;io.riada.insight.index.replication.freetext.FreeTextObjectReplicationPoller.run" name="JIRA assets replication lucene index delete waiting" size="16"/>	
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;io.riada.insight.index.replication.freetext.FreeTextObjectReplicationPoller.processAdd;io.riada.insight.index.replication.freetext.FreeTextObjectReplicationPoller.process;io.riada.insight.index.replication.poller.AssetsReplicationPoller$DefaultImpls.run;io.riada.insight.index.replication.freetext.FreeTextObjectReplicationPoller.run" name="JIRA assets replication lucene index add waiting" size="16"/>	
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;io.riada.insight.index.replication.queue.InMemoryBlockingReplicationMessageQueue.take;io.riada.insight.index.replication.queue.InMemoryBlockingReplicationMessageQueue.take;io.riada.insight.index.replication.poller.AssetsReplicationRetryQueuePoller.process;io.riada.insight.index.replication.poller.AssetsReplicationPoller$DefaultImpls.run;io.riada.insight.index.replication.poller.AssetsReplicationRetryQueuePoller.run" name="JIRA assets replication failure handler waiting" size="17"/>	
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;io.riada.insight.index.replication.freetext.FreeTextObjectReplicationPoller.processUpdate;io.riada.insight.index.replication.freetext.FreeTextObjectReplicationPoller.process;io.riada.insight.index.replication.poller.AssetsReplicationPoller$DefaultImpls.run;io.riada.insight.index.replication.freetext.FreeTextObjectReplicationPoller.run" name="JIRA assets replication lucene index updater waiting" size="16"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.LinkedBlockingQueue.poll;io.riada.insight.index.replication.InsightCacheReplicatorImpl$InsightMessageQueuePoller.get;io.riada.insight.index.replication.InsightCacheReplicatorImpl$InsightMessageQueuePoller.get;io.riada.insight.index.replication.InsightCacheReplicatorImpl$InsightCacheMessageSender.handleMessage;io.riada.insight.index.replication.InsightCacheReplicatorImpl$InsightCacheMessageSender.run;com.atlassian.sal.core.executor.ThreadLocalDelegateRunnable.run" name="JIRA cache message sender waiting" size="14"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.LinkedBlockingQueue.poll;io.riada.insight.index.replication.InsightCacheReplicatorImpl$InsightMessageQueuePoller.get;io.riada.insight.index.replication.InsightCacheReplicatorImpl$InsightMessageQueuePoller.get;io.riada.insight.index.replication.InsightCacheReplicatorImpl$InsightCacheMessageReceiver.receiveMessage;io.riada.insight.index.replication.InsightCacheReplicatorImpl$InsightCacheMessageReceiver.run;com.atlassian.sal.core.executor.ThreadLocalDelegateRunnable.run" name="JIRA cache message receiver waiting" size="14"/>
+				<!-- Script runner -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.ArrayBlockingQueue.poll;java_util_concurrent_BlockingQueue$poll.call;com.onresolve.scriptrunner.runner.diag.rrd.RrdMetricProcessor$RrdDataProcessor.run" name="JIRA script runner waiting" size="9"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionNode.block;java.util.concurrent.ForkJoinPool.unmanagedBlock;java.util.concurrent.ForkJoinPool.managedBlock;java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;java_util_concurrent_BlockingQueue$take$0.call;com.onresolve.scriptrunner.analytics.tracking.TrackingEventAggregator$CommandProcessor.run" name="JIRA script runner tracking event aggregator waiting" size="14"/>
+				<!-- Code barrel automation -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;com.codebarrel.jira.plugin.automation.queue.JiraAutomationQueueExecutor$QueueClaimer.run" name="Code Barrel waiting" size="7"/>
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!--exclude_thread_name pattern_regex="RMI TCP Accept.*" name="RMI thread"/-->
+				<!--  exclude_thread_name pattern="ambari-action-scheduler" name="Ambari action scheduler" size="3"/-->
+			</exclude_thread_names>
+		</patterns>
+
+</profile>
