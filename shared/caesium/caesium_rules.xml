@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Caesium">
+
+		<!-- ************************************************************************ -->
+		<!--                       Caesium RULES                                      -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="Caesium" param="Caesium" stickers="code_quality" ref="JZR-SHA-CAESIUM-001">
+			<narrative>This rule detects the Caesium  client library usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           message="The Atlassian Caesium library is deprecated since 2021.&#10;It is recommended to use now the atlassian-scheduler library."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
