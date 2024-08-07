@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Felix" version="3.2">
+<profile name="Felix" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -46,10 +46,11 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<exclude pattern="java.lang.Object.wait;org.apache.felix.cm.impl.UpdateThread.run" name="Felix updater" size="4"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.lang.Object.wait;org.apache.felix.framework.FrameworkStartLevelImpl.run" name="Felix start" size="4"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.lang.Object.wait;org.apache.felix.scr.impl.ComponentActorThread.run" name="Felix component actor" size="5"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.lang.Object.wait;org.apache.felix.framework.util.EventDispatcher.run;org.apache.felix.framework.util.EventDispatcher.access$000;org.apache.felix.framework.util.EventDispatcher$1.run" name="Felix dispatcher" size="6"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Object.wait;org.apache.felix.cm.impl.UpdateThread.run" name="Felix updater" size="4"/>
+				<exclude pattern="java.lang.Object.wait;org.apache.felix.framework.FrameworkStartLevelImpl.run" name="Felix start" size="4"/>
+				<exclude pattern="java.lang.Object.wait;org.apache.felix.scr.impl.ComponentActorThread.run" name="Felix component actor" size="5"/>
+				<exclude pattern="java.lang.Object.wait;org.apache.felix.framework.util.EventDispatcher.run;org.apache.felix.framework.util.EventDispatcher.access$000;org.apache.felix.framework.util.EventDispatcher$1.run" name="Felix dispatcher" size="6"/>
+				<exclude pattern="java.lang.Object.wait;org.apache.felix.framework.EventDispatcher.run;org.apache.felix.framework.EventDispatcher.access$000;org.apache.felix.framework.EventDispatcher$1.run" name="Felix dispatcher 2" size="6"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
