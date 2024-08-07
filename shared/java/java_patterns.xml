@@ -34,9 +34,13 @@
 				<function pattern="com.sun.jmx.interceptor.DefaultMBeanServerInterceptor.getAttribute" name="JMX attribute remote access"/>
 				<function pattern="javax.management.MBeanServerInvocationHandler.findMXBeanProxy" name="MX bean proxy lookup"/>
 				<function pattern="org.xml.sax.helpers.XMLReaderFactory.createXMLReader" name="XML read"/>
-				<function pattern="com.sun.enterprise.resource.pool.PoolManagerImpl.getResource;com.sun.enterprise.connectors.ConnectionManagerImpl.getResource" name="Sun JDBC connection pool access"/>  <!-- Multiple line pattern -->
+				<function pattern="com.sun.enterprise.resource.pool.PoolManagerImpl.getResource;com.sun.enterprise.connectors.ConnectionManagerImpl.getResource" name="Sun JDBC connection pool access"/>
 				<function pattern="sun.management.GarbageCollectorImpl.createGCNotification" name="JMX GC notification creation"/>
 				<function pattern="java.util.concurrent.ThreadPerTaskExecutor.start" name="Task execution"/>
+				<!-- IMAP -->
+				<function pattern="com.sun.mail.imap.IMAPStore.login" name="IMAP login"/>
+				<function pattern="com.sun.mail.imap.protocol.IMAPProtocol.disconnect" name="IMAP disconnect"/>
+				<function pattern="com.sun.mail.imap.protocol.IMAPProtocol.&lt;init&gt;" name="IMAP init"/>
 				<!-- SSL -->
 				<function pattern="ssl.ServerHandshaker.clientHello" name="SSL server handshake"/>
 				<function pattern="sun.security.ssl.ClientHello$ClientHelloConsumer.consume" name="SSL server handshake"/>
@@ -84,6 +88,7 @@
 				<operation pattern="java.net.HttpURLConnection.getResponseCode" name="HTTP response wait"					type="Network"/>
 				<operation pattern="java.net.NetworkInterface.getNetworkInterfaces" name="Get machine network interfaces"	type="Network"/>
 				<operation pattern="java.net.InetAddress.getByName" name="IP lookup"										type="Network"/>
+				<operation pattern="java.net.InetAddress.getAllByName" name="IP lookup"										type="Network"/>
 				<operation pattern="java.net.SocketOutputStream.socketWrite" name="Socket writing"							type="Network"/>
 				<operation pattern="java.net.Socket$SocketInputStream.read" name="Socket reading"							type="Network"/>
 				<operation pattern="java.net.SocksSocketImpl.connect" name="Socket connect"									type="Network"/>
@@ -149,6 +154,8 @@
 				<operation pattern="java.lang.VirtualThread.joinNanos" name="Waiting for virtual thread(s) to terminate"	type="Synchro"  priority="920"/>
 				<operation pattern="java.lang.Thread.isInterrupted" name="Thread waiting for interruption"					type="Synchro"/>
 				<operation pattern="java.lang.Thread.getStackTrace" name="Stack trace access"/>
+				<operation pattern="com.sun.mail.iap.ResponseInputStream.readResponse" name="IMAP response read"	     priority="910" type="Mail"/>
+				<operation pattern="com.sun.mail.smtp.SMTPTransport.protocolConnect" name="SMTP connect"	             priority="910" type="Mail"/>
 				<operation pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.addResource" name="Write lock obtained to add a resource to the pool" priority="910"			type="Resource pool"/>
 				<operation pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.removeResource" name="Write lock obtained to remove a resource from the pool" priority="910"	type="Resource pool"/>
 				<operation pattern="com.sun.enterprise.resource.pool.datastructure.RWLockDataStructure.returnResource" name="Blocked on RW lock to get a resource from the pool" priority="910"		type="Resource pool"/>
@@ -202,6 +209,7 @@
 				<operation pattern="java.util.Random.next"                name="Number generation"		                type="Random generation"/>
 				<operation pattern="java.security.SecureRandom.nextBytes" name="Random number generation"				type="Random generation"/>
 				<operation pattern="com.sun.jndi.ldap.LdapClient.authenticate" name="LDAP authenticate"/>
+				<operation pattern="com.sun.jndi.ldap.LdapCtxFactory.getInitialContext" name="LDAP init"/>
 				<operation pattern="sun.security.jca." name="Security certificate operation"							type="Crypto"/>
 				<operation pattern="java.security.Signature.verify" name="Signature verification"						type="Crypto"/>
 				<operation pattern="javax.crypto.JarVerifier.verifySingleJar" name="Jar file signature verification"	type="Crypto"/>
@@ -378,7 +386,7 @@
 				<!-- LDAP -->
 				<exclude pattern="com.sun.jndi.ldap.AbstractLdapNamingEnumeration.getNextBatch;com.sun.jndi.ldap.AbstractLdapNamingEnumeration.hasMoreImpl;com.sun.jndi.ldap.AbstractLdapNamingEnumeration.hasMore;com.sun.jndi.ldap.NamingEventNotifier.run" name="LDAP notifier" size="14"/>
 				<exclude pattern="java.lang.Object.wait;com.sun.jndi.ldap.EventQueue.dequeue;com.sun.jndi.ldap.EventQueue.run" name="LDAP event dequeue" size="5"/>
-				<exclude pattern="sun.security.ssl.SSLSocketImpl$AppInputStream.read;java.io.BufferedInputStream.fill;java.io.BufferedInputStream.read1;java.io.BufferedInputStream.read;com.sun.jndi.ldap.Connection.run" name="LDAP SSL connect wait" size="14"/>
+				<exclude pattern="java.io.BufferedInputStream.fill;java.io.BufferedInputStream.read1;java.io.BufferedInputStream.read;com.sun.jndi.ldap.Connection.run" name="LDAP connect wait" size="12"/>
 				<!-- RMI -->
 				<exclude pattern="RMIConnectionImpl.fetchNotifications" name="RMI"/>
 				<exclude pattern="sun.rmi.transport.Transport.serviceCall" name="RMI"/>
