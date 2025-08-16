@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Apache-HTTP-components" version="3.2">
+<profile name="Apache-HTTP-components" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -42,7 +42,7 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!--exclude pattern="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager$ReferenceQueueThread.run" name="HTTP commons client" size="4"/-->
+				<exclude pattern="sun.nio.ch.SelectorImpl.select;org.apache.hc.core5.reactor.SingleCoreIOReactor.doExecute;org.apache.hc.core5.reactor.AbstractSingleCoreIOReactor.execute;org.apache.hc.core5.reactor.IOReactorWorker.run" name="HTTP commons reactor waiting" size="9"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
