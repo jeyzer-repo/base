@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Netty" version="3.2">
+<profile name="Netty" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -50,7 +50,7 @@
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.SelectedSelectionKeySetSelector.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select loop"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.SelectedSelectionKeySetSelector.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select2 loop"/>		<!-- Multiple line pattern -->
-				<exclude pattern="sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select3 loop" size="10"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select3 loop" size="12"/>
 				<exclude pattern="sun.nio.ch.EPoll.wait;sun.nio.ch.EPollSelectorImpl.doSelect;sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;io.netty.channel.nio.NioEventLoop.select;io.netty.channel.nio.NioEventLoop.run" name="Netty select4 loop"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;io.netty.util.concurrent.SingleThreadEventExecutor.takeTask;io.netty.util.concurrent.DefaultEventExecutor.run" name="Netty executor"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;io.netty.util.concurrent.SingleThreadEventExecutor.takeTask;io.netty.util.concurrent.DefaultEventExecutor.run" name="Netty executor 2"/>		<!-- Multiple line pattern -->
@@ -66,6 +66,8 @@
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;io.netty.util.concurrent.SingleThreadEventExecutor.takeTask;io.netty.channel.DefaultEventLoop.run" name="Netty event loop" size="10"/>
 				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;io.netty.util.concurrent.SingleThreadEventExecutor.takeTask;io.netty.channel.DefaultEventLoop.run" name="Netty event loop 2" size="10"/>
 				<exclude pattern="java.util.concurrent.CountDownLatch.await;reactor.core.publisher.BlockingSingleSubscriber.blockingGet;reactor.core.publisher.Mono.block;org.springframework.boot.web.embedded.netty.NettyWebServer$1.run" name="Netty spring server" size="9"/>
+				<exclude pattern="io.netty.channel.epoll.EpollEventLoop.epollWaitNoTimerChange;io.netty.channel.epoll.EpollEventLoop.run;io.netty.util.concurrent.SingleThreadEventExecutor$4.run;io.netty.util.internal.ThreadExecutorMap$2.run;io.netty.util.concurrent.FastThreadLocalRunnable.run" name="Netty EpollEventLoop wait" size="10"/>
+				<exclude pattern="io.netty.channel.epoll.EpollEventLoop.epollWait;io.netty.channel.epoll.EpollEventLoop.run;io.netty.util.concurrent.SingleThreadEventExecutor$4.run;io.netty.util.internal.ThreadExecutorMap$2.run;io.netty.util.concurrent.FastThreadLocalRunnable.run" name="Netty EpollEventLoop wait" size="9"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
