@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Tomcat" version="3.3">
+<profile name="Tomcat" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -30,6 +30,8 @@
 				<function pattern="org.apache.catalina.webresources.StandardRoot.gc" name="Tomcat web resource gc"/>
 				<function pattern="org.apache.catalina.users.MemoryUserDatabase.backgroundProcess" name="Tomcat in memory db"/>
 				<function pattern="org.apache.tomcat.util.net.SocketWrapperBase.close" name="Tomcat close socket"/>
+				<function pattern="org.apache.tomcat.jdbc.pool.ConnectionPool.returnConnection" name="Tomcat close db connection"/>
+				<function pattern="org.apache.tomcat.jdbc.pool.DataSourceProxy.getConnection" name="Tomcat get db connection"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -47,6 +49,7 @@
 				<operation pattern="org.apache.coyote.Response.doWrite" name="Tomcat write response" 													type="Network"/>
 				<operation pattern="org.apache.catalina.tribes.transport.nio.ParallelNioSender.doLoop" name="Tomcat cluster sent message result wait" 	type="Network"/>
 				<operation pattern="org.apache.catalina.tribes.group.interceptors.TcpFailureDetector.memberDisappeared" name="Tomcat cluster member disappearance handling"/>
+				<operation pattern="org.apache.tomcat.jdbc.pool.ConnectionPool.getThreadDump" name="Tomcat thread dump creation"/>
 				<operation pattern="org.apache.coyote.ajp." name="AJP operation"/>
 			</operations>
 			<lockers>
