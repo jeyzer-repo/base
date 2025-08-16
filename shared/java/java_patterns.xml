@@ -103,6 +103,7 @@
 				<operation pattern="java.lang.ClassLoader.defineClass" name="Class byte loading"							type="Class loader"/>
 				<operation pattern="java.util.jar.JarFile.getManifest" name="Jar manifest loading"							type="Class loader"/>
 				<operation pattern="java.util.jar.JarFile.getInputStream" name="Jar entry loading"							type="Class loader"/>
+				<operation pattern="java.util.jar.JarFile.getJarEntry" name="Jar entry access"								type="Class loader"/>
 				<operation pattern="sun.instrument.InstrumentationImpl.getAllLoadedClasses" name="Class listing"/>
 				<operation pattern="java.lang.Class.forName" name="Class access"/>
 				<operation pattern="sun.nio.fs.WindowsNativeDispatcher.DeleteFile" name="File delete"						type="File"/>
@@ -182,6 +183,7 @@
 				<operation pattern="sun.nio.ch.EPoll.wait" name="Poll wait"																				type="Synchro"/>
 				<operation pattern="java.lang.Object.notifyAll" name="Wakes all threads"/>
 				<operation pattern="java.lang.Object.notify" name="Wakes one thread"/>
+				<operation pattern="sun.management.ThreadImpl.dumpAllThreads" name="Dump Threads"/>
 				<operation pattern="jdk.internal.vm.Continuation.run" name="Exec virtualization"/>
 				<operation pattern="javax.security.auth.login.LoginContext.login" name="Auth login"/>
 				<operation pattern="sun.net.www.protocol.https.HttpsClient.New" name="HTTPS connection creation"        type="Network"/>
@@ -242,6 +244,7 @@
 				<operation pattern="java.util.TreeSet." name="Java tree set operation"									type="Collection"/>
 				<operation pattern="java.util.Hashtable." name="Java hash table operation"								type="Collection"/>
 				<operation pattern="java.util.HashMap." name="Java hash map operation"								    type="Collection"/>
+				<operation pattern="java.util.HashMap$" name="Java hash map operation"									type="Collection"/>
 				<operation pattern="java.util.HashSet." name="Java hash set operation"								    type="Collection"/>
 				<operation pattern="java.util.LinkedHashMap$" name="Java linked hash map operation"						type="Collection"/>
 				<operation pattern="java.util.concurrent.ConcurrentHashMap." name="Java concurrent hashmap operation" 	type="Collection"/>
@@ -324,6 +327,7 @@
 				<executor pattern="jdk.internal.misc.Signal$1.run" name="JVM signal handler"/>
 				<executor pattern="com.sun.corba.se.impl.transport.SelectorImpl.run" name="CORBA selector"/>
 				<executor pattern="com.sun.corba.se.impl.orb.ORBImpl.run" name="CORBA main"/>
+				<executor pattern="sun.management.GarbageCollectorImpl.createGCNotification" name="GC notifier"/>
 				<!-- Virtual threads -->
 				<executor pattern="java.lang.VirtualThread.runContinuation" name="VT carrier"/>
 				<executor pattern="java.lang.VirtualThread$VThreadContinuation.lambda" name="VT"/>
@@ -334,6 +338,7 @@
 				<executor_thread_name pattern="Keep-Alive-Timer" name="HTTP keep alive timer"/>
 				<executor_thread_name pattern="Logging-Cleaner" name="Java logging cleaner"/>
 				<executor_thread_name pattern="SIGTERM handler" name="JVM termination thread"/>
+				<executor_thread_name pattern="JavaMail-EventQueue" name="Java mail event listener"/>
 				<!-- Java 9+ JFR -->
 				<executor_thread_name pattern="JFR Periodic Tasks" name="JFR"/>
 			</executor_thread_names>
@@ -355,8 +360,8 @@
 				<exclude pattern="java.util.concurrent.SynchronousQueue.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a synchronous queue (poll)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.LinkedBlockingDeque.take;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a linked blocking dequeue (take)"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.LinkedBlockingDeque.poll;java.util.concurrent.ThreadPoolExecutor.getTask;java.util.concurrent.ThreadPoolExecutor.runWorker" name="Worker thread waiting for a task to execute from a linked blocking dequeue (poll)"/>		<!-- Multiple line pattern -->
-				<exclude pattern="sun.nio.ch.Iocp.getQueuedCompletionStatus;sun.nio.ch.Iocp.access$300;sun.nio.ch.Iocp$EventHandlerTask.run" name="Windows I/O completion wait"/>		<!-- Multiple line pattern -->
-				<exclude pattern="sun.nio.ch.EPoll.epollWait;sun.nio.ch.EPollPort$EventHandlerTask.poll;sun.nio.ch.EPollPort$EventHandlerTask.run" name="Windows E port poll wait"/>		<!-- Multiple line pattern -->
+				<exclude pattern="sun.nio.ch.Iocp.getQueuedCompletionStatus;sun.nio.ch.Iocp.access$300;sun.nio.ch.Iocp$EventHandlerTask.run" name="Windows I/O completion wait"/>
+				<exclude pattern="sun.nio.ch.EPoll.epollWait;sun.nio.ch.EPollPort$EventHandlerTask.poll;sun.nio.ch.EPollPort$EventHandlerTask.run" name="Windows E port poll wait"/>
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;sun.nio.ch.EPollPort$EventHandlerTask.run" name="Windows E port poll wait 2"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.locks.LockSupport.parkUntil;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join dormant thread" size="4"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.locks.LockSupport.park;java.util.concurrent.ForkJoinPool.awaitWork;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join dormant thread 2" size="5"/>		<!-- Multiple line pattern -->
@@ -367,6 +372,9 @@
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<!-- exclude pattern="ThreadImpl.dumpThreads" name="Thread dump"/-->
 				<exclude pattern="com.sun.jmx.remote.internal.ServerCommunicatorAdmin$Timeout.run" name="JMX"/>
+				<!-- Sun KQueuePort -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;sun.nio.ch.KQueuePort$EventHandlerTask.run;sun.nio.ch.AsynchronousChannelGroupImpl$1.run" name="Sun event async group"/>
+				<exclude pattern="sun.nio.ch.KQueuePort$EventHandlerTask.poll;sun.nio.ch.KQueuePort$EventHandlerTask.run" name="Sun kqueue event handler" size="4"/>
 				<!-- HTTP -->
 				<exclude pattern="sun.net.www.http.KeepAliveCache.run" name="HTTP keep alive timer" size="3"/>
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;sun.net.httpserver.ServerImpl$Dispatcher.run" name="HTTP server select loop" size="7"/>
@@ -375,11 +383,11 @@
 				<exclude pattern="com.sun.corba.se.impl.transport.SelectorImpl.run" name="CORBA selector" size="5"/>
 				<exclude pattern="com.sun.corba.se.impl.orb.ORBImpl.run" name="CORBA main" size="5"/>
 				<!-- Sun 2D -->
-				<exclude pattern="sun.java2d.Disposer.run" name="Java 2D disposer" size="7"/>
-				<exclude pattern="javax.swing.TimerQueue.run" name="Swing timer" size="6"/>
+				<exclude pattern="sun.java2d.Disposer.run" name="Java 2D disposer" size="11"/>
+				<exclude pattern="javax.swing.TimerQueue.run" name="Swing timer" size="9"/>
 				<exclude pattern="java.lang.Object.wait;sun.java2d.metal.MTLRenderQueue$QueueFlusher.run;java.lang.Thread.run" name="Java 2D render queue waiting" size="3"/>
 				<!-- AWT -->
-				<exclude pattern="java.lang.Object.wait;sun.awt.AWTAutoShutdown.run" name="AWT shutdown hook" size="4"/>
+				<exclude pattern="java.lang.Object.wait;sun.awt.AWTAutoShutdown.run" name="AWT shutdown hook" size="5"/>
 				<exclude pattern="sun.awt.X11.XToolkit.waitForEvents;sun.awt.X11.XToolkit.run;sun.awt.X11.XToolkit.run" name="AWT X11 event " size="4"/>
 				<!-- JNA -->
 				<exclude pattern="com.sun.jna.internal.Cleaner$1.run" name="JNA cleaner" size="4"/>
@@ -411,12 +419,13 @@
 				<exclude pattern="sun.nio.ch.EPollPoller.poll;sun.nio.ch.Poller.poll;sun.nio.ch.Poller.pollLoop" name="VT write poller 2" size="6"/>
 				<exclude pattern="java.util.concurrent.LinkedTransferQueue.awaitMatch;java.util.concurrent.LinkedTransferQueue.xfer;java.util.concurrent.LinkedTransferQueue.take;sun.nio.ch.Poller.updateLoop;java.lang.Thread.run;jdk.internal.misc.InnocuousThread.run" name="VT read poller" size="11"/>
 				<exclude pattern="java.util.concurrent.LinkedTransferQueue$DualNode.await;java.util.concurrent.LinkedTransferQueue.xfer;java.util.concurrent.LinkedTransferQueue.take;sun.nio.ch.Poller.updateLoop" name="VT read poller 2" size="8"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;javax.mail.EventQueue.run" name="Java mail events" size="6"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;com.sun.corba.se.impl.transport.SelectorImpl.run" name="CORBA selector thread" size="6"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<!-- exclude_thread_name pattern_regex="RMI TCP.*" name="RMI"/-->
-				<!-- exclude_thread_name pattern="JMX server connection timeout" name="RMI"/-->
 			</exclude_thread_names>
 		</patterns>
 
