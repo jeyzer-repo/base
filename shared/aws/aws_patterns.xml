@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="AWS" version="3.3">
+<profile name="AWS" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -35,6 +35,7 @@
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<executor pattern="java.lang.Thread.sleep;com.amazonaws.http.IdleConnectionReaper.run" name="AWS HTTP connection reaper"/>
 				<executor pattern="org.springframework.cloud.aws.messaging.listener.SimpleMessageListenerContainer$AsynchronousMessageListener.run" name="AWS Spring message listener"/>
+				<executor pattern="com.amazonaws.http.AmazonHttpClient$RequestExecutor" name="AWS HTTP request executor"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -43,6 +44,7 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="java.lang.Thread.sleep;com.amazonaws.http.IdleConnectionReaper.run" name="AWS HTTP connection reaper"/>		<!-- Multiple line pattern -->
+				<exclude pattern="software.amazon.awssdk.http.apache.internal.conn.IdleConnectionReaper$ReaperTask.run" name="AWS HTTP connection reaper 2"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
