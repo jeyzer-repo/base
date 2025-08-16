@@ -40,11 +40,14 @@
 				<function pattern="io.undertow.servlet.core.DeploymentManagerImpl.deploy" name="JBoss servlet deploy"/>
 				<function pattern="io.undertow.servlet.spec.HttpServletResponseImpl.responseDone" name="JBoss servlet response end"/>
 				<function pattern="com.arjuna.ats.internal.arjuna.recovery.PeriodicRecovery.doBackoffWait" name="JBoss recovery scan waiting"/>
+				<function pattern="org.jboss.as.clustering.controller.MetricHandler.executeRuntimeStep" name="JBoss metrics"/>
+				<function pattern="org.jboss.resteasy.plugins.server.servlet.ServletUtil.extractUriInfo" name="JBoss URI parsing"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<!-- JBoss -->
+				<operation pattern="org.jboss.as.naming.NamingContext.lookup" name="JBoss JNDI lookup" />
 				<operation pattern="org.jboss.security.authentication.JBossCachedAuthenticationManager.authenticate" name="JBoss authenticate"/>
 				<operation pattern="org.jboss.resource.adapter.jdbc.CheckValidConnectionSQL.isValidConnection" name="JBoss JDBC connection testing"/>
 				<operation pattern="org.jboss.classloader.spi.base.BaseClassLoader.getResource" name="JBoss ressource loading"		type="Class loader"/>
@@ -55,6 +58,7 @@
 				<operation pattern="org.jboss.modules.ModuleClassLoader.findClass" name="JBoss module class load"	type="Class loader"/>
 				<operation pattern="org.jboss.vfs.VirtualFile.exists" name="JBoss file check" 						type="File"/>
 				<operation pattern="io.undertow.protocols.ssl.SslConduit.doHandshake" name="Undertow SSL handshake" type="Network"/>
+				<operation pattern="org.jboss.resteasy.client.jaxrs.internal.ClientInvocationBuilder.post" name="REST post" type="Network"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -74,6 +78,7 @@
 				<executor pattern="org.jboss.jca.core.connectionmanager.pool.idle.IdleRemover$IdleRemoverRunner.run" name="JBoss connection remover"/>
 				<executor pattern="org.wildfly.common.ref.References$ReaperThread.run" name="JBoss reference reaper"/>
 				<executor pattern="com.arjuna.ats.internal.arjuna.recovery.PeriodicRecovery.run" name="JBoss Arjuna recovery thread"/>
+				<executor pattern="io.undertow.server.HttpServerExchange$1.run" name="JBoss HTTP listener"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -86,8 +91,8 @@
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<!-- JBoss -->
 				<exclude pattern="org.jboss.resource.adapter.mail.inflow.NewMsgsWorker.run" name="JBoss message worker" size="10"/>
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;org.jboss.threads.QueueExecutor.takeTask;org.jboss.threads.QueueExecutor.access;org.jboss.threads.QueueExecutor$Worker.run" name="Worker thread waiting for a task to execute from a blocking queue"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;org.jboss.threads.EnhancedQueueExecutor$PoolThreadNode.park;org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run" name="Worker thread waiting for a task to execute from a JBoss enhanced queue"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;org.jboss.threads.QueueExecutor.takeTask;org.jboss.threads.QueueExecutor.access;org.jboss.threads.QueueExecutor$Worker.run" name="Worker thread waiting for a task to execute from a blocking queue"/>
+				<exclude pattern="org.jboss.threads.EnhancedQueueExecutor$PoolThreadNode.park;org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run" name="Worker thread waiting for a task to execute from a JBoss enhanced queue"/>
 				<exclude pattern="org.jboss.modules.ref.References$ReaperThread.run" name="JBoss reaper thread" size="4"/>
 				<exclude pattern="org.jboss.as.jacorb.service.CorbaORBService$ORBRunner.run" name="JBoss Jacorb embedded service" size="5"/>
 				<exclude pattern="org.jboss.threads.JBossThread.run" name="JBoss thread" size="9"/>
