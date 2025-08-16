@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="LMAX" version="3.2">
+<profile name="LMAX" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -44,6 +44,8 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;com.lmax.disruptor.TimeoutBlockingWaitStrategy.waitFor;com.lmax.disruptor.ProcessingSequenceBarrier.waitFor;com.lmax.disruptor.BatchEventProcessor.processEvents;com.lmax.disruptor.BatchEventProcessor.run" name="LMAX event loop" size="8"/>
+				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;com.lmax.disruptor.SleepingWaitStrategy.applyWaitMethod;com.lmax.disruptor.SleepingWaitStrategy.waitFor;com.lmax.disruptor.ProcessingSequenceBarrier.waitFor;com.lmax.disruptor.BatchEventProcessor.processEvents;com.lmax.disruptor.BatchEventProcessor.run" name="LMAX event loop 2" size="10"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;com.lmax.disruptor.BlockingWaitStrategy.waitFor;com.lmax.disruptor.ProcessingSequenceBarrier.waitFor;com.lmax.disruptor.BatchEventProcessor.processEvents;com.lmax.disruptor.BatchEventProcessor.run" name="LMAX event loop 3" size="10"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
