@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Artemis" version="3.2">
+<profile name="Artemis" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -48,6 +48,7 @@
 				<!-- Artemis -->
 				<executor pattern="org.apache.activemq.artemis.core.io.buffer.TimedBuffer$CheckTimer.run" name="Artemis buffer thread"/>
 				<executor pattern="org.apache.activemq.artemis.core.server.cluster.impl.BroadcastGroupImpl.run" name="Artemis buffer thread"/>
+				<executor pattern="org.apache.activemq.artemis.core.client.impl.ClientConsumerImpl$Runner.run" name="Artemis consumer"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -68,6 +69,8 @@
 				<exclude_thread_name pattern_regex="ActiveMQ-server-org.apache.activemq.artemis.core.server.impl.ActiveMQServerImpl" name="Artemis server impl thread" size="10"/>
 				<exclude_thread_name pattern_regex="activemq-buffer-timeout" name="Artemis buffer timout thread" size="8"/>
 				<exclude_thread_name pattern_regex="activemq-failure-check-thread" name="Artemis filure check thread" size="6"/>
+				<exclude_thread_name pattern_regex="Apache ActiveMQ Artemis libaio poller" name="Artemis libaio poller thread" size="3"/>
+				<exclude_thread_name pattern_regex="activemq-expiry-reaper-thread" name="Artemis reaper thread" size="7"/>
 			</exclude_thread_names>
 		</patterns>
 
