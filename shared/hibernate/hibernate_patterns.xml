@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Hibernate" version="3.3">
+<profile name="Hibernate" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -59,6 +59,8 @@
 				<operation pattern="org.hibernate.engine.query.spi.QueryPlanCache.getHQLQueryPlan" name="Hibernate HQL query plan access"/>
 				<operation pattern="org.hibernate.boot.archive.scan.spi.AbstractScannerImpl.scan" name="Hibernate boot archive scan"/>
 				<operation pattern="org.hibernate.validator.engine.ValidatorImpl.validate" name="Hibernate bean validation"/>
+				<operation pattern="org.hibernate.validator.internal.util.logging.Log_$logger.getUnableToLoadClassException" name="Hibernate class loading failure"/>
+				<operation pattern="org.hibernate.validator.internal.engine.ConfigurationImpl.buildValidatorFactory" name="Hibernate build validator factory"/>
 				<operation pattern="org.hibernate." name="Hibernate operation"/>
 			</operations>
 			<lockers>
