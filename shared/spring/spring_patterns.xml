@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Spring" version="3.2">
+<profile name="Spring" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -48,6 +48,7 @@
 				<executor pattern="org.springframework.boot.loader.MainMethodRunner.run" name="Spring boot main"/>
 				<executor pattern="org.springframework.cloud.consul.binder.ConsulInboundMessageProducer$1.run" name="Spring inbound message producer"/>
 				<executor pattern="org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run" name="Spring error handler"/>
+				<executor pattern="org.springframework.aop.interceptor.AsyncExecutionInterceptor.lambda$invoke" name="Spring async executor"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
