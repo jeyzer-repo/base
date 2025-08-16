@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="MySQL" version="3.2">
+<profile name="MySQL" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -20,12 +20,13 @@
 		<patterns>
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
-				<!-- function pattern="org.compass.core.lucene.engine.optimizer.DefaultLuceneSearchEngineOptimizer.optimize" name="Search index optimization"/ -->
+				<function pattern="com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate" name="SQL update"/>
+				<function pattern="com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery" name="SQL prepared statement execution" />
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
-				<operation pattern="com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery" name="SQL prepared statement execution"  	type="MySQL"/>
+				<operation pattern="com.mysql.cj.protocol.FullReadInputStream.readFully" name="SQL connection read"  					type="MySQL"/>
 				<operation pattern="com.mysql.cj.jdbc.ConnectionImpl.createNewIO" name="Create db connection"  							type="MySQL"/>
 				<operation pattern="com.mysql.jdbc.ConnectionImpl.execSQL" name="SQL execution"  			   							type="MySQL"/>
 				<operation pattern="mysql.jdbc.PreparedStatement.executeUpdate" name="MySQL insert or update"  							type="MySQL"/>
@@ -48,12 +49,12 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<exclude pattern="com.mysql.cj.jdbc.AbandonedConnectionCleanupThread.run" name="MySQL connection cleanup thread" size="6"/>
+				<exclude pattern="com.mysql.cj.jdbc.AbandonedConnectionCleanupThread.run" name="MySQL connection cleanup thread" size="11"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<exclude_thread_name pattern_regex="^Abandoned connection cleanup thread" name="MySQL connection cleanup thread" size="6"/>
+				<exclude_thread_name pattern_regex="^Abandoned connection cleanup thread" name="MySQL connection cleanup thread" size="11"/>
 			</exclude_thread_names>
 		</patterns>
 
