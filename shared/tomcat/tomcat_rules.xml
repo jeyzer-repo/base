@@ -62,6 +62,19 @@
 				           message="Tomcat cluster is facing TCP connection issues to connect to other cluster node(s)."/>
 			</thresholds>
 		</rule>
+
+		<!--  If operation regex pattern in the current task is seen more than value, generate event. Pattern is regex -->
+		<rule name="Operation pattern" extra_info="Tomcat JDBC connection pool stack generation" ref="JZR-SHA-TOM-004">
+			<narrative>This rule detects the pool stack generation upon the Tomcat JDBC connection access.</narrative>
+			<thresholds>
+				<threshold type="stack pattern" 
+						   count="1"
+				           pattern="Tomcat thread stack creation" 
+				           level="INFO"
+				           sub_level="6"
+				           message="The Tomcat JDBC connection pool is generating a stack through an exception generation upon connection access.&#10;This can be performance invasive like any intensive exception generation.&#10;If not for troubleshooting purposes, you may disable it in the Tomcat configuration."/>
+			</thresholds>
+		</rule>
 				
 		<!--  If number of threads (active and inactive) matching the [pattern] is lower or equal than [value] for [count] thread dumps or [time], generate event. Pattern is regex -->
 		<!--  Important : Absent threads rules cannot be complementary as one or the other will wrongly match. Put all patterns under the same regex like below -->
