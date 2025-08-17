@@ -328,6 +328,7 @@
 				<executor pattern="com.sun.corba.se.impl.transport.SelectorImpl.run" name="CORBA selector"/>
 				<executor pattern="com.sun.corba.se.impl.orb.ORBImpl.run" name="CORBA main"/>
 				<executor pattern="sun.management.GarbageCollectorImpl.createGCNotification" name="GC notifier"/>
+				<executor pattern="sun.nio.fs.WindowsWatchService$Poller.run" name="Windows file system watcher"/>
 				<!-- Virtual threads -->
 				<executor pattern="java.lang.VirtualThread.runContinuation" name="VT carrier"/>
 				<executor pattern="java.lang.VirtualThread$VThreadContinuation.lambda" name="VT"/>
