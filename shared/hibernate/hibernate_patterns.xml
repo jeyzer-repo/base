@@ -61,6 +61,7 @@
 				<operation pattern="org.hibernate.validator.engine.ValidatorImpl.validate" name="Hibernate bean validation"/>
 				<operation pattern="org.hibernate.validator.internal.util.logging.Log_$logger.getUnableToLoadClassException" name="Hibernate class loading failure"/>
 				<operation pattern="org.hibernate.validator.internal.engine.ConfigurationImpl.buildValidatorFactory" name="Hibernate build validator factory"/>
+				<operation pattern="org.hibernate.impl.CriteriaImpl.uniqueResult" name="Hibernate unique result fetch"/>
 				<operation pattern="org.hibernate." name="Hibernate operation"/>
 			</operations>
 			<lockers>
