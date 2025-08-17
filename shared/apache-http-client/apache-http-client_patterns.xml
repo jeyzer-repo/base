@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Apache-HTTP-client" version="3.3">
+<profile name="Apache-HTTP-client" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -21,6 +21,7 @@
 			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
 			<functions>
 				<function pattern="java.lang.Thread.sleep;org.apache.http.impl.client.IdleConnectionEvictor$1.run" name="Connection watch suspended"/>
+				<function pattern="org.apache.http.impl.client.CloseableHttpClient.execute" name="HTTP call"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
