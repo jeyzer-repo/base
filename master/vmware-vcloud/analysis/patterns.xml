@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="VMware-VCloud" version="3.2">
+<profile name="VMware-VCloud" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -26,6 +26,10 @@
 				<function pattern="com.vmware.vcloud.backendbase.management.system.SecurityServiceImpl.validateVcdJwt" name="Validate security token"/>
 				<function pattern="com.vmware.vcloud.security.web.RestSessionFilter.setVcdJwtToken" name="Set security token"/>
 				<function pattern="com.vmware.vcloud.common.main.CloudLauncher.main" name="VMware VCloud main loop"/>
+				<function pattern="com.vmware.vcloud.common.persist.Conversation.get" name="Conversation access"/>
+				<function pattern="com.vmware.vcloud.common.activity.dao.impl.ActivityQueueServiceImpl.claimNextRunnableActivity" name="Claim next activity"/>
+				<function pattern="com.vmware.vcloud.common.activity.dao.impl.ActivityQueueServiceImpl.lambda$claimNextRunnableActivity" name="Activity execution"/>
+				<function pattern="com.vmware.vcloud.heartbeat.impl.CellLivenessMonitor.safelyLoadCellSpec" name="Laod cell spec"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -41,6 +45,9 @@
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<executor pattern="com.vmware.vcloud.common.main.CloudLauncher.main" name="VMware VCloud main"/>
 				<executor pattern="com.vmware.vcloud.common.event.impl.EventPublishingAgent$PublishingRunner.run" name="VMware event publisher"/>
+				<executor pattern="com.vmware.vcloud.activity.executors.ActivityRunner.run" name="VMware activity runner"/>
+				<executor pattern="com.vmware.vcloud.activity.toolkit.queueing.DefaultActivityQueueProcessor$1.run" name="VMware activity queue processor"/>
+				<executor pattern="com.vmware.cell.heartbeat.impl.HeartbeatServiceImpl$HeartbeatRunner.run" name="VMware heartbeat runner"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -58,6 +65,7 @@
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.vmware.ssdc.backend.services.UIThumbnailRequestConsumer.execute;com.vmware.ssdc.backend.services.UIThumbnailRequestConsumer$1.run" name="UIThumbnailRequest consumer wait" size="11"/>	
 				<exclude pattern="java.lang.Thread.sleep;com.vmware.vcloud.common.cell.jms.activemq.broadcasting.VCDBroadcastEndpoint$2.run" name="VMware VCDBroadcastEndpoint sleep" size="8"/>
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.vmware.vcloud.common.cell.jms.activemq.impl.JmsFacadeService.senderRun" name="VMware JMS facade sender waiting" size="11"/>	
+				<exclude pattern="org.eclipse.jetty.io.ManagedSelector$SelectorProducer.select;org.eclipse.jetty.io.ManagedSelector$SelectorProducer.produce;org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.produceTask;org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.tryProduce;org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.run;com.vmware.vcloud.common.threading.ExtendedJettyQueuedThreadPool$CleaningRunnable.run" name="VMware Jetty executor" size="19"/>	
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->

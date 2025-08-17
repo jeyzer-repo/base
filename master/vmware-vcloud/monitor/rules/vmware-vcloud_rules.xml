@@ -21,6 +21,19 @@
 			</thresholds>
 		</rule>
 		
+		<!--  If contention type regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Contention type parallel contention" extra_info="PostgreSQL contention" ref="JZR-APP-VMW-VCLOUD-002">
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="10"
+				           pattern="PostgreSQL" 
+				           level="INFO"
+				           sub_level="10"
+				           message="Important activity on the PostgreSQL. Check the various database calls and possibly discuss with the DBA to look for performance bottlenecks."/>
+			</thresholds>
+		</rule>
+		
 	</rules>
 
 </monitor>
