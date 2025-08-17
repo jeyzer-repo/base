@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="OpenCensus">
+
+		<!-- ************************************************************************ -->
+		<!--                       OpenCensus RULES                                   -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="OpenCensus" param="OpenCensus" stickers="code_quality" ref="JZR-SHA-OPENCENSUS-001">
+			<narrative>This rule detects the OpenCensus client library usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           message="The OpenCensus library is deprecated since 2023.&#10;It is recommended to use now the OpenTelemetry library."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
