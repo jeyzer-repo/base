@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Hadoop" version="3.2">
+<profile name="Hadoop" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -76,6 +76,8 @@
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.ranger.audit.queue.AuditAsyncQueue.runLogAudit;org.apache.ranger.audit.queue.AuditAsyncQueue.run" name="Ranger AuditAsyncQueue waiting to take"/>
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.ranger.plugin.util.PolicyRefresher.run" name="Ranger PolicyRefresher waiting to take"/>
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer.acquireSharedInterruptibly;java.util.concurrent.Semaphore.acquire;org.apache.ranger.audit.provider.AuditProviderFactory$RangerAsyncAuditCleanup.run" name="Ranger RangerAsyncAuditCleanup semaphore"/>
+				<exclude pattern="java.lang.Object.wait;org.apache.hadoop.fs.azurebfs.services.ReadBufferManager.getNextBlockToRead;org.apache.hadoop.fs.azurebfs.services.ReadBufferWorker.run" name="Hadoop Azure buffer reader" size="5"/>
+				<exclude pattern="java.lang.Thread.sleep;org.apache.hadoop.fs.azure.metrics.BandwidthGaugeUpdater$UploadBandwidthUpdater.run" name="Hadoop BandwidthGaugeUpdater" size="3"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
