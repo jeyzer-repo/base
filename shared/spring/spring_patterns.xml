@@ -59,6 +59,7 @@
 				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
 				<exclude pattern="java.lang.Thread.sleep;org.apache.catalina.core.StandardServer.await;org.springframework.boot.web.embedded.tomcat.TomcatWebServer$1.run" name="Spring Tomcat main waiting"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.lang.Thread.sleep;org.apache.catalina.core.StandardServer.await;org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer$2.run" name="Spring Tomcat context main waiting"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Thread.sleep;org.springframework.boot.devtools.filewatch.FileSystemWatcher$Watcher.scan;org.springframework.boot.devtools.filewatch.FileSystemWatcher$Watcher.run" name="Spring Devtools file watcher" size="4"/>		<!-- Multiple line pattern -->
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
