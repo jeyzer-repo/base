@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Hazelcast" version="3.3">
+<profile name="Hazelcast" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -32,6 +32,7 @@
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<executor pattern="com.hazelcast.util.executor.CachedExecutorServiceDelegate$Worker.run" name="Hazelcast executor"/>
+				<executor pattern="com.hazelcast.internal.util.executor.HazelcastManagedThread.run" name="Hazelcast thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -39,23 +40,25 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<exclude pattern="com.hazelcast.internal.util.concurrent.MPSCQueue.takeAll;com.hazelcast.internal.util.concurrent.MPSCQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.run" name="Hazelcast operation handler" size="6"/>	<!-- Multiple line pattern -->
-				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;com.hazelcast.internal.networking.nio.NioThread.selectLoop;com.hazelcast.internal.networking.nio.NioThread.run" name="Hazelcast NIO thread waiting" size="7"/>	<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.util.executor.StripedExecutor$Worker.run" name="Hazelcast striped Executor waiting" size="5"/>	<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.run" name="Hazelcast Operation thread waiting" size="6"/>	<!-- Multiple line pattern -->
-				<exclude pattern="sun.misc.Unsafe.park;java.util.concurrent.locks.LockSupport.park;com.hazelcast.internal.util.concurrent.MPSCQueue.takeAll;com.hazelcast.internal.util.concurrent.MPSCQueue.take;com.hazelcast.spi.impl.operationservice.impl.InboundResponseHandlerSupplier$ResponseThread.doRun" name="Hazelcast Inbound response thread waiting" size="6"/>	<!-- Multiple line pattern -->
-				<exclude pattern="sun.nio.ch.SelectorImpl.select;com.hazelcast.nio.tcp.TcpIpAcceptor$AcceptorIOThread.acceptLoop;com.hazelcast.nio.tcp.TcpIpAcceptor$AcceptorIOThread.run" name="Hazelcast TcpIpAcceptor waiting" size="8"/>	<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.run" name="Hazelcast Operation executor waiting" size="6"/>	<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;com.hazelcast.internal.partition.impl.MigrationQueue.poll;com.hazelcast.internal.partition.impl.MigrationThread.doRun;com.hazelcast.internal.partition.impl.MigrationThread.run" name="Hazelcast Partition migration thread waiting" size="7"/>	<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.LinkedBlockingQueue.poll;com.hazelcast.internal.networking.nio.iobalancer.IOBalancerThread.run" name="Hazelcast IO balancer waiting" size="5"/>	<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.DelayQueue.poll;com.hazelcast.spi.impl.operationparker.impl.OperationParkerImpl$ExpirationTask.doRun;com.hazelcast.spi.impl.operationparker.impl.OperationParkerImpl$ExpirationTask.run" name="Hazelcast expiration task waiting" size="13"/>	<!-- Multiple line pattern -->
-				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;com.hazelcast.internal.networking.nio.NioThread.selectLoop;com.hazelcast.internal.networking.nio.NioThread.executeRun" name="Hazelcast NIO thread waiting" size="7"/>	<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.locks.LockSupport.park;com.hazelcast.internal.util.concurrent.MPSCQueue.takeAll;com.hazelcast.internal.util.concurrent.MPSCQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.executeRun" name="Hazelcast MPSC Operation thread waiting" size="7"/>	<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.internal.util.executor.StripedExecutor$Worker.run" name="Hazelcast Striped executor waiting" size="8"/>	<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.executeRun" name="Hazelcast operation executor waiting" size="10"/>	<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.locks.LockSupport.park;com.hazelcast.internal.util.concurrent.MPSCQueue.takeAll;com.hazelcast.internal.util.concurrent.MPSCQueue.take;com.hazelcast.spi.impl.operationservice.impl.InboundResponseHandlerSupplier$ResponseThread.doRun" name="Hazelcast inbound response waiting" size="7"/>	<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.executeRun" name="Hazelcast spi operation thread waiting" size="10"/>	<!-- Multiple line pattern -->
-				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;com.hazelcast.internal.server.tcp.TcpServerAcceptor$AcceptorIOThread.acceptLoop;com.hazelcast.internal.server.tcp.TcpServerAcceptor$AcceptorIOThread.run" name="Hazelcast TCP server" size="6"/>	<!-- Multiple line pattern -->
+				<exclude pattern="com.hazelcast.internal.util.concurrent.MPSCQueue.takeAll;com.hazelcast.internal.util.concurrent.MPSCQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.run" name="Hazelcast operation handler" size="6"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;com.hazelcast.internal.networking.nio.NioThread.selectLoop;com.hazelcast.internal.networking.nio.NioThread.run" name="Hazelcast NIO thread waiting" size="7"/>
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.util.executor.StripedExecutor$Worker.run" name="Hazelcast striped Executor waiting" size="5"/>
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.run" name="Hazelcast Operation thread waiting" size="6"/>
+				<exclude pattern="sun.misc.Unsafe.park;java.util.concurrent.locks.LockSupport.park;com.hazelcast.internal.util.concurrent.MPSCQueue.takeAll;com.hazelcast.internal.util.concurrent.MPSCQueue.take;com.hazelcast.spi.impl.operationservice.impl.InboundResponseHandlerSupplier$ResponseThread.doRun" name="Hazelcast Inbound response thread waiting" size="6"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.select;com.hazelcast.nio.tcp.TcpIpAcceptor$AcceptorIOThread.acceptLoop;com.hazelcast.nio.tcp.TcpIpAcceptor$AcceptorIOThread.run" name="Hazelcast TcpIpAcceptor waiting" size="8"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.run" name="Hazelcast Operation executor waiting" size="6"/>
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.poll;com.hazelcast.internal.partition.impl.MigrationQueue.poll;com.hazelcast.internal.partition.impl.MigrationThread.doRun;com.hazelcast.internal.partition.impl.MigrationThread.run" name="Hazelcast Partition migration thread waiting" size="7"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;java.util.concurrent.LinkedBlockingQueue.poll;com.hazelcast.internal.networking.nio.iobalancer.IOBalancerThread.run" name="Hazelcast IO balancer waiting" size="5"/>
+				<exclude pattern="java.util.concurrent.DelayQueue.poll;com.hazelcast.spi.impl.operationparker.impl.OperationParkerImpl$ExpirationTask.doRun;com.hazelcast.spi.impl.operationparker.impl.OperationParkerImpl$ExpirationTask.run" name="Hazelcast expiration task waiting" size="13"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;com.hazelcast.internal.networking.nio.NioThread.selectLoop;com.hazelcast.internal.networking.nio.NioThread.executeRun" name="Hazelcast NIO thread waiting" size="7"/>
+				<exclude pattern="java.util.concurrent.locks.LockSupport.park;com.hazelcast.internal.util.concurrent.MPSCQueue.takeAll;com.hazelcast.internal.util.concurrent.MPSCQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.executeRun" name="Hazelcast MPSC Operation thread waiting" size="7"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.internal.util.executor.StripedExecutor$Worker.run" name="Hazelcast Striped executor waiting" size="8"/>
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.executeRun" name="Hazelcast operation executor waiting" size="10"/>
+				<exclude pattern="java.util.concurrent.locks.LockSupport.park;com.hazelcast.internal.util.concurrent.MPSCQueue.takeAll;com.hazelcast.internal.util.concurrent.MPSCQueue.take;com.hazelcast.spi.impl.operationservice.impl.InboundResponseHandlerSupplier$ResponseThread.doRun" name="Hazelcast inbound response waiting" size="7"/>
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationQueueImpl.take;com.hazelcast.spi.impl.operationexecutor.impl.OperationThread.executeRun" name="Hazelcast spi operation thread waiting" size="10"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;com.hazelcast.internal.server.tcp.TcpServerAcceptor$AcceptorIOThread.acceptLoop;com.hazelcast.internal.server.tcp.TcpServerAcceptor$AcceptorIOThread.run" name="Hazelcast TCP server" size="6"/>
+				<exclude pattern="java.util.concurrent.TimeUnit.sleep;com.hazelcast.spi.impl.operationexecutor.slowoperationdetector.SlowOperationDetector$DetectorThread.sleepInterval;com.hazelcast.spi.impl.operationexecutor.slowoperationdetector.SlowOperationDetector$DetectorThread.run" name="Hazelcast slow operator detector" size="5"/>
+				<exclude pattern="java.util.concurrent.TimeUnit.sleep;com.hazelcast.internal.diagnostics.HealthMonitor$HealthMonitorThread.run" name="Hazelcast health monitor" size="4"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
