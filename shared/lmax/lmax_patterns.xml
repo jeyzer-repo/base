@@ -35,7 +35,7 @@
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<!-- Lucene -->
-				<!--executor pattern="org.compass.core.lucene.engine.optimizer.LuceneSearchEngineOptimizerManager$ScheduledOptimizeRunnable.run" name="Lucene search optimizer scheduled thread"/-->
+				<executor pattern="com.lmax.disruptor.BatchEventProcessor.run" name="Lmax batch event processor"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
