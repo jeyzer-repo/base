@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Ehcache" version="3.2">
+<profile name="Ehcache" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -34,7 +34,7 @@
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<!--executor pattern="HttpServlet.service" name="HTTP request"/-->
-				<!--executor pattern="java.lang.Thread.sleep;com.amazonaws.http.IdleConnectionReaper.run" name="AWS HTTP connection reaper"/-->		<!-- Multiple line pattern -->
+				<executor pattern="net.sf.ehcache.distribution.MulticastKeepaliveHeartbeatReceiver$MulticastReceiverThread.run" name="Ehcache heartbeat receiver"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -42,7 +42,8 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<!--exclude pattern="java.lang.Object.wait;org.apache.felix.cm.impl.UpdateThread.run" name="Felix updater" size="4"/-->		<!-- Multiple line pattern -->
+				<exclude pattern="java.lang.Object.wait;net.sf.ehcache.distribution.MulticastKeepaliveHeartbeatSender$MulticastServerThread.run
+" name="Ehcache heartbeat receiver" size="2"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
