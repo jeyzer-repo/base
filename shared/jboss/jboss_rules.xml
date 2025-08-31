@@ -8,7 +8,7 @@
 		<!--                       JBOSS RULES                                        -->
 		<!-- ************************************************************************ -->
 		<!--  If operation regex [pattern] is seen in more than [value] parallel threads for [count] successive times, generate event. -->
-		<rule name="Operation parallel contention" extra_info="JBoss database connection pool access contention" ref="JZR-SHA-JBOS-001">
+		<rule name="Operation parallel contention" extra_info="JBoss database connection pool access contention" stickers="performance" ref="JZR-SHA-JBOS-001">
 			<narrative>This rule detects the JBoss database connection pool miseries.</narrative>
 			<thresholds>
 				<threshold type="session custom"
@@ -60,7 +60,7 @@
 		</rule>
 
 		<!--  If operation regex [pattern] is seen in more than [value] parallel threads for [count] successive times, generate event. -->
-		<rule name="Operation parallel contention" extra_info="JBoss TCP stress" ref="JZR-SHA-JBOS-004">
+		<rule name="Operation parallel contention" extra_info="JBoss TCP stress" stickers="performance" ref="JZR-SHA-JBOS-004">
 			<narrative>This rule detects high activity at the JBoss TCP Undertow level.</narrative>
 			<thresholds>
 				<threshold type="session custom"
@@ -70,6 +70,20 @@
 				           level="WARNING"
 				           sub_level="6"
 				           message="High TCP activity.&#10;System may be under stress.&#10;Check other figures and server high level activity to make sure it handles the load correctly in a valid context."/>
+			</thresholds>
+		</rule>
+
+		<!--  If function regex [pattern] is seen in more than [value] parallel threads for [count] successive times, generate event. -->
+		<rule name="Function parallel contention" extra_info="JBoss caller role check stress" stickers="performance" ref="JZR-SHA-JBOS-005">
+			<narrative>This rule detects high activity at the JBoss caller role check level.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="JBoss caller role check"  
+				           level="WARNING"
+				           sub_level="6"
+				           message="High activity at the JBoss caller role check.&#10;System may be under stress.&#10;Check other figures and server high level activity to make sure it handles the load correctly in a valid context."/>
 			</thresholds>
 		</rule>
 

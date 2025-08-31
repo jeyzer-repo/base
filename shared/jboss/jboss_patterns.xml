@@ -42,6 +42,7 @@
 				<function pattern="com.arjuna.ats.internal.arjuna.recovery.PeriodicRecovery.doBackoffWait" name="JBoss recovery scan waiting"/>
 				<function pattern="org.jboss.as.clustering.controller.MetricHandler.executeRuntimeStep" name="JBoss metrics"/>
 				<function pattern="org.jboss.resteasy.plugins.server.servlet.ServletUtil.extractUriInfo" name="JBoss URI parsing"/>
+				<function pattern="org.jboss.as.ejb3.context.EJBContextImpl.isCallerInRole" name="JBoss caller role check"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -57,8 +58,11 @@
 				<operation pattern="org.jboss.modules.JarFileResourceLoader.getClassSpec" name="Jar file get class spec"/>
 				<operation pattern="org.jboss.modules.ModuleClassLoader.findClass" name="JBoss module class load"	type="Class loader"/>
 				<operation pattern="org.jboss.vfs.VirtualFile.exists" name="JBoss file check" 						type="File"/>
-				<operation pattern="io.undertow.protocols.ssl.SslConduit.doHandshake" name="Undertow SSL handshake" type="Network"/>
 				<operation pattern="org.jboss.resteasy.client.jaxrs.internal.ClientInvocationBuilder.post" name="REST post" type="Network"/>
+				<operation pattern="io.undertow.protocols.ssl.SslConduit.doHandshake" name="Undertow SSL handshake" type="Network"/>
+				<operation pattern="io.undertow.protocols.ssl.SslConduit.close" name="Undertow SSL close" type="Network"/>
+				<operation pattern="org.jboss.logging.Logger.log" name="JBoss logging"/>
+				<operation pattern="com.arjuna.ats.internal.arjuna.objectstore.ShadowingStore.write_state" name="Txn state persistence"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -79,6 +83,7 @@
 				<executor pattern="org.wildfly.common.ref.References$ReaperThread.run" name="JBoss reference reaper"/>
 				<executor pattern="com.arjuna.ats.internal.arjuna.recovery.PeriodicRecovery.run" name="JBoss Arjuna recovery thread"/>
 				<executor pattern="io.undertow.server.HttpServerExchange$1.run" name="JBoss HTTP listener"/>
+				<executor pattern="org.jboss.as.jmx.ServerInterceptorFactory$Interceptor.handleEvent" name="JBoss JMX server"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
