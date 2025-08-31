@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="JsqlParser">
+
+		<!-- ************************************************************************ -->
+		<!--                       JSQLPARSER RULES                                        -->
+		<!-- ************************************************************************ -->
+
+		<!--  If function regex [pattern] is seen in more than [value] parallel threads for [count] successive times, generate event. -->
+		<rule name="Function parallel contention" extra_info="JSQL parser - parsing stress" stickers="performance" ref="JZR-SHA-JSQLPARSER-001">
+			<narrative>This rule detects high activity at the JSQL parsing level.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="JSQL parse"  
+				           level="WARNING"
+				           sub_level="6"
+				           message="High activity at the JSQL parsing level.&#10;System may be under stress.&#10;Check other figures and server high level activity to make sure it handles the load correctly in a valid context.&#10;Check also the JSQLParser library version for performance bugs."/>
+				<threshold type="session custom"
+						   count="2"
+						   value="10"
+				           pattern="JSQL parse"  
+				           level="CRITICAL"
+				           sub_level="7"
+				           message="High activity at the JSQL parsing level.&#10;System is under stress.&#10;Check other figures and server high level activity to make sure it handles the load correctly in a valid context.&#10;Check also the JSQLParser library version for performance bugs."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
