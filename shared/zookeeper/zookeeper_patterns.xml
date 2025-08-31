@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="ZooKeeper" version="3.3">
+<profile name="ZooKeeper" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -49,6 +49,8 @@
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.zookeeper.server.SyncRequestProcessor.run" name="ZooKeeper sync request processor wait"/>
 				<exclude pattern="java.util.concurrent.CountDownLatch.await;org.apache.zookeeper.server.ZooKeeperServerMain.runFromConfig" name="ZooKeeper main waiting for shutdown"/>
 				<exclude pattern="java.util.concurrent.LinkedBlockingDeque.poll;org.apache.zookeeper.ClientCnxnSocketNetty.doTransport;org.apache.zookeeper.ClientCnxn$SendThread.run" name="ZooKeeper client send poll"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.helix.zookeeper.zkclient.ZkEventThread.run" name="ZooKeeper event wait"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.helix.zookeeper.zkclient.callback.ZkAsyncRetryThread.run" name="ZooKeeper async retry wait"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
