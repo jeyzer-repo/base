@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Oracle" version="3.3">
+<profile name="Oracle" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -49,6 +49,7 @@
 				<operation pattern="oracle.net.nt.SSLSocketChannel.write" name="Oracle data sending"  	priority="900"						type="Oracle"/>
 				<operation pattern="oracle.jdbc.driver." name="Oracle JDBC driver operation"  			priority="900"/>
 				<operation pattern="oracle.odi." name="Oracle ODI driver operation"  					priority="900"/>
+				<operation pattern="oracle.sql." name="Oracle SQL operation"  							priority="900"/>
 				<operation pattern="oracle.jdbc.xa.client.OracleXAResource.end" name="Oracle txn closure" priority="900"                     type="Oracle"/>
 				<operation pattern="oracle.jdbc.driver.ScrollableResultSet" name="Oracle result set java access"/>
 				<operation pattern="oracle.sql.CharacterSet.stringToAL32UTF8" name="Oracle UTF8 conversion"/>
@@ -62,6 +63,7 @@
 				<executor pattern="oracle.jdbc.driver.BlockSource$ThreadedCachingBlockSource$BlockReleaser.run" name="Oracle Cache releaser"/>
 				<executor pattern="oracle.odi.runtime.agent.execution.job.OdiJob.call" name="Oracle ODI job"/>
 				<executor pattern="oracle.jdbc.driver.PhysicalConnection$2.run" name="Oracle connection checker"/>
+				<executor pattern="oracle.ias.cache.group.Receiver.run" name="Oracle ias cache receiver"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -89,6 +91,11 @@
 				<exclude pattern="java.lang.Thread.sleep;oracle.odi.runtime.agent.execution.cache.SessionBlueprintCache$SessionBlueprintCacheMonitor.run;java.lang.Thread.run" name="Oracle Cache Monitor" size="3"/>
 				<exclude pattern="java.lang.Object.wait;com.sunopsis.tools.core.SnpsSemaphore.get;com.sunopsis.timer.SnpsAbstractScheduler.run;oracle.odi.runtime.agent.scheduler.OdiAgentScheduler.run" name="Oracle ODI Agent scheduler" size="6"/>
 				<exclude pattern="java.lang.Thread.sleep;oracle.jdbc.driver.OracleTimeoutPollingThread.run" name="Oracle timeout polling" size="2"/>
+				<exclude pattern="oracle.ias.cache.TaskQ.waitForWork;oracle.ias.cache.TaskQ.getTask;oracle.ias.cache.WorkerThread.run" name="Oracle TaskQ cache runner" size="4"/>
+				<exclude pattern="java.lang.Object.wait;oracle.ias.cache.TimeQ.waitForWork;oracle.ias.cache.CacheCleaner.run" name="Oracle ias cache cleaner" size="3"/>
+				<exclude pattern="java.lang.Object.wait;oracle.ias.cache.group.AsyncQueue.sleep;oracle.ias.cache.group.Sender.run" name="Oracle ias cache sender" size="3"/>
+				<exclude pattern="java.lang.Thread.sleep;oracle.ias.cache.group.Monitor.run" name="Oracle ias group monitor" size="2"/>
+				<exclude pattern="java.net.ServerSocket.accept;oracle.ias.cache.group.ServerSocketReceiver.run" name="Oracle ias group socket receiver" size="6"/>
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos;oracle.jdbc.internal.Monitor$WaitableMonitor.monitorWait;oracle.jdbc.internal.Monitor$WaitableMonitor.monitorWait;oracle.jdbc.driver.BlockSource$ThreadedCachingBlockSource$BlockReleaser.run" name="Oracle Waitable Monitor" size="6"/>
 			</excludes>
 			<exclude_thread_names>
