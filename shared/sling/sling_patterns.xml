@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Sling" version="3.2">
+<profile name="Sling" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -35,7 +35,7 @@
 			<executors>
 				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
 				<!--executor pattern="HttpServlet.service" name="HTTP request"/-->
-				<!--executor pattern="java.lang.Thread.sleep;com.amazonaws.http.IdleConnectionReaper.run" name="AWS HTTP connection reaper"/-->		<!-- Multiple line pattern -->
+				<!--executor pattern="java.lang.Thread.sleep;com.amazonaws.http.IdleConnectionReaper.run" name="AWS HTTP connection reaper"/-->
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -43,11 +43,16 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.sling.event.dea.impl.DistributedEventReceiver.processWriteQueue;org.apache.sling.event.dea.impl.DistributedEventReceiver.access" name="Sling event receiver" size="8"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.sling.event.dea.impl.DistributedEventSender.runInBackground;org.apache.sling.event.dea.impl.DistributedEventSender.access" name="Sling event sender" size="8"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingDeque.takeFirst;java.util.concurrent.LinkedBlockingDeque.take;com.adobe.cq.wcm.launches.impl.LaunchesEventHandler$EventProcessor.run" name="Sling event processor" size="7"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.sling.event.impl.jobs.config.TopologyHandler.run" name="Sling topology handler" size="6"/>		<!-- Multiple line pattern -->
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.sling.commons.logservice.internal.LogSupport$LogEntryDispatcher.dequeueLogEntry;org.apache.sling.commons.logservice.internal.LogSupport$LogEntryDispatcher.run" name="Sling log support" size="6"/>		<!-- Multiple line pattern -->
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.sling.event.dea.impl.DistributedEventReceiver.processWriteQueue;org.apache.sling.event.dea.impl.DistributedEventReceiver.access" name="Sling event receiver" size="8"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.sling.event.dea.impl.DistributedEventSender.runInBackground;org.apache.sling.event.dea.impl.DistributedEventSender.access" name="Sling event sender" size="8"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingDeque.takeFirst;java.util.concurrent.LinkedBlockingDeque.take;com.adobe.cq.wcm.launches.impl.LaunchesEventHandler$EventProcessor.run" name="Sling event processor" size="7"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.sling.event.impl.jobs.config.TopologyHandler.run" name="Sling topology handler" size="6"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.sling.commons.logservice.internal.LogSupport$LogEntryDispatcher.dequeueLogEntry;org.apache.sling.commons.logservice.internal.LogSupport$LogEntryDispatcher.run" name="Sling log support" size="6"/>
+				<exclude pattern="java.util.concurrent.LinkedBlockingQueue.take;org.apache.sling.event.impl.TimedJobHandler.runInBackground" name="Sling time job handler" size="7"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.sling.commons.log.internal.LogSupport$LogEntryDispatcher.dequeueLogEntry;org.apache.sling.commons.log.internal.LogSupport$LogEntryDispatcher.run" name="Sling log support 2" size="6"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.sling.event.impl.jobs.jcr.PersistenceHandler.processWriteQueue;org.apache.sling.event.impl.jobs.jcr.PersistenceHandler.persistJobs" name="Sling persistence handler" size="9"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.sling.event.impl.TimedJobHandler.processWriteQueue;org.apache.sling.event.impl.AbstractRepositoryEventHandler$1.run" name="Sling time job writer" size="7"/>
+				<exclude pattern="java.lang.Object.wait;org.apache.sling.installer.core.impl.OsgiInstallerImpl.run" name="Sling OSGI installer" size="3"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
