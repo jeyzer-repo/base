@@ -27,6 +27,7 @@
 				<function pattern="artemis.core.protocol.core.ServerSessionPacketHandler.onSessionAcknowledge" name="Session acknowledge"/>
 				<function pattern="artemis.core.protocol.core.ServerSessionPacketHandler.doConfirmAndResponse" name="Received message confirmation"/>
 				<function pattern="org.apache.activemq.artemis.core.server.cluster.impl.BroadcastGroupImpl.broadcastConnectors" name="Broadcast updates to connectors"/>
+				<function pattern="org.apache.activemq.artemis.core.protocol.core.impl.ActiveMQClientProtocolManager.ping" name="Artemis ping"/>
 				
 				<function pattern="transport.tcp.TcpTransport.readCommand" name="TCP read"/>
 				<function pattern="internal.ssl.SSLSocketImpl.readRecord" name="TCP SSL read"/>
@@ -51,6 +52,7 @@
 				<executor pattern="org.apache.activemq.artemis.core.client.impl.ClientConsumerImpl$Runner.run" name="Artemis consumer"/>
 				<executor pattern="org.apache.activemq.artemis.utils.actors.ProcessorBase.executePendingTask" name="Artemis processor"/>
 				<executor pattern="org.apache.activemq.artemis.core.server.cluster.ClusterController$ConnectRunnable.run" name="Artemis cluster controller"/>
+				<executor pattern="org.apache.activemq.artemis.core.client.impl.ClientSessionFactoryImpl$ActualScheduledPinger.run" name="Artemis ping monitor"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
