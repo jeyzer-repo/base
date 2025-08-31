@@ -104,6 +104,7 @@
 				<exclude pattern="sun.nio.ch.EPollArrayWrapper.poll;sun.nio.ch.EPollSelectorImpl.doSelect;sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;org.apache.catalina.tribes.transport.nio.NioReceiver.listen;org.apache.catalina.tribes.transport.nio.NioReceiver.run" name="Tomcat Tribes NIO receiver waiting" size="8"/>	
 				<exclude pattern="java.lang.Object.wait;org.apache.tomcat.util.net.AprEndpoint$Sendfile.run;java.lang.Thread.run" name="Tomcat APR file sender wait" size="4"/>
 				<exclude pattern="org.apache.tomcat.jni.Socket.accept;org.apache.tomcat.util.net.AprEndpoint.serverSocketAccept;org.apache.tomcat.util.net.AprEndpoint.serverSocketAccept;org.apache.tomcat.util.net.Acceptor.run" name="Tomcat APR server socket wait" size="5"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;org.apache.tomcat.util.threads.TaskQueue.take;org.apache.tomcat.util.threads.TaskQueue.take;org.apache.tomcat.util.threads.ThreadPoolExecutor.getTask;org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker" name="Tomcat task runner" size="15"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
