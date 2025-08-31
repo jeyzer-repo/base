@@ -2,6 +2,16 @@
 
 <stickers group="Java version">
 
+	<sticker name="java25" type="property card" property="java.version" pattern="^25.*"/>
+
+	<sticker name="java24" type="property card" property="java.version" pattern="^24.*"/>
+
+	<sticker name="java23" type="property card" property="java.version" pattern="^23.*"/>
+
+	<sticker name="java22" type="property card" property="java.version" pattern="^22.*"/>
+
+	<sticker name="java21" type="property card" property="java.version" pattern="^21.*"/>
+
 	<sticker name="java20" type="property card" property="java.version" pattern="^20.*"/>
 
 	<sticker name="java19" type="property card" property="java.version" pattern="^19.*"/>
