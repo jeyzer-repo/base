@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Solr" version="3.3">
+<profile name="Solr" version="3.4-SNAPSHOT">
 
 		<!-- Solr is a standalone enterprise search server with a REST-like API. Apache license -->
 
@@ -27,7 +27,7 @@
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
-				<!-- operation pattern="org.apache.commons.net.ftp.FTPClient._openDataConnection" name="FTP connection creation" type="Network"/-->
+				<operation pattern="org.apache.solr.common.SolrDocument.getFieldValue" name="Solr document field access"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
