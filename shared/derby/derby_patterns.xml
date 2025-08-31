@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Derby" version="3.2">
+<profile name="Derby" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -42,6 +42,7 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="java.lang.Object.wait;org.apache.derby.impl.services.monitor.AntiGC.run" name="Derby anti GC" size="4"/>
+				<exclude pattern="java.lang.Object.wait;org.apache.derby.impl.services.daemon.BasicDaemon.rest;org.apache.derby.impl.services.daemon.BasicDaemon.run" name="Derby daemon" size="4"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
