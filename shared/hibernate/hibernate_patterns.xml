@@ -35,6 +35,7 @@
 				<function pattern="org.hibernate.internal.SessionFactoryImpl.prepareEventListeners" name="Hibernate create event listeners"/>
 				<function pattern="org.hibernate.service.internal.AbstractServiceRegistryImpl.createService" name="Hibernate create service"/>
 				<function pattern="org.hibernate.engine.spi.CacheInitiator.initiateService" name="Hibernate create cache"/>
+				<function pattern="org.hibernate.jpa.internal.EntityManagerFactoryImpl.createEntityManager" name="Hibernate create entity manager"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
