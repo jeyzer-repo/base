@@ -27,6 +27,7 @@
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<operation pattern="org.apache.http.impl.conn.PoolingHttpClientConnectionManager.leaseConnection" name="HTTP connection pool access"/>
 				<operation pattern="org.apache.http.conn.ssl.SSLConnectionSocketFactory.connectSocket" name="HTTP SSL connect" 	type="Network"/>
+				<operation pattern="org.apache.hc.core5.http.impl.io.DefaultBHttpClientConnection.receiveResponseHeader" name="HTTP response header process" 	type="Network"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
