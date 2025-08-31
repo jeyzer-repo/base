@@ -37,6 +37,7 @@
 				<function pattern="com.sun.enterprise.resource.pool.PoolManagerImpl.getResource;com.sun.enterprise.connectors.ConnectionManagerImpl.getResource" name="Sun JDBC connection pool access"/>
 				<function pattern="sun.management.GarbageCollectorImpl.createGCNotification" name="JMX GC notification creation"/>
 				<function pattern="java.util.concurrent.ThreadPerTaskExecutor.start" name="Task execution"/>
+				<function pattern="javax.security.auth.login.LoginContext.login" name="Auth login"/>
 				<!-- IMAP -->
 				<function pattern="com.sun.mail.imap.IMAPStore.login" name="IMAP login"/>
 				<function pattern="com.sun.mail.imap.protocol.IMAPProtocol.disconnect" name="IMAP disconnect"/>
@@ -64,6 +65,7 @@
 				<function pattern="sun.net.dns.ResolverConfigurationImpl.notifyAddrChange0" name="Wait for DNS update"/>
 				<function pattern="java.util.logging.LogManager.reset" name="Java logger reset"/>
 				<function pattern="java.lang.ApplicationShutdownHooks.runHooks" name="Shutdown hook execution"/>
+				<function pattern="jdk.internal.ref.PhantomCleanable.clean" name="Clean phantom ref"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -185,7 +187,6 @@
 				<operation pattern="java.lang.Object.notify" name="Wakes one thread"/>
 				<operation pattern="sun.management.ThreadImpl.dumpAllThreads" name="Dump Threads"/>
 				<operation pattern="jdk.internal.vm.Continuation.run" name="Exec virtualization"/>
-				<operation pattern="javax.security.auth.login.LoginContext.login" name="Auth login"/>
 				<operation pattern="sun.net.www.protocol.https.HttpsClient.New" name="HTTPS connection creation"        type="Network"/>
 				<operation pattern="sun.security.rsa.RSACore" name="RSA Cryptographic operation" 						type="Crypto"/>
 				<operation pattern="javax.crypto.KeyAgreement.generateSecret" name="Cryptographic key generation" 		type="Crypto"/>
@@ -203,6 +204,7 @@
 				<operation pattern="java.io.FileDescriptor.sync" name="Java disk writing"								type="File"/>
 				<operation pattern="java.io.RandomAccessFile.writeBytes" name="Java file writing"						type="File"/>
 				<operation pattern="sun.nio.ch.FileDispatcherImpl.write" name="File writing"							type="File"/>
+				<operation pattern="sun.nio.fs.LinuxWatchService.poll" name="Linux system watch"						type="File"/>
 				<operation pattern="java.io.ObjectInputStream.readObject" name="Object deserialization"/>
 				<operation pattern="java.lang.StringBuilder.append" name="String builder append"						type="String"/>
 				<operation pattern="java.lang.StringBuffer.append" name="String buffer append"							type="String"/>
@@ -235,6 +237,7 @@
 				<operation pattern="java.util.HashMap.get" name="Hash map access"										type="Collection"/>
 				<operation pattern="java.util.Hashtable.get" name="Hash table access"									type="Collection"/>
 				<operation pattern="java.util.TreeMap.put" name="Tree map insertion"									type="Collection"/>
+				<operation pattern="java.util.ArrayList.removeIf" name="Java list conditional remove"					type="Collection"/>
 				<operation pattern="Hashtable.containsKey" name="Hash table access"										type="Collection"/>
 				<operation pattern="java.util.AbstractCollection." name="Java collection operation"						type="Collection"/>
 				<operation pattern="java.util.ArrayList." name="Java list operation"									type="Collection"/>
@@ -329,6 +332,8 @@
 				<executor pattern="com.sun.corba.se.impl.orb.ORBImpl.run" name="CORBA main"/>
 				<executor pattern="sun.management.GarbageCollectorImpl.createGCNotification" name="GC notifier"/>
 				<executor pattern="sun.nio.fs.WindowsWatchService$Poller.run" name="Windows file system watcher"/>
+				<executor pattern="sun.print.PrintServiceLookupProvider$PrinterChangeListener.run" name="Java Print Service Listener"/>
+				<executor pattern="jdk.internal.ref.CleanerImpl.run" name="Java ref cleaner"/>
 				<!-- Virtual threads -->
 				<executor pattern="java.lang.VirtualThread.runContinuation" name="VT carrier"/>
 				<executor pattern="java.lang.VirtualThread$VThreadContinuation.lambda" name="VT"/>
@@ -390,8 +395,9 @@
 				<!-- AWT -->
 				<exclude pattern="java.lang.Object.wait;sun.awt.AWTAutoShutdown.run" name="AWT shutdown hook" size="5"/>
 				<exclude pattern="sun.awt.X11.XToolkit.waitForEvents;sun.awt.X11.XToolkit.run;sun.awt.X11.XToolkit.run" name="AWT X11 event " size="4"/>
+				<exclude pattern="sun.awt.windows.WToolkit.eventLoop;sun.awt.windows.WToolkit.run" name="AWT WToolkit " size="3"/>
 				<!-- JNA -->
-				<exclude pattern="com.sun.jna.internal.Cleaner$1.run" name="JNA cleaner" size="4"/>
+				<exclude pattern="com.sun.jna.internal.Cleaner$1.run" name="JNA cleaner" size="10"/>
 				<!-- LDAP -->
 				<exclude pattern="com.sun.jndi.ldap.AbstractLdapNamingEnumeration.getNextBatch;com.sun.jndi.ldap.AbstractLdapNamingEnumeration.hasMoreImpl;com.sun.jndi.ldap.AbstractLdapNamingEnumeration.hasMore;com.sun.jndi.ldap.NamingEventNotifier.run" name="LDAP notifier" size="14"/>
 				<exclude pattern="java.lang.Object.wait;com.sun.jndi.ldap.EventQueue.dequeue;com.sun.jndi.ldap.EventQueue.run" name="LDAP event dequeue" size="5"/>

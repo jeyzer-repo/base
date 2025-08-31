@@ -375,6 +375,27 @@
 			</thresholds>
 		</rule>
 
+		<!--  If operation regex [pattern] is seen in more than [value] parallel threads, generate event. -->
+		<rule name="Operation parallel contention" extra_info="Java list conditional remove" stickers="performance" ref="JZR-SHA-JAVA-028">
+			<narrative>This rule detects any conditional list removal with the logging util framework.</narrative>
+			<thresholds>
+				<threshold type="session custom"
+						   count="1"
+						   value="5"
+				           pattern="Java list conditional remove" 
+				           level="INFO"
+				           sub_level="7"
+				           message="Light contention on an array list removal condition.&#10;Check that the removal condition is behaving correctly."/>
+				<threshold type="session custom"
+						   count="2"
+						   value="10"
+				           pattern="Java list conditional remove" 
+				           level="WARNING"
+				           sub_level="8"
+				           message="Important contention on an array list removal condition.&#10;Check that the removal condition is behaving correctly."/>
+			</thresholds>
+		</rule>
+
 	</rules>
 
 </monitor>
