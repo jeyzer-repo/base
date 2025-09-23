@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Weblogic" version="3.2">
+<profile name="Weblogic" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -26,6 +26,7 @@
 				<function pattern="weblogic.management.mbeanservers.runtime.internal.RegisterWithDomainRuntimeService.start" name="Weblogic server startup" 	priority="1000"/>
 				<function pattern="weblogic.common.resourcepool.ResourcePoolImpl.testUnusedResources" name="Weblogic ressource pool maintenance"/>
 				<function pattern="weblogic.servlet.internal.session.SessionContext$SessionInvalidator.timerExpired" name="Weblogic J2EE session automatic expiration"/>
+				<function pattern="weblogic.nodemanager.NMService.rotateLogFiles" name="Weblogic log rotation"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
@@ -51,6 +52,8 @@
 				<executor pattern="weblogic.work.ExecuteThread.run" name="Weblogic thread"/>
 				<executor pattern="weblogic.kernel.ExecuteThread.run" name="Weblogic kernel thread"/>
 				<executor pattern="weblogic.timers.internal.TimerThread$Thread.run" name="Weblogic timer thread"/>	
+				<executor pattern="weblogic.jdbc.common.rac.internal.WLTask.run" name="Weblogic JDBC task"/>
+				<executor pattern="weblogic.store.internal.PersistentStoreImpl.run" name="Weblogic storage thread"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -58,7 +61,14 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<exclude pattern="jrockit.vm.Locks.monitorEnter;weblogic.socket.EPollSocketMuxer.processSockets;weblogic.socket.SocketReaderRequest.run" name="Weblogic socket reader thread waiting for message to process"/>		<!-- Multiple line pattern -->
+				<exclude pattern="jrockit.vm.Locks.monitorEnter;weblogic.socket.EPollSocketMuxer.processSockets;weblogic.socket.SocketReaderRequest.run" name="Weblogic socket reader thread waiting for message to process"/>
+				<exclude pattern="java.lang.Object.wait;java.lang.Object.wait;weblogic.work.ExecuteThread.waitForRequest;weblogic.work.ExecuteThread.run" name="Weblogic executor thread" size="4"/>
+				<exclude pattern="sun.nio.ch.SelectorImpl.select;weblogic.socket.NIOSocketMuxer.selectFrom;weblogic.socket.NIOSocketMuxer.processSockets;weblogic.socket.SocketReaderRequest.run" name="Weblogic socker reader" size="12"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;weblogic.work.concurrent.ScheduledLongRunningTask.run" name="Weblogic scheduler wait" size="6"/>
+				<exclude pattern="java.lang.Object.wait;weblogic.timers.internal.TimerThread.doWait;weblogic.timers.internal.TimerThread.access;weblogic.timers.internal.TimerThread$Thread.run" name="Weblogic internal timer" size="4"/>
+				<exclude pattern="com.oracle.common.base.ConcurrentNotifier.park;com.oracle.common.base.ConcurrentNotifier.await;com.tangosol.coherence.component.util.Daemon.onWait;com.tangosol.coherence.component.util.DaemonPool$Daemon.onWait" name="Weblogic tangosol daemon" size="10"/>
+				<exclude pattern="java.util.concurrent.locks.LockSupport.parkNanos;com.oracle.common.base.Blocking.parkNanos;com.oracle.common.base.SingleWaiterMultiNotifier.await;com.tangosol.coherence.component.util.queue.SingleConsumerQueue.await;com.tangosol.coherence.component.util.Daemon.onWait;com.tangosol.coherence.component.util.daemon.QueueProcessor.onWait" name="Weblogic tangosol processor" size="10"/>
+				<exclude pattern="com.oracle.common.base.Blocking.sleep;com.tangosol.net.SimpleServiceMonitor.monitorServices;com.tangosol.net.SimpleServiceMonitor$1.run" name="Weblogic tangosol monitor" size="7"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
