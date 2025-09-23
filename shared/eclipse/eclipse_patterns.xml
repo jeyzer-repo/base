@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Eclipse" version="3.3">
+<profile name="Eclipse" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -22,6 +22,7 @@
 			<functions>
 				<function pattern="org.eclipse.persistence.internal.jpa.EJBQueryImpl.getResultList" name="JPA list query"/>
 				<function pattern="org.eclipse.persistence.internal.jpa.EJBQueryImpl.getSingleResult" name="JPA value query"/>
+				<function pattern="org.eclipse.persistence.internal.databaseaccess.DatabaseAccessor.processResultSet" name="Result set process"/>
 				<function pattern="org.eclipse.swt.widgets.EventTable.sendEvent" name="Eclipse event propagation"/>
 			</functions>
 			<operations>
@@ -29,6 +30,7 @@
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<operation pattern="org.eclipse.osgi.internal.loader.ModuleClassLoader.getResources" name="Module loading"/>
 				<operation pattern="org.eclipse.jface.window.Window.close" name="Window closure"/>
+				<operation pattern="org.eclipse.persistence." name="Persistence operation"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
