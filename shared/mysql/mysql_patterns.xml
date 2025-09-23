@@ -32,6 +32,7 @@
 				<operation pattern="mysql.jdbc.PreparedStatement.executeUpdate" name="MySQL insert or update"  							type="MySQL"/>
 				<operation pattern="com.mysql.cj.jdbc.ConnectionImpl.close" name="MySQL close connection"  								type="MySQL"/>
 				<operation pattern="com.mysql.cj.jdbc.ConnectionImpl.prepareStatement" name="MySQL statement prepare"  					type="MySQL"/>
+				<operation pattern="com.mysql.cj.jdbc.result.ResultSetImpl.getTimestamp" name="MySQL resultset timestamp access"  		type="MySQL"/>
 				<operation pattern="mysql.jdbc." name="MySQL operation"		   	   							   							type="MySQL"/>
 				<operation pattern="com.mysql." name="MySQL operation"		   	   							   							type="MySQL"/>
 			</operations>
