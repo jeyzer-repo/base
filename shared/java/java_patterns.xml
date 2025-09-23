@@ -36,6 +36,7 @@
 				<function pattern="org.xml.sax.helpers.XMLReaderFactory.createXMLReader" name="XML read"/>
 				<function pattern="com.sun.enterprise.resource.pool.PoolManagerImpl.getResource;com.sun.enterprise.connectors.ConnectionManagerImpl.getResource" name="Sun JDBC connection pool access"/>
 				<function pattern="sun.management.GarbageCollectorImpl.createGCNotification" name="JMX GC notification creation"/>
+				<function pattern="com.sun.management.internal.GarbageCollectorExtImpl.createGCNotification" name="GC notification creation"/>
 				<function pattern="java.util.concurrent.ThreadPerTaskExecutor.start" name="Task execution"/>
 				<function pattern="javax.security.auth.login.LoginContext.login" name="Auth login"/>
 				<!-- IMAP -->
@@ -75,6 +76,7 @@
 				<!-- SSL -->
 				<operation pattern="ssl.CipherBox.encrypt" name="SSL data encryption"										type="Crypto"/>
 				<operation pattern="ssl.CipherBox.decrypt" name="SSL data decryption"										type="Crypto"/>
+				<operation pattern="sun.security.ssl.TransportContext.finishHandshake" name="SSL handshake end"/>
 				<!-- Could those System/Runtime calls be catch ?-->
 				<operation pattern="java.lang.Runtime.gc" name="Garbage collector forced execution" priority="900"/>
 				<operation pattern="java.lang.System.gc"  name="Garbage collector forced execution" priority="900"/>
@@ -91,12 +93,14 @@
 				<operation pattern="java.net.NetworkInterface.getNetworkInterfaces" name="Get machine network interfaces"	type="Network"/>
 				<operation pattern="java.net.InetAddress.getByName" name="IP lookup"										type="Network"/>
 				<operation pattern="java.net.InetAddress.getAllByName" name="IP lookup"										type="Network"/>
+				<operation pattern="sun.nio.ch.SocketDispatcher.write" name="Socket writing"								type="Network"/>
 				<operation pattern="java.net.SocketOutputStream.socketWrite" name="Socket writing"							type="Network"/>
 				<operation pattern="java.net.Socket$SocketInputStream.read" name="Socket reading"							type="Network"/>
 				<operation pattern="java.net.SocksSocketImpl.connect" name="Socket connect"									type="Network"/>
 				<operation pattern="java.net.Socket.close" name="Socket close"												type="Network"/>
 				<operation pattern="sun.nio.ch.WindowsSelectorImpl$SubSelector.poll0" name="Socket read wait"				type="Listen"/>
 				<operation pattern="sun.nio.ch.EPollArrayWrapper.epollWait" name="Socket read wait"							type="Listen"/>
+				<operation pattern="sun.nio.ch.DevPollArrayWrapper.poll" name="Socket read wait"							type="Listen"/>
 				<operation pattern="URLClassPath$FileLoader.getResource" name="System ressource access (file loader)"		type="File"/>
 				<operation pattern="URLClassPath$JarLoader.getResource" name="System ressource access (jar loader)"			type="File"/>
 				<operation pattern="Class.newInstance" name="Class loading"													type="Class loader"/>
@@ -152,6 +156,7 @@
 				<operation pattern="java.lang.VirtualThread.park" name="Virtual thread suspended"							type="VT unmounted"/>
 				<operation pattern="java.lang.Thread.start" name="Java thread spawning-creation"/>
 				<operation pattern="java.lang.Thread.&lt;init&gt;" name="Java thread creation"/>
+				<operation pattern="java.lang.Thread.isAlive" name="Java thread liveness check"/>
 				<operation pattern="java.lang.Thread.sleep" name="Thread on hold (sleep)"									type="Timed waiting"/>
 				<operation pattern="java.lang.Thread.join" name="Waiting for other thread to terminate"						type="Synchro"  priority="910"/>
 				<operation pattern="java.lang.VirtualThread.joinNanos" name="Waiting for virtual thread(s) to terminate"	type="Synchro"  priority="920"/>
@@ -259,6 +264,8 @@
 				<operation pattern="java.util.concurrent.LinkedBlockingQueue.offer" name="Linked blocking queue item insertion (can wait for consumption)"  type="Queue"/>
 				<operation pattern="java.util.concurrent.DelayQueue.offer" name="Delay queue item insertion (can wait for consumption)"						type="Queue"/>
 				<operation pattern="jdk.jfr.internal.JVM.emitEvent" name="JVM event published"/>
+				<operation pattern="jdk.jfr.internal.PlatformRecording.getId" name="JVM recording access"/>
+				<operation pattern="jdk.jfr.internal.EventWriter.putStackTrace" name="JFR stack trace capture"/>
 				<operation pattern="java.lang.Math." name="Java mathematic operation"/>
 				<operation pattern="java.math." name="Java mathematic operation"/>
 				<operation pattern="java.text.SimpleDateFormat.&lt;init&gt;" name="Simple date format creation"/>

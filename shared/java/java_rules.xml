@@ -396,6 +396,25 @@
 			</thresholds>
 		</rule>
 
+		<!--  If percentage of operation is greater or equal to [value] across current session, generate event. -->
+		<rule name="Operation global percentage" param_display="Java thread creation" param="Java thread spawning-creation" stickers="performance" ref="JZR-SHA-JAVA-029">
+			<narrative>This rule detects any intensive thread creation.</narrative>
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="15" 
+				           level="INFO"
+                           sub_level="6"
+				           message="Important thread volume creation.&#10;You may ask the R&#38;D to review it."/>
+				<threshold type="system value" 
+						   count="1"
+				           value="33" 
+				           level="WARNING"
+						   sub_level="9"						   
+				           message="Huge thread volume creation.&#10;You may ask the R&#38;D to review it.&#10; and see if it can be improved.&#10;You may consider virtual thread usage in case of asynchronous or IO wait calls."/>
+			</thresholds>
+		</rule>
+
 	</rules>
 
 </monitor>
