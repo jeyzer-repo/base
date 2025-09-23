@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Jersey" version="3.2">
+<profile name="Jersey" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -25,7 +25,6 @@
 				<function pattern="com.sun.jersey.api.client.WebResource$Builder.post" name="REST post"/>
 				<function pattern="com.sun.jersey.api.client.WebResource$Builder.get" name="REST get"/>
 				<function pattern="com.sun.jersey.spi.container.ContainerResponse.write" name="REST write response"/>
-				<function pattern="org.glassfish.jersey.internal.Errors.process" name="Jersey service error"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
