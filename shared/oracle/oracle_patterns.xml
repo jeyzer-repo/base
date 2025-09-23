@@ -64,6 +64,7 @@
 				<executor pattern="oracle.odi.runtime.agent.execution.job.OdiJob.call" name="Oracle ODI job"/>
 				<executor pattern="oracle.jdbc.driver.PhysicalConnection$2.run" name="Oracle connection checker"/>
 				<executor pattern="oracle.ias.cache.group.Receiver.run" name="Oracle ias cache receiver"/>
+				<executor pattern="oracle.common.internal.net.ResumableSelectionService.run" name="Oracle selection service"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
