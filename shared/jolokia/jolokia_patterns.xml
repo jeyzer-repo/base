@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Jolokia" version="3.2">
+<profile name="Jolokia" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -42,7 +42,8 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<exclude pattern="java.net.DatagramSocket.receive;org.jolokia.discovery.MulticastSocketListenerThread.receiveMessage;org.jolokia.discovery.MulticastSocketListenerThread.run" name="Jolokia listener" size="5"/>
+				<exclude pattern="java.net.DatagramSocket.receive;org.jolokia.discovery.MulticastSocketListenerThread.receiveMessage;org.jolokia.discovery.MulticastSocketListenerThread.run" name="Jolokia listener" size="9"/>
+				<exclude pattern="java.lang.Thread.join;org.jolokia.jvmagent.CleanupThread.joinThreads;org.jolokia.jvmagent.CleanupThread.run" name="Jolokia cleaner" size="6"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
