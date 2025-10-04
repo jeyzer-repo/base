@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="PostgreSQL" version="3.2">
+<profile name="PostgreSQL" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -48,6 +48,7 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="java.lang.Object.wait;java.lang.ref.ReferenceQueue.remove;org.postgresql.util.LazyCleaner$1.run" name="PostgreSQL cleaner"/>
+				<exclude pattern="java.lang.ref.ReferenceQueue.await;java.lang.ref.ReferenceQueue.remove;java.lang.ref.ReferenceQueue.remove;org.postgresql.util.LazyCleaner" name="PostgreSQL cleaner 2" size="9"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
