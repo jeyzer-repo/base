@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="OkHttp" version="3.3">
+<profile name="OkHttp" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -44,12 +44,12 @@
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<exclude pattern="java.lang.Object.wait,okio.AsyncTimeout.awaitTimeout,okio.AsyncTimeout$Watchdog.run" name="OkHttp okio thread"/>
 				<exclude pattern="okhttp3.internal.concurrent.TaskRunner$RealBackend.coordinatorWait;okhttp3.internal.concurrent.TaskRunner.awaitTaskToRun" name="OkHttp task runner" size="8"/>
-				<exclude pattern="java.lang.Object.wait;okhttp3.internal.connection.RealConnectionPool.lambda$new;java.util.concurrent.ThreadPoolExecutor.runWorker" name="OkHttp connection pool" size="7"/>
+				<exclude pattern="java.lang.Object.wait;okhttp3.internal.connection.RealConnectionPool.lambda$new;java.util.concurrent.ThreadPoolExecutor.runWorker" name="OkHttp connection pool" size="9"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<exclude_thread_name pattern="OkHttp ConnectionPool" name="OkHttp thread" size="6"/>
+				<exclude_thread_name pattern="OkHttp ConnectionPool" name="OkHttp thread" size="9"/>
 				<exclude_thread_name pattern="OkHttp TaskRunner" name="OkHttp TaskRunner thread" size="9"/>
 			</exclude_thread_names>
 		</patterns>
