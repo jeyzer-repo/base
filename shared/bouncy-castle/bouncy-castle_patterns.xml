@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Bouncy Castle" version="3.2">
+<profile name="Bouncy Castle" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -27,6 +27,7 @@
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<operation pattern="org.bouncycastle.jcajce.provider.asymmetric.x509.X509CertificateImpl.checkSignature" name="X509 signature verification" type="Crypto"/>
 				<operation pattern="org.bouncycastle.jcajce.provider.asymmetric.rsa.DigestSignatureSpi.engineVerify" name="RSA signature verification" type="Crypto"/>
+				<operation pattern="org.bouncycastle." name="crypto operation" type="Crypto"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
