@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Paho">
+
+		<!-- ************************************************************************ -->
+		<!--                       PAHO RULES                                         -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If shared profile is detected across current session, generate event. -->
+		<rule name="Shared profile" param_display="Paho" param="Paho" stickers="code_quality" ref="JZR-SHA-PAHO-001">
+			<narrative>This rule detects the Paho client library usage.</narrative>
+			<thresholds>
+				<threshold type="system signal" 
+				           level="INFO" 
+				           message="The Paho java project is not maintained since 2023.&#10;It is recommended to migrate to another MQTT client."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
