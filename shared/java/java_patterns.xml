@@ -276,6 +276,7 @@
 				<operation pattern="java.util.logging.Logger.log" name="Log util trace"														type="Log"/>
 				<operation pattern="java.util.logging.FileHandler.publish" name="Log util file access"										type="Log"/>
 				<operation pattern="sun.nio.ch.FileChannelImpl.force" name="Physical file writing" 						type="File"/>
+				<operation pattern="sun.nio.ch.UnixFileDispatcherImpl.write" name="Unix file write" 					type="File"/>
 				<operation pattern="com.sun.jna.Library$Handler.invoke" name="Native function call" 					type="Native"/>
 				<operation pattern="java.util.GregorianCalendar." name="Calendar operation"/>
 				<operation pattern="java.lang.String.format" name="Java String format"									type="String"/>
@@ -306,6 +307,7 @@
   				<locker pattern="java.util.concurrent.locks.Condition.await" name="Condition"/>
   				<locker pattern="java.util.concurrent.locks.ReentrantReadWriteLock$ReadLock.lock" name="ReadLock"/>
   				<locker pattern="java.util.concurrent.locks.ReentrantReadWriteLock$WriteLock.lock" name="WriteLock"/>
+  				<locker pattern="java.util.concurrent.locks.ReentrantReadWriteLock.getReadHoldCount" name="WriteLock"/>
   				<locker pattern="java.util.concurrent.CountDownLatch.await" name="CountDownLatch"/>
   				<locker pattern="java.util.concurrent.CyclicBarrier.await" name="CyclicBarrier"/>
   				<locker pattern="java.util.concurrent.Semaphore.acquire" name="Semaphore"/>
@@ -380,6 +382,7 @@
 				<exclude pattern="java.util.concurrent.locks.LockSupport.park;java.util.concurrent.ForkJoinPool.awaitWork;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join dormant thread 2" size="5"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.locks.LockSupport.parkUntil;java.util.concurrent.ForkJoinPool.awaitWork;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join dormant thread 3" size="5"/>		<!-- Multiple line pattern -->
 				<exclude pattern="java.util.concurrent.locks.LockSupport.park;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join unsignalled thread" size="4"/>		<!-- Multiple line pattern -->
+				<exclude pattern="jdk.internal.misc.Unsafe.park;java.util.concurrent.ForkJoinPool.awaitWork;java.util.concurrent.ForkJoinPool.deactivate;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join worker thread" size="5"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.misc.Unsafe.park;java.util.concurrent.ForkJoinPool.awaitWork;java.util.concurrent.ForkJoinPool.runWorker;java.util.concurrent.ForkJoinWorkerThread.run" name="Fork join parked thread" size="4"/>		<!-- Multiple line pattern -->
 				<exclude pattern="sun.nio.fs.MacOSXWatchService.CFRunLoopRun;sun.nio.fs.MacOSXWatchService$CFRunLoopThread.run" name="MacOS XWatch Service lookibg for file changes" size="2"/>		<!-- Multiple line pattern -->
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
@@ -388,6 +391,7 @@
 				<!-- Sun KQueuePort -->
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.ArrayBlockingQueue.take;sun.nio.ch.KQueuePort$EventHandlerTask.run;sun.nio.ch.AsynchronousChannelGroupImpl$1.run" name="Sun event async group"/>
 				<exclude pattern="sun.nio.ch.KQueuePort$EventHandlerTask.poll;sun.nio.ch.KQueuePort$EventHandlerTask.run" name="Sun kqueue event handler" size="4"/>
+				<exclude pattern="sun.nio.ch.KQueuePoller.poll;sun.nio.ch.Poller.pollerLoop;sun.nio.ch.Poller$Pollers;java.lang.Thread.runWith;java.lang.Thread.run;jdk.internal.misc.InnocuousThread.run" name="Innocuous thread" size="7"/>
 				<!-- HTTP -->
 				<exclude pattern="sun.net.www.http.KeepAliveCache.run" name="HTTP keep alive timer" size="3"/>
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;sun.net.httpserver.ServerImpl$Dispatcher.run" name="HTTP server select loop" size="7"/>
@@ -408,7 +412,7 @@
 				<!-- LDAP -->
 				<exclude pattern="com.sun.jndi.ldap.AbstractLdapNamingEnumeration.getNextBatch;com.sun.jndi.ldap.AbstractLdapNamingEnumeration.hasMoreImpl;com.sun.jndi.ldap.AbstractLdapNamingEnumeration.hasMore;com.sun.jndi.ldap.NamingEventNotifier.run" name="LDAP notifier" size="14"/>
 				<exclude pattern="java.lang.Object.wait;com.sun.jndi.ldap.EventQueue.dequeue;com.sun.jndi.ldap.EventQueue.run" name="LDAP event dequeue" size="5"/>
-				<exclude pattern="java.io.BufferedInputStream.fill;java.io.BufferedInputStream.read1;java.io.BufferedInputStream.read;com.sun.jndi.ldap.Connection.run" name="LDAP connect wait" size="12"/>
+				<exclude pattern="java.io.BufferedInputStream.fill;java.io.BufferedInputStream.read1;java.io.BufferedInputStream.read;com.sun.jndi.ldap.Connection.run" name="LDAP connect wait" size="17"/>
 				<!-- RMI -->
 				<exclude pattern="RMIConnectionImpl.fetchNotifications" name="RMI"/>
 				<exclude pattern="sun.rmi.transport.Transport.serviceCall" name="RMI"/>
@@ -432,6 +436,7 @@
 				<exclude pattern="sun.nio.ch.WEPollPoller.poll;sun.nio.ch.Poller.poll;sun.nio.ch.Poller.pollLoop" name="VT write poller" size="6"/>
 				<exclude pattern="sun.nio.ch.EPollPoller.poll;sun.nio.ch.Poller.poll;sun.nio.ch.Poller.pollLoop" name="VT write poller 2" size="6"/>
 				<exclude pattern="java.util.concurrent.LinkedTransferQueue.awaitMatch;java.util.concurrent.LinkedTransferQueue.xfer;java.util.concurrent.LinkedTransferQueue.take;sun.nio.ch.Poller.updateLoop;java.lang.Thread.run;jdk.internal.misc.InnocuousThread.run" name="VT read poller" size="11"/>
+				<exclude pattern="java.lang.Object.wait;sun.rmi.transport.GC$Daemon.run" name="GC daemon" size="6"/>
 				<exclude pattern="java.util.concurrent.LinkedTransferQueue$DualNode.await;java.util.concurrent.LinkedTransferQueue.xfer;java.util.concurrent.LinkedTransferQueue.take;sun.nio.ch.Poller.updateLoop" name="VT read poller 2" size="8"/>
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;javax.mail.EventQueue.run" name="Java mail events" size="6"/>
 				<exclude pattern="sun.nio.ch.SelectorImpl.lockAndDoSelect;sun.nio.ch.SelectorImpl.select;com.sun.corba.se.impl.transport.SelectorImpl.run" name="CORBA selector thread" size="6"/>
