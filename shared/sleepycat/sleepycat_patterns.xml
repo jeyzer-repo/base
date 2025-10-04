@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<profile name="Sleepycat" version="3.4-SNAPSHOT">
+
+		<!-- 
+			Pattern rule appliance by priority :
+			0 - locker (1004)
+			1 - stack_size_interest (1003)
+			2 - exclude_thread_name (1002)
+			3 - exclude (1001)
+			4 - locker  (7)
+			5 - function  (6)
+			6 - function_discovery  (5)
+			7 - executor  (4)
+			8 - executor_thread_name (3)
+			9 - operation (2)
+			10 - operation_discovery (1)
+			Exclude, function, operation and executor patterns priorities can be overriden by pattern attribute.
+	 	-->
+		<patterns>
+			<!-- In pattern attribute, use semicolon separator to declare multiple line patterns -->
+			<functions>
+				<function pattern="com.sleepycat.je.recovery.DirtyINMap.selectDirtyINsForCheckpoint" name="Sleepycat dirty IN cleanup"/>
+				<function pattern="com.sleepycat.je.recovery.Checkpointer.flushDirtyNodes" name="Sleepycat dirty node flush"/>
+				<function pattern="com.sleepycat.je.cleaner.FileProcessor.processFile" name="Sleepycat file cleanup"/>
+				<function pattern="com.sleepycat.je.Database.get" name="Sleepycat get" />
+				<function pattern="com.sleepycat.je.Database.put" name="Sleepycat put" />
+			</functions>
+			<operations>
+				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
+				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
+				<operation pattern="com.sleepycat.je.recovery.Checkpointer.logDirtyIN" name="Sleepycat dirty IN logging" />
+				<operation pattern="com.sleepycat." name="Sleepycat operation" />
+			</operations>
+			<lockers>
+				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
+  				<!-- locker pattern="java.util.concurrent.locks.LockSupport.park" name="LockSupport"/-->
+			</lockers>
+			<executors>
+				<!-- Executor patterns must be available within the 20 first lines of the thread dump -->
+				<executor pattern="com.sleepycat.je.utilint.DaemonThread.run" name="Sleepycat daemon"/>
+			</executors>
+			<executor_thread_names>
+				<!-- Executor pattern based on the thread name. Regular expression recommended -->
+				<!--executor_thread_name pattern_regex="^Abandoned connection cleanup thread" name="MySQL connection cleanup thread"/-->
+			</executor_thread_names>
+			<excludes>
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<exclude pattern="java.lang.Object.wait0;java.lang.Object.wait;com.sleepycat.je.utilint.DaemonThread.run" name="Sleepycat " size="5"/>
+			</excludes>
+			<exclude_thread_names>
+				<!-- Exclude stack based on thread name. Regular expression based recommended -->
+				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
+				<!--exclude_thread_name pattern_regex="^Abandoned connection cleanup thread" name="MySQL connection cleanup thread" size="11"/-->
+			</exclude_thread_names>
+		</patterns>
+
+</profile>

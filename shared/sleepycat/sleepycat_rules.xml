@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitor>
+
+	<rules group_name="Sleepycat">
+
+		<!-- ************************************************************************ -->
+		<!--                       Sleepycat RULES                                    -->
+		<!-- ************************************************************************ -->
+		
+		<!--  If percentage of contention type within action principal is greater or equal to [value] across current session, generate event. -->
+		<rule name="Contention type in principal percentage" principal="Sleepycat get" param_display="Lock contention access percentage in Sleepy cat get" param="Synchro" ref="JZR-SHA-SLEEPYCAT-001">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="50" 
+				           level="WARNING" 
+						   sub_level="7"
+				           message="High lock contention in Sleepycat read.&#10; Check the load of the server&#10; or check if Sleepycat has a performance issue."/>
+			</thresholds>
+		</rule>
+
+		<!--  If percentage of contention type within action principal is greater or equal to [value] across current session, generate event. -->
+		<rule name="Contention type in principal percentage" principal="Sleepycat put" param_display="Lock contention access percentage in Sleepy cat write" param="Synchro" ref="JZR-SHA-SLEEPYCAT-002">
+			<thresholds>
+				<threshold type="system value" 
+						   count="1"
+				           value="50" 
+				           level="WARNING"
+						   sub_level="7"
+				           message="High lock contention in Sleepycat write.&#10; Check the load of the server&#10; or check if Sleepycat has a performance issue."/>
+			</thresholds>
+		</rule>
+
+	</rules>
+
+</monitor>
