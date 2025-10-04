@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<profile name="Jacorb" version="3.2">
+<profile name="Jacorb" version="3.4-SNAPSHOT">
 
 		<!-- 
 			Pattern rule appliance by priority :
@@ -49,9 +49,12 @@
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
 				<!-- exclude pattern="sun.misc.GC$Daemon.run" name="GC"/-->
-				<exclude pattern="org.jacorb.orb.iiop.IIOPListener$Acceptor.run" name="CORBA IIOP Listener" size="5"/>
+				<exclude pattern="org.jacorb.orb.iiop.IIOPListener$Acceptor.run" name="CORBA IIOP Listener" size="9"/>
 				<exclude pattern="org.jacorb.poa.AOM$1.run" name="Jacorb POA thread" size="5"/>
+				<exclude pattern="org.jacorb.poa.AOM$AOMRemoval.run" name="Jacorb AOM removal thread" size="8"/>
+				<exclude pattern="org.jacorb.poa.RequestProcessor.run" name="Jacorb POA request processor" size="3"/>
 				<exclude pattern="org.jacorb.poa.RequestController.run" name="CORBA Jacorb request thread" size="4"/>
+				<exclude pattern="org.jacorb.util.threadpool.ConsumerTie.run" name="CORBA consumer" size="14"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->
