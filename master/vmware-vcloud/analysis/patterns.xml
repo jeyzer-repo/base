@@ -30,12 +30,13 @@
 				<function pattern="com.vmware.vcloud.common.activity.dao.impl.ActivityQueueServiceImpl.claimNextRunnableActivity" name="Claim next activity"/>
 				<function pattern="com.vmware.vcloud.common.activity.dao.impl.ActivityQueueServiceImpl.lambda$claimNextRunnableActivity" name="Activity execution"/>
 				<function pattern="com.vmware.vcloud.heartbeat.impl.CellLivenessMonitor.safelyLoadCellSpec" name="Laod cell spec"/>
+				<function pattern="com.vmware.vcloud.extensibilitybackend.impl.DestinationSelectorImpl.getEnabledExternalEndpointForUri" name="Get external endpoint for URI"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
 				<!-- Exception : patterns ending with '.' apply for the first 2 lines of the thread dump -->
 				<!-- XStream -->
-				<!--operation pattern="com.thoughtworks.xstream." name="XML serialization operation"/-->
+				<operation pattern="com.vmware.vcloud.api.rest.handlers.oauth.OAuthTokenApiHandler.createProviderToken" name="VMware provider token creation"/>
 			</operations>
 			<lockers>
 				<!-- Locker patterns apply for the first 20 lines of the thread dump                 -->
@@ -48,6 +49,7 @@
 				<executor pattern="com.vmware.vcloud.activity.executors.ActivityRunner.run" name="VMware activity runner"/>
 				<executor pattern="com.vmware.vcloud.activity.toolkit.queueing.DefaultActivityQueueProcessor$1.run" name="VMware activity queue processor"/>
 				<executor pattern="com.vmware.cell.heartbeat.impl.HeartbeatServiceImpl$HeartbeatRunner.run" name="VMware heartbeat runner"/>
+				<executor pattern="com.vmware.ssdc.backend.services.UIThumbnailRequestConsumer.run" name="VMware UI thumbnail request consumer"/>
 			</executors>
 			<executor_thread_names>
 				<!-- Executor pattern based on the thread name. Regular expression recommended -->
@@ -55,17 +57,21 @@
 			</executor_thread_names>
 			<excludes>
 				<!-- If stack size is equal or below the limit (optional size attribute), thread stack is excluded -->
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.vmware.vcloud.common.activity.RemoteActivityEventRelay.lambda$new" name="VMware remote activity event loop waiting" size="7"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.vmware.vcloud.common.activity.RemoteActivityEventRelay.lambda$new" name="VMware remote activity event loop waiting" size="11"/>
 				<exclude pattern="java.lang.Thread.sleep;com.vmware.vcloud.activity.toolkit.queueing.DefaultActivityQueueProcessor.dequeueElement;com.vmware.vcloud.activity.toolkit.queueing.DefaultActivityQueueProcessor$1.run" name="VMware default activity toolkit event queue sleep" size="3"/>
 				<exclude pattern="java.lang.Thread.sleep;com.vmware.vcloud.vimproxy.internal.impl.PCEventProcessingActivity.sleep;com.vmware.vcloud.vimproxy.internal.impl.PCEventProcessingActivity$ProcessEventsPhase.invoke;com.vmware.vcloud.activity.executors.ActivityRunner.runPhase;com.vmware.vcloud.activity.executors.ActivityRunner.run" name="VMware PC event phase sleep" size="10"/>
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.vmware.vcloud.progress.impl.TaskProgressWriter.run" name="VMware task progress writer wait" size="5"/>
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.vmware.vcloud.progress.impl.TaskStepProgressWriter.run" name="VMware task step writer wait" size="5"/>
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.DelayQueue.take;com.vmware.vcloud.vimvalidation.impl.ValidationServiceImpl$ValidationThread.run" name="VMware validation service wait" size="5"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.vmware.vcloud.progress.impl.TaskProgressWriter.run" name="VMware task progress writer wait" size="8"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.vmware.vcloud.progress.impl.TaskStepProgressWriter.run" name="VMware task step writer wait" size="8"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.DelayQueue.take;com.vmware.vcloud.vimvalidation.impl.ValidationServiceImpl$ValidationThread.run" name="VMware validation service wait" size="8"/>
 				<exclude pattern="java.util.concurrent.LinkedBlockingDeque.take;com.vmware.vcloud.common.cell.jms.activemq.broadcasting.VCDBroadcastEndpoint.receiveBroadcast;org.apache.activemq.artemis.core.cluster.DiscoveryGroup$DiscoveryRunnable.run" name="VMware discovery broadcast wait"/>	
 				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.vmware.ssdc.backend.services.UIThumbnailRequestConsumer.execute;com.vmware.ssdc.backend.services.UIThumbnailRequestConsumer$1.run" name="UIThumbnailRequest consumer wait" size="11"/>	
-				<exclude pattern="java.lang.Thread.sleep;com.vmware.vcloud.common.cell.jms.activemq.broadcasting.VCDBroadcastEndpoint$2.run" name="VMware VCDBroadcastEndpoint sleep" size="8"/>
-				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.vmware.vcloud.common.cell.jms.activemq.impl.JmsFacadeService.senderRun" name="VMware JMS facade sender waiting" size="11"/>	
+				<exclude pattern="java.lang.Thread.sleep;com.vmware.vcloud.common.cell.jms.activemq.broadcasting.VCDBroadcastEndpoint$2.run" name="VMware VCDBroadcastEndpoint sleep" size="10"/>
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.vmware.vcloud.common.cell.jms.activemq.impl.JmsFacadeService.senderRun" name="VMware JMS facade sender waiting" size="15"/>	
+				<exclude pattern="java.util.concurrent.SynchronousQueue.poll;org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.reservedWait;org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run;com.vmware.vcloud.common.threading.ExtendedJettyQueuedThreadPool$CleaningRunnable.run;org.eclipse.jetty.util.thread.QueuedThreadPool.runJob;com.vmware.vcloud.common.threading.ExtendedJettyQueuedThreadPool.runJob" name="VMware Jetty queue job waiting" size="15"/>	
 				<exclude pattern="org.eclipse.jetty.io.ManagedSelector$SelectorProducer.select;org.eclipse.jetty.io.ManagedSelector$SelectorProducer.produce;org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.produceTask;org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.tryProduce;org.eclipse.jetty.util.thread.strategy.AdaptiveExecutionStrategy.run;com.vmware.vcloud.common.threading.ExtendedJettyQueuedThreadPool$CleaningRunnable.run" name="VMware Jetty executor" size="19"/>	
+				<exclude pattern="java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await;java.util.concurrent.LinkedBlockingQueue.take;com.vmware.ssdc.backend.services.UIThumbnailRequestConsumer.execute;com.vmware.ssdc.backend.services.UIThumbnailRequestConsumer$1.run;com.vmware.ssdc.backend.services.UIThumbnailRequestConsumer$1.run" name="UIThumbnailRequestConsumer waiting" size="15"/>
+				<exclude pattern="java.lang.Thread.sleep;com.vmware.vcloud.logging.helper.WatchDog.run" name="VMware log4j conf watcher" size="3"/>
+				<exclude pattern="ConditionObject" name="VMware file watcher" size="15"/>
 			</excludes>
 			<exclude_thread_names>
 				<!-- Exclude stack based on thread name. Regular expression based recommended -->

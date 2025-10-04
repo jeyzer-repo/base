@@ -12,7 +12,7 @@
 
 	<!-- Dependency sets. Referenced in the analysis patterns and monitoring rules -->
 	<dependencies>
-		<set id="base-shared-deps" profiles="rabbitmq, jetty, postgresql, artemis, tomcat, hibernate, netty, spring, eclipse, apache-commons, apache-http-client, jeyzer, java"/>
+		<set id="base-shared-deps" profiles="rabbitmq, jetty, postgresql, artemis, tomcat, hibernate, netty, spring, eclipse, apache-commons, okhttp, okio, apache-http-client, caffeine, bouncy-castle, jeyzer, java"/>
 	</dependencies>
 
 	<!-- Analysis patterns. Load order : top to bottom. Pattern rules of the top pattern set apply first. Dynamic patterns are loaded at last -->
