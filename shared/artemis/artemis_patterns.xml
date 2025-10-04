@@ -34,6 +34,7 @@
 				<function pattern="transport.tcp.SslTransport.doConsume" name="TCP SSL message processing"/>
 				<function pattern="java.util.TimerThread.mainLoop(Timer.java:509)" name="Timer thread on hold"/>
 				<function pattern="ssl.internal.ssl.SSLServerSocketImpl.accept" name="SSL Server socket listening"/>
+				<function pattern="artemis.core.protocol.core.impl.ChannelImpl.flushConnection" name="Artemis connection flush"/>
 			</functions>
 			<operations>
 				<!-- Operation patterns apply for the first 20 lines of the thread dump                	 -->
